@@ -35,6 +35,7 @@ export class ListaService {
     
   }
   setAlumnos(c) {
+    
     this.inscriptosColection=this.afs.collection<Inscriptos>('cursadas/'+c+'/alumnos',ref=>ref.orderBy("fecha","asc") );
     this.Inscriptos = this.inscriptosColection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
