@@ -1,0 +1,51 @@
+<div class="card">
+    <div class="card-header" data-spy="scroll">
+        <i class="fa fa-align-justify"></i> Muro
+        <small>content</small>
+    </div>
+    <div id="muro" data-spy="scroll" #scrollMe [scrollTop]="scrollMe.scrollHeight" data-offset="5" style="max-height: 400px; overflow: auto;">
+        <div *ngIf="clases?.length > 0;else noClase">
+            <div *ngFor="let clases of clases " >
+                
+                <div class="card-body"></div>
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start" href="#">
+                    <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{clases.nombre}}</h5>
+                    <small class="text-muted">{{clases.fecha}}</small>
+                    </div>
+                    <p class="mb-1">{{clases.texto}}</p>
+                    <small class="text-muted">Donec id elit non mi porta.</small>
+                    </a>
+                </div>
+            </div>
+     </div>  
+    <ng-template #noClase>
+            <hr>
+            <h5>NO EXISTEN POST</h5>
+        </ng-template> 
+
+</div>
+    <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+                 
+            <div class="form-group">
+              <div class="input-group">
+                <textarea class="form-control" #text type="text" name="texto" placeholder="Contenido..." style="overflow:auto;resize:none"></textarea>
+                <div class="input-group-append">
+                <a class="btn input-group-text">
+                <i class="fa fa-send"></i>
+                </a>
+            </div>
+          </div>
+  
+          </div>
+              
+  
+        </div>
+    
+  </div>
+
+        
