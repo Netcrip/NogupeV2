@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { navItems } from './../../_nav';
-import {AuthService} from '../../servicios/auth.service'
+import {AuthService} from '../../servicios/auth.service';
+import {ListaService} from '../../servicios/lista.service'
 
 
 @Component({
@@ -14,7 +15,7 @@ export class DefaultLayoutComponent {
   public element: HTMLElement = document.body;
   public navCursos=[];
   
-  constructor(public auth:AuthService) {
+  constructor(public auth:AuthService,private cursos:ListaService) {
 
     this.changes = new MutationObserver((mutations) => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
@@ -24,9 +25,7 @@ export class DefaultLayoutComponent {
       attributes: true
     });
   }
-  ngOnInit() {
-    
-  }
+  
 
 
 }

@@ -10,7 +10,7 @@ import {Cursos} from '../../interface/cursos';
 })
 export class CursosComponent implements OnInit {
     
-  cursos: Cursos[];
+    cursos: Cursos[];
     editState: boolean = false;
     cursoToEdit: Cursos;
     constructor(private cursoService: CursosService, private router: Router) { }
