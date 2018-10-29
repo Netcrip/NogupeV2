@@ -24,8 +24,26 @@ export class DefaultLayoutComponent {
     this.changes.observe(<Element>this.element, {
       attributes: true
     });
+    
+    
+  
+    this.cursos.getCursos().forEach(element => {
+      element.forEach(dato => {
+        
+        navItems.push({name: dato.nombremateria ,url:'clase/'+dato.cursada , icon: 'icon-puzzle'},)
+      });      
+    });
+   
+    //console.log(v)
+    
+    //this.navItems= v;
+    
+    //navItems.push({""})
   }
   
+  signOut(){
+    this.auth.signOut();
+  }
 
 
 }

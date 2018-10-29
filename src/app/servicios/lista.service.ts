@@ -30,10 +30,12 @@ export class ListaService {
         return { id, ...data };
       }))
     );
-
-    
     
   }
+  getCursos() {
+    return this.cursos;
+  }
+
   setAlumnos(c) {
     
     this.inscriptosColection=this.afs.collection<Inscriptos>('cursadas/'+c+'/alumnos',ref=>ref.orderBy("fecha","asc") );

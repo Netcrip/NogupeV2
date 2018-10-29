@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Router,NavigationEnd } from '@angular/router';
 import {CursosService} from '../../servicios/cursos.service';
 import {Cursos} from '../../interface/cursos';
 
@@ -8,12 +8,25 @@ import {Cursos} from '../../interface/cursos';
   templateUrl: 'cursos.component.html',
   styleUrls: ['./cursos.component.scss']
 })
-export class CursosComponent implements OnInit {
+export class CursosComponent implements OnInit, AfterViewChecked {
     
     cursos: Cursos[];
     editState: boolean = false;
     cursoToEdit: Cursos;
-    constructor(private cursoService: CursosService, private router: Router) { }
+    constructor(private cursoService: CursosService, private router: Router) {
+      this.router.routeReuseStrategy.shouldReuseRoute = function(){
+        return false;
+     }
+
+     this.router.events.subscribe((evt) => {
+        if (evt instanceof NavigationEnd) {
+           // trick the Router into believing it's last link wasn't previously loaded
+           this.router.navigated = false;
+           // if you need to scroll back to top, here is the right place
+           window.scrollTo(0, 0);
+        }
+    });
+     }
 
    
     ngOnInit() {
@@ -21,7 +34,13 @@ export class CursosComponent implements OnInit {
         this.cursos = cursos;
       });
     }
-    /*editCurso(event, curso: CursosInterface) {
+    ngAfterViewChecked() {
+      // ...
+      this.cursoService.start();
+    }
+    
+    /*
+    editCurso(event, curso: CursosInterface) {
       this.editState = true;
       this.cursoToEdit = curso;
     }
@@ -39,6 +58,6 @@ export class CursosComponent implements OnInit {
     }*/
     irclase(s){
      console.log(s)
-     this.router.navigate(['clase/',s])
+     this.router.navigate(['nogupe/clase/',s])
     }
 }

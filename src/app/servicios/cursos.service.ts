@@ -4,7 +4,6 @@ import {Cursos} from '../interface/cursos'
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-
 import {AuthService} from './auth.service';
 
 @Injectable({
@@ -18,8 +17,11 @@ export class CursosService {
 
 
   constructor(public afs: AngularFirestore, public auth: AuthService) {
-    var uid=  auth.getuid();
-    this.cursosCollection = afs.collection<Cursos>('inscripciones', ref => ref.where('userid',"==",uid));
+    this.start();
+  }
+  start(){
+    var uid=  this.auth.getuid();
+    this.cursosCollection = this.afs.collection<Cursos>('inscripciones', ref => ref.where('userid',"==",uid));
     this.cursos = this.cursosCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Cursos;

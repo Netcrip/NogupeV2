@@ -14,7 +14,7 @@ export const navItems = [
   },
   {
     name: 'Cursos',
-    url: '/cursos',
+    url: 'cursos',
     icon: 'icon-drop'
   },
   {

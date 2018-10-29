@@ -41,7 +41,7 @@ export class AuthService {
       )
       
     }
-
+    
     ////
     
 getuid(){
@@ -114,7 +114,6 @@ async facebookLogin() {
     // ...
   });
 }
-
 twitterLogin() {
   const provider = new auth.TwitterAuthProvider();
   return this.oAuthLogin(provider);
