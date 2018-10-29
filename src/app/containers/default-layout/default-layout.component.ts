@@ -25,20 +25,17 @@ export class DefaultLayoutComponent {
       attributes: true
     });
     
-    
-  
+    let v:Object={name: 'Materias', url: 'cursos', icon: 'icon-puzzle', children: [], badge: {
+      variant: 'info',
+      text: 'NEW'
+    }}
     this.cursos.getCursos().forEach(element => {
-      element.forEach(dato => {
-        
-        navItems.push({name: dato.nombremateria ,url:'clase/'+dato.cursada , icon: 'icon-puzzle'},)
-      });      
+      element.forEach(dato => {        
+        v['children'].push({name: dato.nombremateria,url:'clase/'+dato.cursada, icon: 'fa '+dato.imgenurl});
+      });     
+      navItems.push(<any>v) 
     });
-   
-    //console.log(v)
     
-    //this.navItems= v;
-    
-    //navItems.push({""})
   }
   
   signOut(){
