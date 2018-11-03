@@ -34,5 +34,6 @@ export class ClasesService {
   }
   addPost(muro: Muro) {
     this.clasCollection.add(muro);
+    
   }
 }
