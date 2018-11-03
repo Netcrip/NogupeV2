@@ -33,7 +33,6 @@ export class ClasesService {
     return this.clases;
   }
   addPost(muro: Muro) {
-    console.log('NEW COURSE');
     this.clasCollection.add(muro);
   }
 }

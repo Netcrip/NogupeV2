@@ -47,13 +47,14 @@ export class AuthService {
 getuid(){
   return this.afAuth.auth.currentUser.uid;
 }
-////// OAuth Methods /////
-linkgoogleLogin() {
+////// link a cuenta social/////
+linkgoogle() {
   const provider = new auth.GoogleAuthProvider();
-  //return this.oAuthLogin(provider);
+  let a =this.afAuth.auth.currentUser.uid
+  var Ref: AngularFirestoreDocument<any> = this.afs.collection('users').doc(a);
   return firebase.auth().currentUser.linkWithPopup(provider).then(function(result) {
-    if (result.credential) {
-       console.log("Accounts successfully linked");
+    if (result.credential) {  
+      Ref.update({"google":"link"}).then(_ => console.log('update!'));
       //var credential = result.credential;
       //var user = result.user;
       // ...
@@ -64,11 +65,14 @@ linkgoogleLogin() {
 }
 linkface() {
   //return this.afAuth.auth.signInWithPopup( new firebase.auth.GoogleAuthProvider);
+  let a =this.afAuth.auth.currentUser.uid
   const provider = new auth.FacebookAuthProvider();
+  var Ref: AngularFirestoreDocument<any> = this.afs.collection('users').doc(a);
   //return this.oAuthLogin(provider);
   return firebase.auth().currentUser.linkWithPopup(provider).then(function(result) {
-    if (result) {
-       console.log("Accounts successfully linked");
+    if (result.credential) {
+
+      Ref.update({"facebook":"link"}).then(_ => console.log('update!'));
       //var credential = result.credential;
       //var user = result.user;
       // ...
@@ -79,8 +83,43 @@ linkface() {
   }).catch(function(error) {
    console.log(error);
   });;
+}
+
+// unlink cuentas sociales
+unLinkgoogle(){
+  const provider = new auth.GoogleAuthProvider();
+  //return this.oAuthLogin(provider);
+  let a =this.afAuth.auth.currentUser.uid
+  console.log("apreto unlink google")
+  firebase.auth().currentUser.unlink(provider.providerId).then(function(result) {
+    if (result) {
+    // Auth provider unlinked from account
+    
+    var Ref: AngularFirestoreDocument<any> = this.afs.collection('users').doc(a);
+    Ref.update({"google":"unlink"}).then(_ => console.log('update!'));
+    }
+  
+  }).catch(function(error) {
+    // An error happened
+  });
 
 }
+unLinkfacebook(){
+  const provider = new auth.FacebookAuthProvider();
+  let a =this.afAuth.auth.currentUser.uid
+  //return this.oAuthLogin(provider);
+  return firebase.auth().currentUser.unlink(provider.providerId).then(_ =>  {
+    // Auth provider unlinked from account
+    
+    var Ref: AngularFirestoreDocument<any> = this.afs.collection('users').doc(a);
+    Ref.update({"facebook":"unlink"}).then(_ => console.log('update!'));
+  
+  }).catch(function(error) {
+    // An error happened
+  });
+
+}
+//login-----------------------------------------------------------------------------------------------------------------------------------
 async googleLogin() {
   return this.afAuth.auth.signInWithPopup( new firebase.auth.GoogleAuthProvider).then(function(result){
     console.log(result);
@@ -90,11 +129,6 @@ async googleLogin() {
 
 
 }
-githubLogin() {
-  const provider = new auth.GithubAuthProvider();
-  return this.oAuthLogin(provider);
-}
-
 async facebookLogin() {
   const provider = new firebase.auth.FacebookAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -114,21 +148,6 @@ async facebookLogin() {
     // ...
   });
 }
-twitterLogin() {
-  const provider = new auth.TwitterAuthProvider();
-  return this.oAuthLogin(provider);
-}
-
-private oAuthLogin(provider: any) {
-  return this.afAuth.auth
-    .signInWithPopup(provider)
-    .then(credential => {
-      //this.notify.update('Welcome to Firestarter!!!', 'success');
-      return credential.user;
-    })
-    .catch(error => this.handleError(error));
-}
-
 
 //// Email/Password Auth ////
 async emailSignUp(email: string, password: string, dni:string, nombre: string, avatar:string ) {
@@ -142,20 +161,7 @@ async emailSignUp(email: string, password: string, dni:string, nombre: string, a
 }
 
 
-// documento
-/*
-getOnedni(dsi: string){
-  this.dni_o = this.afAuth.authState.pipe(
-    switchMap(dni => {
-      if (this.dni_o) {
-        return this.afs.doc<dni>(`Dni/${dsi}`).valueChanges()
-      } else {
-        return of(null)
-      }
-    })
-  )
- }  
-*/ usuariosdocu(nrodni:string): Observable <boolean> {   
+usuariosdocu(nrodni:string): Observable <boolean> {   
   //console.log("entro 1");
   return new Observable(observer =>{
     this.afs.collection("users").ref.where("dni","==",nrodni).get().then(function(collection){
@@ -173,13 +179,6 @@ getOnedni(dsi: string){
     console.log("Error getting document:", error);
  });
   });
-   /*
-     return true
-   }else {
-    // doc.data() will be undefined in this case
-    return false;
-}
-*/
 }
 
  docu(nrodni:string): Observable <boolean> {   
@@ -201,13 +200,6 @@ getOnedni(dsi: string){
       console.log("Error getting document:", error);
    });
     });
-     /*
-       return true
-     }else {
-      // doc.data() will be undefined in this case
-      return false;
-  }
-  */
 }
 //logine email
 
@@ -231,6 +223,7 @@ resetPassword(email: string) {
     .catch(error => this.handleError(error));
 }
 
+
 signOut() {
   this.afAuth.auth.signOut().then(() => {
     this.router.navigate(['']);
@@ -243,6 +236,7 @@ private handleError(error: Error) {
   //this.notify.update(error.message, 'error');
 }
 
+
 // Sets user data to firestore after succesful login
 private updateUserData(user: User,dni,nombre,avatar) {
   const userRef: AngularFirestoreDocument<User> = this.afs.doc(
@@ -253,9 +247,9 @@ private updateUserData(user: User,dni,nombre,avatar) {
     email: user.email,
     dni:dni,
     displayName: nombre|| 'nameless user',
-    avatarURL: avatar|| 'https://goo.gl/Fz9nrQ'
-    
-
+    avatarURL: avatar|| 'https://goo.gl/Fz9nrQ',
+    facebook: 'unlink',
+    google: 'unlink'
   };
   return userRef.set(data);
 } 

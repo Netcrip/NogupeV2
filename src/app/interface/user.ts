@@ -4,5 +4,7 @@ export interface User {
     dni?:string;
     avatarURL?: string;
     displayName?: string;
+    facebook?: string;
+    google?: string;
   }
   

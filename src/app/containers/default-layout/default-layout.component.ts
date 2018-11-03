@@ -37,7 +37,21 @@ export class DefaultLayoutComponent {
     });
     
   }
-  
+  Linkfacebook(){
+    this.auth.linkface();
+  }
+  Linkgoogle(){
+    this.auth.linkgoogle();
+  }
+  unLinkfacebook(){
+    console.log("face")
+    this.auth.unLinkfacebook();
+  }
+
+  unLinkgoogle() {
+    console.log("google")
+    this.auth.unLinkgoogle();
+  }
   signOut(){
     this.auth.signOut();
   }
