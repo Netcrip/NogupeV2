@@ -1,5 +1,5 @@
 export const navItems = [
-  
+ 
   {
     title: true,
     name: 'Cursos',  

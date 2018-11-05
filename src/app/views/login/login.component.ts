@@ -22,30 +22,6 @@ ngOnInit() {
   
 }
 
-  async create(email, nombre,pas,pas1,dni){
-   // this.singup(email.value,pas.value,dni.value,nombre.value,document.querySelector('input[name="optionsRadios"]:checked').value);
-    this.auth.docu(dni.value).subscribe(success=> {
-      if(success==true){
-        this.auth.usuariosdocu(dni.value).subscribe(succes=> {
-          if(succes==true){
-            this.singup(email.value,pas.value,dni.value,nombre.value,document.querySelector<any>('input[name="optionsRadios"]:checked').value);
-          }else{
-            console.log("dni repetido"); 
-          }
-        },error=>{
-          console.log(error);
-        });
-      }else{
-        console.log("dni Incorrecto");
-      }
-    },error=>{
-      console.log(error);
-    });      
- 
-  }
-
-
-
   async signInWithGoogle() {
     await this.auth.googleLogin();
     return await this.afterSignIn();
@@ -67,11 +43,7 @@ ngOnInit() {
     this.auth.signOut();
   }
   //
-  async singup(email,pas,dni,nombre,avatar){
-    //console.log(email, pas, dni, nombre, avatar);
-    await this.auth.emailSignUp(email,pas,dni,nombre,avatar);
-    return await this.afterSignIn();
-  }
+ 
   /// Shared
   async afterSignIn() {
     // Do after login stuff here, such router redirects, toast messages, etc.
@@ -80,8 +52,8 @@ ngOnInit() {
 
   //otra
 
-  async midoc(d : string){
-    return await this.auth.docu(d);
+  irregistro(){
+    this.router.navigate(['registro'])
   }
     
 

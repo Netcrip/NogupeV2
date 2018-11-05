@@ -1,5 +1,5 @@
 export interface Dni {
     Dni:string;
-    Quees:string;
+    cuenta:string;
   }
   

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import {ModalModule} from 'ngx-bootstrap'
 
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -52,6 +53,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 //SERVICIOS
 import {AuthService} from './servicios/auth.service';
 import { TareasComponent } from './views/tareas/tareas.component';
+import { AdminComponent } from './views/admin/admin.component';
 
 
 
@@ -72,7 +74,8 @@ import { TareasComponent } from './views/tareas/tareas.component';
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features,
-
+    ModalModule,
+    
     
   ],
   declarations: [
@@ -83,6 +86,7 @@ import { TareasComponent } from './views/tareas/tareas.component';
     LoginComponent,
     RegisterComponent,
     TareasComponent,
+    AdminComponent,
   ],
   providers: [{
     provide: LocationStrategy,

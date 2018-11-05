@@ -11,12 +11,13 @@ import {ActivatedRoute} from '@angular/router';
 export class ClaseComponent implements OnInit {
   clases: Muro[];
   mensaje:Muro;
+  s;
   constructor(private claseService: ClasesService,public auth: AuthService, private route:ActivatedRoute
       ) { }
 
   ngOnInit() {
-    let s =  this.route.snapshot.paramMap.get('id');
-    this.claseService.v=s;
+     this.s =  this.route.snapshot.paramMap.get('id');
+    this.claseService.v=this.s;
     this.claseService.cargar();
     this.claseService.getClases().subscribe(clases => {
     this.clases = clases;

@@ -10,7 +10,7 @@ import { switchMap} from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import {User} from '../interface/user';
 import {Dni} from '../interface/dni';
-
+import { map } from 'rxjs/operators';
 
 
 
@@ -20,7 +20,11 @@ export class AuthService {
   user: Observable<User>;
   
   dni_o:Observable<Dni>;
-  dniCollection: AngularFirestoreDocument<Dni>;
+  //dniCollection: AngularFirestoreDocument<Dni>;
+
+  dniCollection: AngularFirestoreCollection<Dni>;
+  dni: Observable<Dni[]>;
+  dniDoc: AngularFirestoreDocument<Dni>;
 
 
   constructor(
@@ -88,16 +92,12 @@ linkface() {
 // unlink cuentas sociales
 unLinkgoogle(){
   const provider = new auth.GoogleAuthProvider();
-  //return this.oAuthLogin(provider);
   let a =this.afAuth.auth.currentUser.uid
-  console.log("apreto unlink google")
-  firebase.auth().currentUser.unlink(provider.providerId).then(function(result) {
-    if (result) {
+
+  firebase.auth().currentUser.unlink(provider.providerId).then(_ =>  {
     // Auth provider unlinked from account
-    
     var Ref: AngularFirestoreDocument<any> = this.afs.collection('users').doc(a);
     Ref.update({"google":"unlink"}).then(_ => console.log('update!'));
-    }
   
   }).catch(function(error) {
     // An error happened
@@ -108,7 +108,7 @@ unLinkfacebook(){
   const provider = new auth.FacebookAuthProvider();
   let a =this.afAuth.auth.currentUser.uid
   //return this.oAuthLogin(provider);
-  return firebase.auth().currentUser.unlink(provider.providerId).then(_ =>  {
+  firebase.auth().currentUser.unlink(provider.providerId).then(_ =>  {
     // Auth provider unlinked from account
     
     var Ref: AngularFirestoreDocument<any> = this.afs.collection('users').doc(a);
@@ -150,12 +150,12 @@ async facebookLogin() {
 }
 
 //// Email/Password Auth ////
-async emailSignUp(email: string, password: string, dni:string, nombre: string, avatar:string ) {
+async emailSignUp(email: string, password: string, dni:string, nombre: string, avatar:string,cuenta :string ) {
     return this.afAuth.auth
     .createUserWithEmailAndPassword(email,password)
     .then(credential => {
       //this.notify.update('Welcome new user!', 'success');
-      return this.updateUserData(credential.user,dni,nombre,avatar); // if using firestore
+      return this.updateUserData(credential.user,dni,nombre,avatar,cuenta); // if using firestore
     })
     .catch(error => this.handleError(error));
 }
@@ -181,7 +181,7 @@ usuariosdocu(nrodni:string): Observable <boolean> {
   });
 }
 
- docu(nrodni:string): Observable <boolean> {   
+ /*docu(nrodni:string): Observable <boolean> {   
   //console.log("entro 1");
     return new Observable(observer =>{
       this.afs.collection("Dni").ref.where("Dni","==",nrodni).get().then(function(collection){
@@ -200,6 +200,20 @@ usuariosdocu(nrodni:string): Observable <boolean> {
       console.log("Error getting document:", error);
    });
     });
+}*/
+
+getcountclas(a){
+ 
+  this.dniCollection = this.afs.collection<Dni>('Dni',ref=>ref.where('Dni','==',a.value) );
+    this.dni = this.dniCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Dni;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+
+  return this.dni;
 }
 //logine email
 
@@ -238,7 +252,7 @@ private handleError(error: Error) {
 
 
 // Sets user data to firestore after succesful login
-private updateUserData(user: User,dni,nombre,avatar) {
+private updateUserData(user: User,dni,nombre,avatar,cuenta) {
   const userRef: AngularFirestoreDocument<User> = this.afs.doc(
     `users/${user.uid}`
   );
@@ -249,7 +263,9 @@ private updateUserData(user: User,dni,nombre,avatar) {
     displayName: nombre|| 'nameless user',
     avatarURL: avatar|| 'https://goo.gl/Fz9nrQ',
     facebook: 'unlink',
-    google: 'unlink'
+    google: 'unlink',
+    cuenta: cuenta
+
   };
   return userRef.set(data);
 } 

@@ -17,7 +17,7 @@ export const routes: Routes = [
   
   { path: '500', component: P500Component, data: { title: 'Page 500' } },
   { path: '', component: LoginComponent, data: { title: 'Login Page' }},
-  { path: 'registro', component: RegisterComponent, data: { title: 'Register Page' } },
+  { path: 'registro', component: RegisterComponent, data: { title: 'Register Page'} },
   { path: 'nogupe', component: DefaultLayoutComponent, data: { title: 'Nogupe'},
    children: [ { path: 'cursos', loadChildren: './views/cursos/cursos.module#CursosModule' },
       { path: 'dashboard',loadChildren: './views/dashboard/dashboard.module#DashboardModule'},

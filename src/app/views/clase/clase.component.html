@@ -1,4 +1,12 @@
+
 <div *ngIf="auth.user | async as user">
+        <div class="card-body">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <button type="button"  data-toggle="modal" data-target="#presente" class="btn btn-warning btn-block">Presente</button>
+                </li>
+            </ul>
+        </div>
 <div class="card">
     <div class="card-header" data-spy="scroll">
         <i class="fa fa-align-justify"></i> Muro
@@ -49,3 +57,40 @@
     
   </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="presente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Actualizar datos Personales</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+    
+                <div class="form-group col-12">
+                    <label for="inputPassword6">{{s}}</label>
+                    <input type="text" id="clase" class="form-control " aria-describedby="passwordHelpInline">
+                    <small id="passwordHelpInline" class="text-muted">
+                      Must be 8-20 characters long.
+                    </small>
+    
+                    <label for="inputPassword6">Password</label>
+                    <input type="text" id="inputPassword6" class="form-control " aria-describedby="passwordHelpInline">
+                    <small id="passwordHelpInline" class="text-muted">
+                      Must be 8-20 characters long.
+                    </small>
+                  </div>
+            
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Presente</button>
+            </div>
+          </div>
+        </div>
+      </div>

@@ -6,5 +6,6 @@ export interface User {
     displayName?: string;
     facebook?: string;
     google?: string;
+    cuenta?:string;
   }
   

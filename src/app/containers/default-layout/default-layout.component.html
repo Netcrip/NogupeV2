@@ -14,12 +14,12 @@
     </ul>
     <ul class="nav navbar-nav ml-auto">
       <li class="nav-item dropdown" dropdown placement="bottom right">
-        <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+        <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
           <img src="{{user.avatarURL}}" class="img-avatar" alt="admin@bootstrapmaster.com"/>
         </a>
         <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
           <div class="dropdown-header text-center"><strong>Account</strong></div>
-          <a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Cuenta</a>
+          <a class="dropdown-item" data-toggle="modal" data-target="#Curso"><i class="fa fa-bell-o"></i> Cuenta</a>
           <div class="dropdown-header text-center"><strong>Account Linked</strong></div>
          <div *ngIf="user.google=='link'; else noLinkgoogle">
           <a class="dropdown-item bg-success" (click)="unLinkgoogle()"><i class="fa fa-google"></i> Google</a>
@@ -41,9 +41,31 @@
     </ul>
   </app-header>
   <div class="app-body">
+   
     <app-sidebar [fixed]="true" [display]="'lg'">
-      <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+      <app-sidebar-nav [navItems]="navItem" ></app-sidebar-nav>
+
+      <!--nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-title">Materias</li>
+             <li class="nav-item nav-dropdown" [ngClass]="{' ': !clicked, 'open': clicked}" (click)="clicked = !clicked">
+               <a class="nav-link nav-dropdown-toggle">
+                  <i class="nav-icon icon-star"></i> Cursos Activos</a>
+                    <ul class="nav-dropdown-items">
+                    <li *ngFor="let cursos of cur" class="nav-item">
+                      <a routerlinkactive="active" class="nav-link"  routerLink="clase/{{cursos.cursada}}" ng-reflect-router-link-active="active" >
+                      <i class="nav-icon fa {{cursos.imgenurl}}"></i> {{cursos.nombremateria}}</a>
+                    </li>
+                  </ul>
+              </li>
+        </ul>
+      </nav-->
       <app-sidebar-minimizer></app-sidebar-minimizer>
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></a>
+
+      
+      
+      
     </app-sidebar>
     <!-- Main content -->
     <main class="main">
@@ -64,7 +86,23 @@
       </div><!-- /.container-fluid -->
     </main>
     <app-aside [fixed]="true" [display]="false">
-      <app-tareas></app-tareas>
+          
+    <div *ngIf="user.cuenta=='admin'">
+        <div class="col-12">
+            <a class="btn bg-danger btn-block" href="#">Crear Clase</a>
+            <a class="btn bg-info btn-block" href="#">Cargar DNI Usuario</a>
+            <a class="btn bg-success btn-block" href="#">Crear Curso</a>
+        </div>
+      </div>
+    <div class="container mt-2">
+        <button type="button" data-toggle="modal" data-target="#Generarpresente" class="btn btn-warning btn-block">Generar Presente</button>
+
+        <button type="button"  data-toggle="modal" data-target="#presente" class="btn btn-warning btn-block">Presente</button>
+
+
+       
+    </div>
+      
     </app-aside>
   </div>
 
@@ -73,3 +111,29 @@
     <span class="ml-auto">Powered by <a href="">Gurpo4</a></span>
   </app-footer>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="Curso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Actualizar datos Personales</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  
