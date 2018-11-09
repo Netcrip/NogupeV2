@@ -53,7 +53,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 //SERVICIOS
 import {AuthService} from './servicios/auth.service';
 import { TareasComponent } from './views/tareas/tareas.component';
-import { AdminComponent } from './views/admin/admin.component';
 
 
 
@@ -86,7 +85,6 @@ import { AdminComponent } from './views/admin/admin.component';
     LoginComponent,
     RegisterComponent,
     TareasComponent,
-    AdminComponent,
   ],
   providers: [{
     provide: LocationStrategy,
