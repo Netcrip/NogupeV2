@@ -245,7 +245,7 @@ export class CursosService {
           x=1;          
             if(result.length>0){
               swal('Espere!',
-              'El profesor no se a expedido!',
+              'La Inscripcion esta creada!',
               'error')
             }  
         }
