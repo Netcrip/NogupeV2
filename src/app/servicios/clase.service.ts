@@ -1,10 +1,10 @@
 import { Injectable, Input } from '@angular/core';
 
-import {Muro} from '../interface/muro'
+import { Muro } from '../interface/muro'
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import {AuthService} from './auth.service'
+import { AuthService } from './auth.service'
 import { Inscripciones } from '../interface/inscripciones';
 import swal from 'sweetalert2';
 import { Notas } from '../interface/notas';
@@ -24,23 +24,23 @@ export class ClasesService {
   inscs: Observable<Inscripciones[]>
   alcollection: AngularFirestoreCollection<Notas>;
   alumnos: Observable<Notas[]>
-  claseclasesinfocollection:AngularFirestoreCollection<Cursada>;
-  clasesinfo:Observable<Cursada[]>;
-  listadonoascole:AngularFirestoreCollection<Notas>
-  listadonotas:Observable<Notas[]>
-  listadopresentescole:AngularFirestoreCollection<Presentismo>
-  listadopresentes:Observable<Presentismo[]>
-  alpretokecollection:AngularFirestoreCollection<Alumnipresente>
-  alpretoke:Observable<Alumnipresente[]>
+  claseclasesinfocollection: AngularFirestoreCollection<Cursada>;
+  clasesinfo: Observable<Cursada[]>;
+  listadonoascole: AngularFirestoreCollection<Notas>
+  listadonotas: Observable<Notas[]>
+  listadopresentescole: AngularFirestoreCollection<Presentismo>
+  listadopresentes: Observable<Presentismo[]>
+  alpretokecollection: AngularFirestoreCollection<Alumnipresente>
+  alpretoke: Observable<Alumnipresente[]>
 
 
-  public v:string;
-  constructor(public afs: AngularFirestore, public auth:AuthService) {
-  this.cargar();
-    
+  public v: string;
+  constructor(public afs: AngularFirestore, public auth: AuthService) {
+    this.cargar();
   }
-  cargar(){
-    this.clasCollection = this.afs.collection<Muro>('cursadas/'+this.v+'/muro',ref=>ref.orderBy("fecha","asc") );
+
+  cargar() {
+    this.clasCollection = this.afs.collection<Muro>('cursadas/' + this.v + '/muro', ref => ref.orderBy("fecha", "asc"));
     this.clases = this.clasCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Muro;
@@ -48,10 +48,10 @@ export class ClasesService {
         return { id, ...data };
       }))
     );
-    
   }
-  cargarlumnos(p){
-    this.alcollection = this.afs.collection<Notas>('cursadas/'+p+'/notas',ref=>ref.where("estado","==","activa") );
+
+  cargarlumnos(p) {
+    this.alcollection = this.afs.collection<Notas>('cursadas/' + p + '/notas', ref => ref.where("estado", "==", "activa"));
     this.alumnos = this.alcollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Notas;
@@ -60,8 +60,9 @@ export class ClasesService {
       }))
     );
   }
-  cargarpendiente(p){
-    this.inscCollection = this.afs.collection<Inscripciones>('inscripciones',ref=>ref.where('cursadaid',"==",p).where("estado","==","pendiente") );
+
+  cargarpendiente(p) {
+    this.inscCollection = this.afs.collection<Inscripciones>('inscripciones', ref => ref.where('cursadaid', "==", p).where("estado", "==", "pendiente"));
     this.inscs = this.inscCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Inscripciones;
@@ -70,23 +71,23 @@ export class ClasesService {
       }))
     );
   }
+
   getClases() {
     return this.clases;
   }
-  
-  
+
   addPost(muro: Muro) {
     this.clasCollection.add(muro);
-    
+
   }
 
-  getpendientes(){
+  getpendientes() {
     return this.inscs;
   }
 
-  eliminar(doc){
+  eliminar(doc) {
     var Ref: AngularFirestoreDocument<Inscripciones> = this.afs.collection('inscripciones').doc(doc)
-    Ref.delete().then(_=>{
+    Ref.delete().then(_ => {
       swal({
         type: 'success',
         title: 'Eliminado!',
@@ -96,10 +97,10 @@ export class ClasesService {
     })
 
   }
-  aceptar(doc,useruid,uname,cursada){
+  aceptar(doc, useruid, uname, cursada) {
     var Ref: AngularFirestoreDocument<Inscripciones> = this.afs.collection('inscripciones').doc(doc);
-    Ref.update({estado:'activa'}).then(_ => {
-      this.crearnota(uname,useruid,cursada)
+    Ref.update({ estado: 'activa' }).then(_ => {
+      this.crearnota(uname, useruid, cursada)
       swal({
         type: 'success',
         title: 'Aceptado!',
@@ -108,8 +109,9 @@ export class ClasesService {
       })
     });
   }
-  datosdeclase(id){
-    this.claseclasesinfocollection = this.afs.collection<Cursada>('cursadas', ref => ref.where('cursadaid',"==",id));
+
+  datosdeclase(id) {
+    this.claseclasesinfocollection = this.afs.collection<Cursada>('cursadas', ref => ref.where('cursadaid', "==", id));
     this.clasesinfo = this.claseclasesinfocollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Cursada;
@@ -118,61 +120,67 @@ export class ClasesService {
       }))
     );
   }
-  getdatoclase(){
+
+  getdatoclase() {
     return this.clasesinfo;
   }
-  getalunos(){
+
+  getalunos() {
     return this.alumnos
   }
-  crearnota(nom,uid,cursada){
-          let id= this.afs.createId();
-          let notaref: AngularFirestoreDocument <Notas> =this.afs.doc(`cursadas/`+cursada+`/notas/${id}`);
-          const not:Notas= {
-            notaid:id,
-            nota1:"",
-            nota2:"",
-            notafinal:"",
-            uid:uid,
-            uname:nom,
-            estado:"activa"
-          }
-          notaref.set(not);
+
+  crearnota(nom, uid, cursada) {
+    let id = this.afs.createId();
+    let notaref: AngularFirestoreDocument<Notas> = this.afs.doc(`cursadas/` + cursada + `/notas/${id}`);
+    const not: Notas = {
+      notaid: id,
+      nota1: "",
+      nota2: "",
+      notafinal: "",
+      uid: uid,
+      uname: nom,
+      estado: "activa"
+    }
+    notaref.set(not);
   }
-  cargarnota(nota1,nota2,nota3,curso,notaid){
-    let notaref: AngularFirestoreDocument <Notas> =this.afs.doc(`cursadas/`+curso+`/notas/${notaid}`);
-          notaref.update({
-            nota1:nota1,
-            nota2:nota2,
-            notafinal:nota3,
-            estado:"cargada"
-          }).then(function(){
-            swal({
-              type: 'success',
-              title: 'Notas Cargadas!',
-              showConfirmButton: false,
-              timer: 1500
-            })
-          });
+
+  cargarnota(nota1, nota2, nota3, curso, notaid) {
+    let notaref: AngularFirestoreDocument<Notas> = this.afs.doc(`cursadas/` + curso + `/notas/${notaid}`);
+    notaref.update({
+      nota1: nota1,
+      nota2: nota2,
+      notafinal: nota3,
+      estado: "cargada"
+    }).then(function () {
+      swal({
+        type: 'success',
+        title: 'Notas Cargadas!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    });
   }
-  generarpresentismo(cod,valido,curso){
-    let id=this.afs.createId();
-    let presentismoref: AngularFirestoreDocument <Presentismo> =this.afs.doc(`cursadas/`+curso+`/presentismo/${id}`);
+
+  generarpresentismo(cod, valido, curso) {
+    let id = this.afs.createId();
+    let presentismoref: AngularFirestoreDocument<Presentismo> = this.afs.doc(`cursadas/` + curso + `/presentismo/${id}`);
     presentismoref.set({
-      presenteid:id, 
-      codigo:cod,
-      valido:valido}).then(function(){
-        swal({
-          type: 'success',
-          title: 'Token Generado Con Exito!',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      });
+      presenteid: id,
+      codigo: cod,
+      valido: valido
+    }).then(function () {
+      swal({
+        type: 'success',
+        title: 'Token Generado Con Exito!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    });
   }
-  confirmarpresentismo(curso,cod,tiempo,uid,uname){
-    
-    let valcol = this.afs.collection<Presentismo>(`cursadas/`+curso+`/presentismo`, ref => ref.where('codigo',"==",cod));
-    let val= valcol.snapshotChanges().pipe(
+
+  confirmarpresentismo(curso, cod, tiempo, uid, uname) {
+    let valcol = this.afs.collection<Presentismo>(`cursadas/` + curso + `/presentismo`, ref => ref.where('codigo', "==", cod));
+    let val = valcol.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Presentismo;
         const id = a.payload.doc.id;
@@ -180,7 +188,7 @@ export class ClasesService {
       }))
     );
     val.forEach(element => {
-      if(element.length<1){
+      if (element.length < 1) {
         swal({
           type: 'error',
           title: 'Confirme el Token!',
@@ -188,19 +196,19 @@ export class ClasesService {
           timer: 1500
         })
       }
-      else{
-        let x=0;
+      else {
+        let x = 0;
         element.forEach(element => {
-          if(new Date(element.valido)> new Date(tiempo)){
-            x=1;
-            let id=this.afs.createId();
-            let presentismoref: AngularFirestoreDocument <Alumnipresente> =this.afs.doc(`cursadas/`+curso+`/presentismo/`+element.presenteid+`/alumnos/${id}`);
+          if (new Date(element.valido) > new Date(tiempo)) {
+            x = 1;
+            let id = this.afs.createId();
+            let presentismoref: AngularFirestoreDocument<Alumnipresente> = this.afs.doc(`cursadas/` + curso + `/presentismo/` + element.presenteid + `/alumnos/${id}`);
             presentismoref.set({
-              alpresenteid:id,
-              uid:uid,
-              uname:uname,
-              dia:tiempo,
-            }).then(function(){
+              alpresenteid: id,
+              uid: uid,
+              uname: uname,
+              dia: tiempo,
+            }).then(function () {
               swal({
                 type: 'success',
                 title: 'Asistencia Generada!',
@@ -210,7 +218,7 @@ export class ClasesService {
             });
           }
         });
-        if(x==0){
+        if (x == 0) {
           swal({
             type: 'error',
             title: 'Confirme el Token!',
@@ -220,10 +228,10 @@ export class ClasesService {
         }
       }
     });
-    
   }
-  startlistadonota(curso){
-    this.listadonoascole = this.afs.collection<Notas>('cursadas/'+curso+'/notas',ref=>ref.where("estado","==","cargada") );
+
+  startlistadonota(curso) {
+    this.listadonoascole = this.afs.collection<Notas>('cursadas/' + curso + '/notas', ref => ref.where("estado", "==", "cargada"));
     this.listadonotas = this.listadonoascole.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Notas;
@@ -232,12 +240,12 @@ export class ClasesService {
       }))
     );
   }
-  getlistadonota(){
+  getlistadonota() {
     return this.listadonotas;
   }
 
-  starttodoslospresentes(curso){
-    this.listadopresentescole   = this.afs.collection<Presentismo>('cursadas/'+curso+'/presentismo');
+  starttodoslospresentes(curso) {
+    this.listadopresentescole = this.afs.collection<Presentismo>('cursadas/' + curso + '/presentismo');
     this.listadopresentes = this.listadopresentescole.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Presentismo;
@@ -246,11 +254,13 @@ export class ClasesService {
       }))
     );
   }
-  gettodoslospresentes(){
+
+  gettodoslospresentes() {
     return this.listadopresentes;
   }
-  startaltoken(curso,token){
-    this.alpretokecollection   = this.afs.collection<Alumnipresente>('cursadas/'+curso+'/presentismo/'+token+'/alumnos');
+
+  startaltoken(curso, token) {
+    this.alpretokecollection = this.afs.collection<Alumnipresente>('cursadas/' + curso + '/presentismo/' + token + '/alumnos');
     this.alpretoke = this.alpretokecollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Alumnipresente;
@@ -259,7 +269,8 @@ export class ClasesService {
       }))
     );
   }
-  getaltoken(){
+
+  getaltoken() {
     return this.alpretoke;
   }
 

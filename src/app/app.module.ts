@@ -79,10 +79,6 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     AngularFireStorageModule, // imports firebase/storage only needed for storage features,
     ModalModule,
     SweetAlert2Module,
-    
-    
-    
-    
   ],
   declarations: [
     AppComponent,
@@ -92,7 +88,6 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     LoginComponent,
     RegisterComponent,
     TareasComponent,
- 
   ],
   providers: [{
     provide: LocationStrategy,

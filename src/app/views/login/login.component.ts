@@ -8,20 +8,20 @@ import { AuthService } from '../../servicios/auth.service';
   selector: 'app-dashboard',
   templateUrl: 'login.component.html'
 })
-export class LoginComponent { 
-  constructor( public auth: AuthService,
-              private router: Router) {
-                if(auth.user){
-                  this.router.navigate(['nogupe/cursos'])
-                }
-               }
-ngOnInit() {
-  if(this.auth.getuid){
-    return  this.router.navigate(['nogupe/cursos'])
+export class LoginComponent {
+  constructor(public auth: AuthService, private router: Router) {
+    if (auth.user) {
+      this.router.navigate(['nogupe/cursos'])
+    }
   }
-  
-}
+  ngOnInit() {
+    if (this.auth.getuid) {
+      return this.router.navigate(['nogupe/cursos'])
+    }
 
+  }
+
+  //Inicio de Sesión Redes Sociales.
   async signInWithGoogle() {
     await this.auth.googleLogin();
     return await this.afterSignIn();
@@ -32,29 +32,26 @@ ngOnInit() {
     await this.afterSignIn();
   }
 
-
- async login(email,pas){
-   console.log("entro")
-    await this.auth.emailLogin(email.value,pas.value);
+  //Inicio de sesión.
+  async login(email, pas) {
+    console.log("entro")
+    await this.auth.emailLogin(email.value, pas.value);
     return await this.afterSignIn();
   }
-  ////
-  singout(){
+
+  //Cerrar Sesión.
+  singout() {
     this.auth.signOut();
   }
-  //
- 
-  /// Shared
+
+  //Después de iniciar sesión aquí, redirecciones de enrutador, mensajes, etc.
   async afterSignIn() {
-    // Do after login stuff here, such router redirects, toast messages, etc.
     return await this.router.navigate(['nogupe/cursos']);
   }
 
-  //otra
-
-  irregistro(){
+  //Ruteo de registro.
+  irregistro() {
     this.router.navigate(['registro'])
   }
-    
 
 }

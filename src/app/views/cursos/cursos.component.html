@@ -2,50 +2,55 @@
     <div *ngIf="user.cuenta=='admin';else usuarioyprofe" class="row">
         <div class="col">
             <div class="card">
-            <div class="card-header">                
-                <nav class="nav nav-pills flex-column flex-sm-row">
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#crearmateria">Crear materia</a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#buscarmateria">Buscar materia</a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#Crearclase">Crear cursada</a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#buscarcursada">Buscar cursada</a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#Altausuario">Alta usuario</a>
-                </nav>
+                <div class="card-header">
+                    <nav class="nav nav-pills flex-column flex-sm-row">
+                        <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#crearmateria">Crear
+                            materia</a>
+                        <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#buscarmateria">Buscar
+                            materia</a>
+                        <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#Crearclase">Crear
+                            cursada</a>
+                        <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#buscarcursada">Buscar
+                            cursada</a>
+                        <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#Altausuario">Alta
+                            usuario</a>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<ng-template #usuarioyprofe>
+    <ng-template #usuarioyprofe>
         <div *ngIf="user.cuenta=='profesor';else usuarioComun" class="row">
-                <div class="container-fluid" style="min-height: 1000px" >
-                    <div class="row " *ngIf="cursosacargo?.length > 0; else noCursos"> 
-                        <div *ngFor="let curso of cursosacargo" class="col-12 col-md-4 col-lg-3" >
-                            <div class="circle-tile">
-                                <a>
-                                    <div class="circle-tile-heading {{curso.color}}">
-                                        <i class="fa {{curso.img}} fa-fw fa-3x"></i>
-                                    </div>
-                                </a>
-                                <div class="circle-tile-content {{curso.color}}">
-                                    <div class="circle-tile-description text-faded">
-                                        Cursada Numero: {{curso.numerocursada}}
-                                    </div>
-                                    <div class="circle-tile-number text-faded">
-                                            {{curso.materia}}
-                                            <span id="sparklineA"></span>
-                                    </div>
-                                        {{curso.fechafin}}
-                                        <a type="button" (click)="irclase(curso.cursadaid)" class="circle-tile-footer"><i class="fa fa-chevron-circle-right"></i></a>
+            <div class="container-fluid" style="min-height: 1000px">
+                <div class="row " *ngIf="cursosacargo?.length > 0; else noCursos">
+                    <div *ngFor="let curso of cursosacargo" class="col-12 col-md-4 col-lg-3">
+                        <div class="circle-tile">
+                            <a>
+                                <div class="circle-tile-heading {{curso.color}}">
+                                    <i class="fa {{curso.img}} fa-fw fa-3x"></i>
                                 </div>
+                            </a>
+                            <div class="circle-tile-content {{curso.color}}">
+                                <div class="circle-tile-description text-faded">
+                                    Cursada Numero: {{curso.numerocursada}}
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    {{curso.materia}}
+                                    <span id="sparklineA"></span>
+                                </div>
+                                {{curso.fechafin}}
+                                <a type="button" (click)="irclase(curso.cursadaid)" class="circle-tile-footer"><i class="fa fa-chevron-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-</ng-template>
-<ng-template #usuarioComun>
-        <div class="container-fluid" style="min-height: 1000px" >
-            <div class="row " *ngIf="cursos?.length > 0;else noCursos"> 
-                <div *ngFor="let curso of cursos" class="col-12 col-md-4 col-lg-3" >
+    </ng-template>
+    <ng-template #usuarioComun>
+        <div class="container-fluid" style="min-height: 1000px">
+            <div class="row " *ngIf="cursos?.length > 0;else noCursos">
+                <div *ngFor="let curso of cursos" class="col-12 col-md-4 col-lg-3">
                     <div *ngIf="curso.estado =='activa'">
                         <div class="circle-tile">
                             <a>
@@ -58,453 +63,481 @@
                                     Cursada Numero: {{curso.numerocursada}}
                                 </div>
                                 <div class="circle-tile-number text-faded">
-                                        
-                                        {{curso.materia}}
+
+                                    {{curso.materia}}
                                     <span id="sparklineA"></span>
                                 </div>
-                                    {{curso.fechafin}}
+                                {{curso.fechafin}}
                                 <a type="button" (click)="irclase(curso.cursadaid)" class="circle-tile-footer"><i class="fa fa-chevron-circle-right"></i></a>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div *ngIf="curso.estado == 'pendiente'">
-                            <div class="circle-tile">
-                                <a>
-                                    <div class="circle-tile-heading light-gray">
-                                        <i class="fa {{curso.img}} fa-fw fa-3x"></i>
-                                    </div>
-                                </a>
-                                <div class="circle-tile-content light-gray">
-                                    <div class="circle-tile-description text-faded">
-                                            Cursada Numero: {{curso.numerocursada}}
-                                    </div>
-                                    <div class="circle-tile-number text-faded">      
-                                        {{curso.materia}}
-                                        <span id="sparklineA"></span>
-                                        </div>
-                                        {{curso.fechafin}}
-                                    <a type="button" class="circle-tile-footer">Pendiente</a>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                <div class="col-12 col-md-3">
                         <div class="circle-tile">
-                            <a href="#"  data-toggle="modal" data-target="#altainscripcion">
+                            <a>
                                 <div class="circle-tile-heading light-gray">
-                                    <i class="fa fa-plus-square-o fa-fw fa-3x"></i>
+                                    <i class="fa {{curso.img}} fa-fw fa-3x"></i>
                                 </div>
                             </a>
                             <div class="circle-tile-content light-gray">
                                 <div class="circle-tile-description text-faded">
-                                        Agregar Nuevo
+                                    Cursada Numero: {{curso.numerocursada}}
                                 </div>
                                 <div class="circle-tile-number text-faded">
-                                        Curso
+                                    {{curso.materia}}
                                     <span id="sparklineA"></span>
                                 </div>
-                                <a href="#" class="circle-tile-footer"  data-toggle="modal" data-target="#altainscripcion"><i class="fa fa-chevron-circle-right"></i></a>
+                                {{curso.fechafin}}
+                                <a type="button" class="circle-tile-footer">Pendiente</a>
                             </div>
                         </div>
-                    </div>            
-            </div>     
-            
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="circle-tile">
+                        <a href="#" data-toggle="modal" data-target="#altainscripcion">
+                            <div class="circle-tile-heading light-gray">
+                                <i class="fa fa-plus-square-o fa-fw fa-3x"></i>
+                            </div>
+                        </a>
+                        <div class="circle-tile-content light-gray">
+                            <div class="circle-tile-description text-faded">
+                                Agregar Nuevo
+                            </div>
+                            <div class="circle-tile-number text-faded">
+                                Curso
+                                <span id="sparklineA"></span>
+                            </div>
+                            <a href="#" class="circle-tile-footer" data-toggle="modal" data-target="#altainscripcion"><i
+                                    class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <ng-template #noCursos>
                 <hr>
                 <h5>NO EXISTEN CURSOS</h5>
                 <div class="col-12 col-md-3">
-                        <div class="circle-tile">
-                            <a href="#"  data-toggle="modal" data-target="#altainscripcion">
-                                <div class="circle-tile-heading light-gray">
-                                    <i class="fa fa-plus-square-o fa-fw fa-3x"></i>
-                                </div>
-                            </a>
-                            <div class="circle-tile-content light-gray">
-                                <div class="circle-tile-description text-faded">
-                                        Agregar Nuevo
-                                </div>
-                                <div class="circle-tile-number text-faded">
-                                        Curso
-                                    <span id="sparklineA"></span>
-                                </div>
-                                <a href="#" class="circle-tile-footer"  data-toggle="modal" data-target="#altainscripcion"><i class="fa fa-chevron-circle-right"></i></a>
+                    <div class="circle-tile">
+                        <a href="#" data-toggle="modal" data-target="#altainscripcion">
+                            <div class="circle-tile-heading light-gray">
+                                <i class="fa fa-plus-square-o fa-fw fa-3x"></i>
                             </div>
+                        </a>
+                        <div class="circle-tile-content light-gray">
+                            <div class="circle-tile-description text-faded">
+                                Agregar Nuevo
+                            </div>
+                            <div class="circle-tile-number text-faded">
+                                Curso
+                                <span id="sparklineA"></span>
+                            </div>
+                            <a href="#" class="circle-tile-footer" data-toggle="modal" data-target="#altainscripcion">
+                                <i class="fa fa-chevron-circle-right"></i>
+                            </a>
                         </div>
                     </div>
-                </ng-template> 
+                </div>
+            </ng-template>
         </div>
-</ng-template> 
-                    
+    </ng-template>
 
 
 
-<!----Modales-->
-<div class="modal fade" id="crearmateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <!----Modales-->
+    <div class="modal fade" id="crearmateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Crear Materia</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-    
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear Materia</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
                     <div class="container">
-                            <h1>Crear Materia</h1>
-                            <form ngNativeValidate (ngSubmit)="altamateria()" >
-                              <div class="form-group">
+                        <h1>Crear Materia</h1>
+                        <form ngNativeValidate (ngSubmit)="altamateria()">
+                            <div class="form-group">
                                 <label for="ano">año</label>
-                                <input type="number" min="1" max="6"class="form-control" id="ano" required>
-                              </div>
-                         
-                              <div class="form-group">
+                                <input type="number" min="1" max="6" class="form-control" id="ano" required>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="carrera">Nombre Carrera</label>
                                 <select class="form-control" id="carrera" required>
                                     <option *ngFor="let nomcarrera of carreras" [value]="nomcarrera">{{nomcarrera}}</option>
                                 </select>
-                              </div>
-                              <div class="form-group">
-                                    <label for="materia">Nombre materia</label>
-                                    <input type="text" class="form-control" id="materia" #materia required>
-                                </div>
-                              <button type="submit" class="btn btn-success btn-block" >cargar</button>
-                            </form>
-                            
-                        </div>
-            </div>
-            
- 
-          </div>
-        </div>
-</div>
-
-<div class="modal fade" id="Crearclase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Crear cursada</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-    
-                <div class="container">
-                    <h1>Crear cursada</h1>
-                    <form ngNativeValidate (ngSubmit)="altaclase()" id="fcrearclase" >
-                        <div class="form-group">
-                            <label for="cursadan">fecha inicio</label>
-                            <input type="number" min="1" class="form-control" id="cursadan" required>
-                        </div>
-                      <div class="form-group">
-                        <label for="finicio">fecha inicio</label>
-                        <input type="date" min="1" max="6"class="form-control" id="finicio" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="finicio">fecha finalizacion</label>
-                        <input type="date" min="1" max="6"class="form-control" id="ffin" required>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="carreramat">Nombre Carrera</label>
-                        <select class="form-control" id="carreramat" required (change)="cargarmaterias()">
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                            <option *ngFor="let nomcarrera of carreras" [value]="nomcarrera">{{nomcarrera}}</option>
-                        </select>
-                      </div>
-                      
-                      <div class="form-group">
-                        <label for="mat">Seleccione Materia</label>
-                        <select class="form-control" id="mat" required>
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                            <option *ngFor="let materia of materias" [value]=materia.materiaid >{{materia.materia}}</option>
-                        </select>
-
-                      </div>
-                        <div class="form-group">
-                            <label for="profesor">Seleccione profesor</label>
-                            <select class="form-control" id="profesor" required>
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="iconoclase">Seleccione Icono</label>
-                        <div class="form-check" id="iconoclase">
-                            <label class="form-check-label col-4">
-                              <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios1" value="fa-calculator" checked="">
-                              <i class="fa fa-calculator" aria-hidden="true"></i>
-                             </label>
-                              <label class="form-check-label col-4">
-                                <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios2" value="fa-pencil" checked="">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                              </label>
-                              <label class="form-check-label col-4">
-                                <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios3" value="fa-plane" checked="">
-                                <i class="fa fa-plane" aria-hidden="true"></i>
-                              </label>
-                              <label class="form-check-label col-4">
-                                <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios4" value="fa-history" checked="">
-                                <i class="fa fa-history" aria-hidden="true"></i>
-                              </label>
-                              <label class="form-check-label col-4">
-                                <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios5" value="fa-pie-chart" checked="">
-                                <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                              </label>
-                              <label class="form-check-label col-4">
-                                <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios6" value="fa-desktop" checked="">
-                                <i class="fa fa-desktop" aria-hidden="true"></i>
-                              </label>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="colormateria">Seleccione color</label>
-                            <select class="form-control" id="colormateria" required>
-                                <option *ngFor="let color of color" [value]="color.val">{{color.nombre}}</option>
-                            </select>
-                        </div>
-                      
-                      <button type="submit" class="btn btn-success btn-block "  data-dismiss="crearmateria" >cargar</button>
-                    </form>
-                    
-                    </div>
-            </div>
-          </div>
-        </div>
-</div>
+                            <div class="form-group">
+                                <label for="materia">Nombre materia</label>
+                                <input type="text" class="form-control" id="materia" #materia required>
+                            </div>
+                            <button type="submit" class="btn btn-success">Cargar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </form>
 
-<div class="modal fade" id="Altausuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Crear Usuario</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form ngNativeValidate (ngSubmit)="Altausuario()" >
-                    <div class="form-group">
-                        <label for="documento">Documento</label>
-                        <input type="text"  class="form-control" id="documento" required minlength="6" maxlength="8" pattern="[0-9.]+">
                     </div>
-                    <div class="form-group">
-                        <label for="usuariotipo">tipo de Usuario</label>
-                        <select class="form-control" id="usuariotipo" required>
-                            <option *ngFor="let tipo of tipousuario" [value]=tipo>{{tipo}}</option>
-                        </select>
-                        
-                    </div>
-                    <button type="submit" class="btn btn-success btn-block">cargar</button>
-                </form>
-            </div>
-          </div>
-        </div>
-</div>
-
-<div class="modal fade" id="buscarmateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Buscar</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-    
-                <div class="container">
-                    <h1>Buscar Materia</h1>
-                    <form ngNativeValidate id="formeliminar">
-                        <div class="form-group">
-                            <label for="mate">Nombre Carrera</label>
-                            <select class="form-control" id="carreras" required (change)="cargarmaterias()">
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                <option *ngFor="let nomcarrera of carreras" [value]="carreras">{{nomcarrera}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="mat">Seleccione Materia</label>
-                            <select class="form-control" id="materias" required (change)="datosmateria()" selectedIndex=-1>
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                <option *ngFor="let materia of materias" [value]=materia.materiaid >{{materia.materia}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                                <label for="año">año</label>
-                                <input type="number" min="1" max="6"class="form-control" id="año" required disabled>
-                        </div>
-                        <button type="button" id="eliminar" (click)="eliminarmateria()" class="btn btn-danger btn-block" style="display: none;">Eliminar</button>
-                        <button type="submit" class="btn btn-info btn-block" data-dismiss="modal" >Cerrar</button>
-                    </form>                        
                 </div>
+
+
             </div>
-          </div>
         </div>
-</div>
+    </div>
 
-
-<div class="modal fade" id="buscarcursada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="Crearclase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Buscar</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-    
-                <div class="container">
-                    <h1>Buscar Materia</h1>
-                    <form ngNativeValidate id="bcformcursada">
-                        <div class="form-group">
-                            <label for="bccarrera">Nombre Carrera</label>
-                            <select class="form-control" id="bccarrera" required (change)="carreracursada()">
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                <option *ngFor="let nomcarrera of carreras" [value]="carreras">{{nomcarrera}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="bccmateria">Seleccione Materia</label>
-                            <select class="form-control" id="bccmateria" required (change)="materiacursada()" selectedIndex=-1>
-                                <option value="" selected disabled hidden>Seleccionar</option>
-                                <option *ngFor="let cursadabaj of materias" [value]=cursadabaj.materiaid >{{cursadabaj.materia}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                                <label for="bcaño">año</label>
-                                <input type="number" min="1" max="6"class="form-control" id="bcaño" required disabled>
-                        </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear cursada</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-                        <div class="form-group">
-                                <label for="bccursadas">Seleccione cursada</label> 
-                                <select class="form-control" id="bccursadas" required (change)="cargarcursada()" selectedIndex=-1>
+                    <div class="container">
+                        <h1>Crear cursada</h1>
+                        <form ngNativeValidate (ngSubmit)="altaclase()" id="fcrearclase">
+                            <div class="form-group">
+                                <label for="cursadan">fecha inicio</label>
+                                <input type="number" min="1" class="form-control" id="cursadan" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="finicio">fecha inicio</label>
+                                <input type="date" min="1" max="6" class="form-control" id="finicio" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="finicio">fecha finalizacion</label>
+                                <input type="date" min="1" max="6" class="form-control" id="ffin" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="carreramat">Nombre Carrera</label>
+                                <select class="form-control" id="carreramat" required (change)="cargarmaterias()">
                                     <option value="" selected disabled hidden>Seleccionar</option>
-                                    <option *ngFor="let cursadas of cursadas" [value]=cursadas.cursadaid >{{cursadas.numerocursada}}</option>
+                                    <option *ngFor="let nomcarrera of carreras" [value]="nomcarrera">{{nomcarrera}}</option>
                                 </select>
                             </div>
 
-                     
-                                <div class="form-group">
-                                    <label for="bcfinicio">fecha inicio</label>
-                                    <input type="date" min="1" max="6"class="form-control" id="bcfinicio" required disabled>
-                                </div>
-                                <div class="form-group">
-                                    <label for="bcffin">fecha finalizacion</label>
-                                    <input type="date" min="1" max="6"class="form-control" id="bcffin" required disabled>
-                                </div>
-                                <div class="form-group">
-                                    <label for="bcprofesor">Seleccione profesor</label >
-                                    <select class="form-control" id="bcprofesor" required disabled>
-                                        <option value="" selected disabled hidden>Seleccionar</option>
-                                        <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" >
-                                    <label for="bciconoclase">Seleccione Icono</label>
-                                    <div class="form-check" id="bciconoclase" >
+                            <div class="form-group">
+                                <label for="mat">Seleccione Materia</label>
+                                <select class="form-control" id="mat" required>
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let materia of materias" [value]=materia.materiaid>{{materia.materia}}</option>
+                                </select>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="profesor">Seleccione profesor</label>
+                                <select class="form-control" id="profesor" required>
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="iconoclase">Seleccione Icono</label>
+                                <div class="form-check" id="iconoclase">
                                     <label class="form-check-label col-4">
-                                      <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios1" value="fa-calculator" checked=""disabled>
-                                      <i class="fa fa-calculator" aria-hidden="true"></i>
-                                     </label>
-                                      <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios2" value="fa-pencil" checked=""disabled>
+                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios1"
+                                            value="fa-calculator" checked="">
+                                        <i class="fa fa-calculator" aria-hidden="true"></i>
+                                    </label>
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios2"
+                                            value="fa-pencil" checked="">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>
-                                      </label>
-                                      <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios3" value="fa-plane" checked=""disabled>
+                                    </label>
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios3"
+                                            value="fa-plane" checked="">
                                         <i class="fa fa-plane" aria-hidden="true"></i>
-                                      </label>
-                                      <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios4" value="fa-history" checked=""disabled>
+                                    </label>
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios4"
+                                            value="fa-history" checked="">
                                         <i class="fa fa-history" aria-hidden="true"></i>
-                                      </label>
-                                      <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios5" value="fa-pie-chart" checked=""disabled>
+                                    </label>
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios5"
+                                            value="fa-pie-chart" checked="">
                                         <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                                      </label>
-                                      <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios6" value="fa-desktop" checked=""disabled>
+                                    </label>
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios6"
+                                            value="fa-desktop" checked="">
                                         <i class="fa fa-desktop" aria-hidden="true"></i>
-                                      </label>
-                                    </div>
+                                    </label>
                                 </div>
-                                <div class="form-group">
-                                    <label for="bccolormateria">Seleccione color</label>
-                                    <select class="form-control" id="bccolormateria" required disabled>
-                                        <option value="" selected disabled hidden>Seleccionar</option>
-                                        <option *ngFor="let color of color" [value]="color.val">{{color.nombre}}</option>
-                                    </select>
-                                </div>
-                        <div class="row mb-1">
-                            <div class="col-6">
-                                    <button type="button" id="bcmodificar" (click)="bcmodificar()" class="btn btn-success btn-block" style="display: none;">Modificar</button>
                             </div>
-                            <div class="col-6">
-                                <button type="button" id="bceliminar" (click)="bceliminarmateria()" class="btn btn-danger btn-block" style="display: none;">Eliminar</button>
+                            <div class="form-group">
+                                <label for="colormateria">Seleccione color</label>
+                                <select class="form-control" id="colormateria" required>
+                                    <option *ngFor="let color of color" [value]="color.val">{{color.nombre}}</option>
+                                </select>
                             </div>
-                        </div>
-                        <button type="submit" class="btn btn-info btn-block" data-dismiss="modal" >Cerrar</button>
-                    </form>                        
+
+                            <button type="submit" class="btn btn-success btn-block " data-dismiss="crearmateria">cargar</button>
+                        </form>
+
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
-</div>
+    </div>
 
-
-<div class="modal fade" id="altainscripcion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="Altausuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Crear Materia</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear Usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form ngNativeValidate (ngSubmit)="Altausuario()">
+                        <div class="form-group">
+                            <label for="documento">Documento</label>
+                            <input type="text" class="form-control" id="documento" required minlength="6" maxlength="8"
+                                pattern="[0-9.]+">
+                        </div>
+                        <div class="form-group">
+                            <label for="usuariotipo">tipo de Usuario</label>
+                            <select class="form-control" id="usuariotipo" required>
+                                <option *ngFor="let tipo of tipousuario" [value]=tipo>{{tipo}}</option>
+                            </select>
+
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">cargar</button>
+                    </form>
+                </div>
             </div>
-            <div class="modal-body">
-    
+        </div>
+    </div>
+
+    <div class="modal fade" id="buscarmateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Buscar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
                     <div class="container">
-                            <h1>Crear Materia</h1>
-                            <form ngNativeValidate (ngSubmit)="inscripcioncursada()" >                         
-                              <div class="form-group">
+                        <h1>Buscar Materia</h1>
+                        <form ngNativeValidate id="formeliminar">
+                            <div class="form-group">
+                                <label for="mate">Nombre Carrera</label>
+                                <select class="form-control" id="carreras" required (change)="cargarmaterias()">
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let nomcarrera of carreras" [value]="carreras">{{nomcarrera}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="mat">Seleccione Materia</label>
+                                <select class="form-control" id="materias" required (change)="datosmateria()"
+                                    selectedIndex=-1>
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let materia of materias" [value]=materia.materiaid>{{materia.materia}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="año">año</label>
+                                <input type="number" min="1" max="6" class="form-control" id="año" required disabled>
+                            </div>
+                            <button type="button" id="eliminar" (click)="eliminarmateria()" class="btn btn-danger btn-block"
+                                style="display: none;">Eliminar</button>
+                            <button type="submit" class="btn btn-info btn-block" data-dismiss="modal">Cerrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="buscarcursada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Buscar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="container">
+                        <h1>Buscar Materia</h1>
+                        <form ngNativeValidate id="bcformcursada">
+                            <div class="form-group">
+                                <label for="bccarrera">Nombre Carrera</label>
+                                <select class="form-control" id="bccarrera" required (change)="carreracursada()">
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let nomcarrera of carreras" [value]="carreras">{{nomcarrera}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bccmateria">Seleccione Materia</label>
+                                <select class="form-control" id="bccmateria" required (change)="materiacursada()"
+                                    selectedIndex=-1>
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let cursadabaj of materias" [value]=cursadabaj.materiaid>{{cursadabaj.materia}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bcaño">año</label>
+                                <input type="number" min="1" max="6" class="form-control" id="bcaño" required disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bccursadas">Seleccione cursada</label>
+                                <select class="form-control" id="bccursadas" required (change)="cargarcursada()"
+                                    selectedIndex=-1>
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let cursadas of cursadas" [value]=cursadas.cursadaid>{{cursadas.numerocursada}}</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="bcfinicio">fecha inicio</label>
+                                <input type="date" min="1" max="6" class="form-control" id="bcfinicio" required
+                                    disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="bcffin">fecha finalizacion</label>
+                                <input type="date" min="1" max="6" class="form-control" id="bcffin" required disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="bcprofesor">Seleccione profesor</label>
+                                <select class="form-control" id="bcprofesor" required disabled>
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bciconoclase">Seleccione Icono</label>
+                                <div class="form-check" id="bciconoclase">
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios1"
+                                            value="fa-calculator" checked="" disabled>
+                                        <i class="fa fa-calculator" aria-hidden="true"></i>
+                                    </label>
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios2"
+                                            value="fa-pencil" checked="" disabled>
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </label>
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios3"
+                                            value="fa-plane" checked="" disabled>
+                                        <i class="fa fa-plane" aria-hidden="true"></i>
+                                    </label>
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios4"
+                                            value="fa-history" checked="" disabled>
+                                        <i class="fa fa-history" aria-hidden="true"></i>
+                                    </label>
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios5"
+                                            value="fa-pie-chart" checked="" disabled>
+                                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                                    </label>
+                                    <label class="form-check-label col-4">
+                                        <input type="radio" class="form-check-input" name="bccolorradio" id="optionsRadios6"
+                                            value="fa-desktop" checked="" disabled>
+                                        <i class="fa fa-desktop" aria-hidden="true"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="bccolormateria">Seleccione color</label>
+                                <select class="form-control" id="bccolormateria" required disabled>
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let color of color" [value]="color.val">{{color.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-6">
+                                    <button type="button" id="bcmodificar" (click)="bcmodificar()" class="btn btn-success btn-block"
+                                        style="display: none;">Modificar</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" id="bceliminar" (click)="bceliminarmateria()" class="btn btn-danger btn-block"
+                                        style="display: none;">Eliminar</button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-info btn-block" data-dismiss="modal">Cerrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="altainscripcion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Inscripcion a Materias</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="container">
+                        <form ngNativeValidate (ngSubmit)="inscripcioncursada()">
+                            <div class="form-group">
                                 <label for="icarrera">Nombre Carrera</label>
                                 <select class="form-control" id="icarrera" required>
                                     <option *ngFor="let nomcarrera of carreras" [value]="nomcarrera">{{nomcarrera}}</option>
                                 </select>
-                              </div>
-                              <div class="form-group">
-                                    <label for="iano">año</label>
-                                    <select class="form-control" id="iano" required (change)="imaterias()">
-                                            <option value="" selected disabled hidden>Seleccionar</option>
-                                            <option *ngFor="let a of [1,2,3,4,5,6]" [value]="a">{{a}}</option>
-                                        </select>
-                                </div>
-                                <div class="form-group">
-                                        <label for="imateria">Seleccione Materia</label>
-                                        <select class="form-control" id="imateria" required (change)="icursadas()" selectedIndex=-1>
-                                            <option value="" selected disabled hidden>Seleccionar</option>
-                                            <option *ngFor="let imaterias of materiasao" [value]=imaterias.materiaid >{{imaterias.materia}}</option>
-                                        </select>
-                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="iano">Año</label>
+                                <select class="form-control" id="iano" required (change)="imaterias()">
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let a of [1,2,3,4,5,6]" [value]="a">{{a}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="imateria">Seleccione Materia</label>
+                                <select class="form-control" id="imateria" required (change)="icursadas()"
+                                    selectedIndex=-1>
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let imaterias of materiasao" [value]=imaterias.materiaid>{{imaterias.materia}}</option>
+                                </select>
+                            </div>
 
-                                <div class="form-group">
-                                        <label for="icursada">Seleccione cursada</label> 
-                                        <select class="form-control" id="icursada" required selectedIndex=-1>
-                                            <option value="" selected disabled hidden>Seleccionar</option>
-                                            <option *ngFor="let cursadas of cursadas" [value]=cursadas.cursadaid >{{cursadas.numerocursada}}</option>
-                                        </select>
-                                </div>
-                              <button type="submit" class="btn btn-success btn-block" >Inscribirse</button>
-                            </form>
-                        </div>
+                            <div class="form-group">
+                                <label for="icursada">Seleccione Cursada</label>
+                                <select class="form-control" id="icursada" required selectedIndex=-1>
+                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option *ngFor="let cursadas of cursadas" [value]=cursadas.cursadaid>{{cursadas.numerocursada}}</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block">Inscribirse</button>
+                            <button type="button" class="btn btn-danger btn-block" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            
- 
-          </div>
         </div>
+    </div>
 </div>
-
