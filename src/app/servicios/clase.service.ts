@@ -26,6 +26,13 @@ export class ClasesService {
   alumnos: Observable<Notas[]>
   claseclasesinfocollection:AngularFirestoreCollection<Cursada>;
   clasesinfo:Observable<Cursada[]>;
+  listadonoascole:AngularFirestoreCollection<Notas>
+  listadonotas:Observable<Notas[]>
+  listadopresentescole:AngularFirestoreCollection<Presentismo>
+  listadopresentes:Observable<Presentismo[]>
+  alpretokecollection:AngularFirestoreCollection<Alumnipresente>
+  alpretoke:Observable<Alumnipresente[]>
+
 
   public v:string;
   constructor(public afs: AngularFirestore, public auth:AuthService) {
@@ -215,4 +222,45 @@ export class ClasesService {
     });
     
   }
+  startlistadonota(curso){
+    this.listadonoascole = this.afs.collection<Notas>('cursadas/'+curso+'/notas',ref=>ref.where("estado","==","cargada") );
+    this.listadonotas = this.listadonoascole.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Notas;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+  getlistadonota(){
+    return this.listadonotas;
+  }
+
+  starttodoslospresentes(curso){
+    this.listadopresentescole   = this.afs.collection<Presentismo>('cursadas/'+curso+'/presentismo');
+    this.listadopresentes = this.listadopresentescole.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Presentismo;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+  gettodoslospresentes(){
+    return this.listadopresentes;
+  }
+  startaltoken(curso,token){
+    this.alpretokecollection   = this.afs.collection<Alumnipresente>('cursadas/'+curso+'/presentismo/'+token+'/alumnos');
+    this.alpretoke = this.alpretokecollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Alumnipresente;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+  getaltoken(){
+    return this.alpretoke;
+  }
+
 }

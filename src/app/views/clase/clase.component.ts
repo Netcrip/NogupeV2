@@ -12,6 +12,8 @@ import { Cursada } from '../../interface/cursada';
 import { AngularFirestoreCollection } from 'angularfire2/firestore';
 import $ from 'jquery';
 import { getTime } from 'ngx-bootstrap/chronos/utils/date-getters';
+import { Alumnipresente } from '../../interface/alumnipresente';
+import { Presentismo } from '../../interface/presentismo';
 
 
 @Component({
@@ -26,6 +28,11 @@ export class ClaseComponent implements OnInit {
   alumnos: Notas[];
   datosclase:Cursada[]
   tiempo=["15","30","60","120"]
+  notas:Notas[];
+  prom:number;
+  lospresentes:Presentismo[];
+  alpresente:Alumnipresente[];
+  al
   s;
   constructor(private claseService: ClasesService,public auth: AuthService, private route:ActivatedRoute,private cur:CursosService
       ) { 
@@ -51,6 +58,11 @@ export class ClaseComponent implements OnInit {
     this.claseService.getalunos().subscribe(clases => {
     this.alumnos = clases;
     });
+    this.claseService.startlistadonota(this.route.snapshot.paramMap.get('id'));
+    this.cargarnotas()
+    this.claseService.starttodoslospresentes(this.route.snapshot.paramMap.get('id'))
+    this.todoslospresentes()
+    
   }
 
   clase(){
@@ -60,7 +72,7 @@ export class ClaseComponent implements OnInit {
     });
    
   }
-  cargarnota(nota1,nota2,nota3,uname,useruid,notaid){
+  cargarnota(nota1,nota2,nota3,notaid){
     if(nota1>10||nota2>10||nota3>10||nota1<0||nota2<0||nota3<0||nota1==''||nota2==''||nota3==''){
       swal('la nota tiene que ser entre 0 y 10')
     }
@@ -146,6 +158,36 @@ export class ClaseComponent implements OnInit {
     this.claseService.confirmarpresentismo(this.route.snapshot.paramMap.get('id'),$("#acodigo").val(),t,uid,uname);
     $("#apresente .close").click()
     $("#afpresente").trigger('reset');
+  }
+  cargarnotas(){
+    this.claseService.getlistadonota().subscribe(notas=>{
+      this.notas=notas;
+    })
+  }
+  
+  promedio(){
+    let x=0;
+    let pro=0;
+    $(".notafinal").each(function(){
+      x=x+1;
+      pro=pro+parseInt($(this).html());
+    })
+    this.prom=pro/x;
+  }
+  todoslospresentes(){
+    this.claseService.gettodoslospresentes().subscribe(a=>{
+      this.lospresentes=a
+    })
+  }
+
+  cargaralumnostoken(id){
+    this.claseService.startaltoken(this.route.snapshot.paramMap.get('id'),id)
+    this.alumnotoke()
+  }
+  alumnotoke(){
+    this.claseService.getaltoken().subscribe(d =>{
+      this.alpresente=d
+    })
   }
   
 }
