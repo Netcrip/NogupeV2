@@ -61,10 +61,9 @@ export class RegisterComponent {
         }
         else{
           this.auth.getcountclas(dni).subscribe(d => {
-            this.dn = d;
-          })
-          if(this.dn.length>0){
-            this.dn.forEach(d => {
+                   
+          if(d.length>0){
+             d.forEach(d => {
               if(d.Dni==dni.value){
                 this.auth.usuariosdocu(dni.value).subscribe(succes=> {
                   if(succes==true){
@@ -97,6 +96,7 @@ export class RegisterComponent {
           else{
             console.log("dni Incorrecto");
           }
+        })
         }
 }
 async singup(email,pas,dni,nombre,avatar,cuenta){

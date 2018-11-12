@@ -80,5 +80,23 @@ ngOnInit() {
     this.router.navigate(['registro'])
   }
     
-
+  async recuperar(){
+    const {value: email} = await swal({
+      title: 'Ingrese su direccion de email ',
+      input: 'email',
+      inputPlaceholder: 'Ingrese su'
+    })
+    
+    if (email) {
+      this.auth.resetPassword(email)
+      swal({
+        type: 'success',
+        title: 'Se envio correo de recuperacion',
+        toast: true,
+        position: 'center',
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }
+  }
 }

@@ -8,8 +8,8 @@
                     <nav class="nav nav-pills flex-column flex-sm-row">
                     <a class="flex-sm-fill text-sm-center nav-link" *ngFor="let dato of datosclase" >{{dato.materia}}</a>
                     <a class="flex-fill text-sm-center nav-link active" href="#" data-toggle="modal" data-target="#apresente">Presentismo</a>
-                    <a class="flex-sm-fill text-sm-center nav-link" href="">Notas</a>
-                    <a class="flex-sm-fill text-sm-center nav-link" href="">Faltas</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" (click)=promedio() data-toggle="modal" data-target="#vernotas" href="#">Notas</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#listadopresentes">Listado Presentes</a>
                     </nav>
                 </div>
               </div>
@@ -24,7 +24,8 @@
             <nav class="nav nav-pills flex-column flex-sm-row">
             <a class="flex-sm-fill text-sm-center nav-link" *ngFor="let dato of datosclase" >{{dato.materia}}</a>
             <a class="flex-fill text-sm-center nav-link active" href="#" data-toggle="modal" data-target="#presente"> Genera Presentismo</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#verpresentes">Ver Presentismo</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#verpresentes">Ver Presentismo Token</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#listadopresentes">Listado Presentes</a>
             <a class="flex-sm-fill text-sm-center nav-link" href="#" (click)=promedio() data-toggle="modal" data-target="#vernotas">Ver Notas</a>
             <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#notascarga">Cargar Notas</a>
             <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#autorizacion">Autorizaciones cursada</a>
@@ -209,7 +210,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cargar Notas</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Ver Notas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -316,4 +317,40 @@
         </div>
       </div>
     </div>
+</div>
+
+
+<div class="modal fade" id="listadopresentes" tabindex="-1" >
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Token Generados</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group col-12">
+          <table class="table table-dark">
+            <thead>
+              <tr>
+                <th>Dia</th>
+                <th>Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ptes of listadopresentes">                 
+                  <td>{{ptes.dia}} </td>
+                  <td>{{ptes.uname}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

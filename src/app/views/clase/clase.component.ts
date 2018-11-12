@@ -32,6 +32,7 @@ export class ClaseComponent implements OnInit {
   prom:number;
   lospresentes:Presentismo[];
   alpresente:Alumnipresente[];
+  listadopresentes:Alumnipresente[];
   al
   s;
   constructor(private claseService: ClasesService,public auth: AuthService, private route:ActivatedRoute,private cur:CursosService
@@ -61,7 +62,10 @@ export class ClaseComponent implements OnInit {
     this.claseService.startlistadonota(this.route.snapshot.paramMap.get('id'));
     this.cargarnotas()
     this.claseService.starttodoslospresentes(this.route.snapshot.paramMap.get('id'))
-    this.todoslospresentes()
+    this.todoslospresentes();
+    this.claseService.startlistadopresentes(this.route.snapshot.paramMap.get('id'))
+    this.listadoasistencia();
+
     
   }
 
@@ -188,6 +192,13 @@ export class ClaseComponent implements OnInit {
     this.claseService.getaltoken().subscribe(d =>{
       this.alpresente=d
     })
+  }
+
+  listadoasistencia(){
+    this.claseService.getlistadopresente().subscribe(presentes=>{
+      this.listadopresentes=presentes;
+    })
+    
   }
   
 }

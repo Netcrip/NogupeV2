@@ -32,7 +32,8 @@ export class ClasesService {
   listadopresentes:Observable<Presentismo[]>
   alpretokecollection:AngularFirestoreCollection<Alumnipresente>
   alpretoke:Observable<Alumnipresente[]>
-
+  listadocoleccionpresentes:AngularFirestoreCollection<Alumnipresente>
+  presenteslista:Observable<Alumnipresente[]>
 
   public v:string;
   constructor(public afs: AngularFirestore, public auth:AuthService) {
@@ -200,6 +201,15 @@ export class ClasesService {
               uid:uid,
               uname:uname,
               dia:tiempo,
+            }).then(_ =>{
+              let aid=this.afs.createId();
+              let dia=  tiempo.split(" ", 1);
+              let presentismoref: AngularFirestoreDocument <Alumnipresente> =this.afs.doc(`cursadas/`+curso+`/Asistencia/${aid}`);
+                presentismoref.set({
+                alpresenteid:id,
+                uid:uid,
+                uname:uname,
+                dia:dia[0],
             }).then(function(){
               swal({
                 type: 'success',
@@ -207,6 +217,7 @@ export class ClasesService {
                 showConfirmButton: false,
                 timer: 1500
               })
+            })
             });
           }
         });
@@ -263,4 +274,17 @@ export class ClasesService {
     return this.alpretoke;
   }
 
+  startlistadopresentes(curso){
+    this.listadocoleccionpresentes   = this.afs.collection<Alumnipresente>('cursadas/'+curso+'/Asistencia');
+    this.presenteslista = this.listadocoleccionpresentes.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Alumnipresente;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+  getlistadopresente(){
+    return this.presenteslista;
+  }
 }
