@@ -5,6 +5,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CommonModule } from '@angular/common';
 
+
 import { CursosComponent } from './cursos.component';
 import { CursosRoutingModule } from './cursos-routing.module';
 

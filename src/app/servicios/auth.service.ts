@@ -13,12 +13,11 @@ import {Dni} from '../interface/dni';
 import { map } from 'rxjs/operators';
 
 
-
 @Injectable()
 export class AuthService {
 
   user: Observable<User>;
-  
+  cuenta:string;
   dni_o:Observable<Dni>;
   //dniCollection: AngularFirestoreDocument<Dni>;
 
@@ -44,6 +43,7 @@ export class AuthService {
         })
       )
       
+      
     }
     
     ////
@@ -51,6 +51,8 @@ export class AuthService {
 getuid(){
   return this.afAuth.auth.currentUser.uid;
 }
+
+
 ////// link a cuenta social/////
 linkgoogle() {
   const provider = new auth.GoogleAuthProvider();
@@ -104,6 +106,7 @@ unLinkgoogle(){
   });
 
 }
+
 unLinkfacebook(){
   const provider = new auth.FacebookAuthProvider();
   let a =this.afAuth.auth.currentUser.uid
@@ -181,29 +184,8 @@ usuariosdocu(nrodni:string): Observable <boolean> {
   });
 }
 
- /*docu(nrodni:string): Observable <boolean> {   
-  //console.log("entro 1");
-    return new Observable(observer =>{
-      this.afs.collection("Dni").ref.where("Dni","==",nrodni).get().then(function(collection){
-        if(!collection.empty){
-          //console.log(collection.docs[0].data());
-          observer.next(true);
-          observer.complete;
-      }else{
-        //console.log(collection.docs[0].data());
-        observer.next(false);
-        observer.complete;
-    }
-    }).catch(function (error) {
-      observer.error(error);
-      observer.complete();
-      console.log("Error getting document:", error);
-   });
-    });
-}*/
 
 getcountclas(a){
- 
   this.dniCollection = this.afs.collection<Dni>('Dni',ref=>ref.where('Dni','==',a.value) );
     this.dni = this.dniCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {

@@ -1,9 +1,11 @@
-import { Component, OnInit, AfterViewChecked  } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, OnChanges  } from '@angular/core';
 //import { navItems } from './../../_nav';
 import {AuthService} from '../../servicios/auth.service';
 import {ListaService} from '../../servicios/lista.service'
 import { Cursos } from '../../interface/cursos';
 import { navItems } from '../../_nav';
+import swal from 'sweetalert2';
+import { Inscripciones } from '../../interface/inscripciones';
 
 
 
@@ -11,13 +13,13 @@ import { navItems } from '../../_nav';
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html'
 })
-export class DefaultLayoutComponent implements OnInit, AfterViewChecked  {
+export class DefaultLayoutComponent implements OnInit  {
   navItem= navItems
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
   public navCursos=[];
-  cur: Cursos[];
+  cur: Inscripciones[];
   v:Object;
   
   constructor(public auth:AuthService,private curso:ListaService) {
@@ -34,11 +36,8 @@ export class DefaultLayoutComponent implements OnInit, AfterViewChecked  {
     });
     
   }
-  ngAfterViewChecked(){
-
-  }
   ngOnInit(){
-
+  
   }
 
   actualizarcursos(){
@@ -49,8 +48,10 @@ export class DefaultLayoutComponent implements OnInit, AfterViewChecked  {
       }}
       this.navItem.splice(1);
    
-      element.forEach(dato => {        
-       this.v['children'].push({name: dato.nombremateria,url:'clase/'+dato.cursada, icon: 'fa '+dato.imgenurl});
+      element.forEach(dato => {  
+      if(dato.estado=="activa"){
+        this.v['children'].push({name: dato.materia,url:'clase/'+dato.cursadaid, icon: 'fa '+dato.img});
+      }      
       });     
       
       this.navItem.push(<any>this.v) 
@@ -76,6 +77,17 @@ export class DefaultLayoutComponent implements OnInit, AfterViewChecked  {
   }
   signOut(){
     this.auth.signOut();
+  }
+  async cambiarcontra(){
+     this.auth.user.subscribe(e=>{
+      swal(
+        'Se a enviado un correo para cambiar la contraseña a:',
+        e.email,
+        'info'
+      )
+      this.auth.resetPassword(e.email);
+     })
+    
   }
 
 

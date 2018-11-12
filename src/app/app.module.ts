@@ -12,6 +12,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
 
+
 import { AppComponent } from './app.component';
 
 // Import containers
@@ -32,6 +33,7 @@ import {
   AppHeaderModule,
   AppFooterModule,
   AppSidebarModule,
+  
 } from '@coreui/angular';
 
 // Import routing module
@@ -41,6 +43,7 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+
 
 // angular
 import { environment } from '../environments/environment';
@@ -53,8 +56,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 //SERVICIOS
 import {AuthService} from './servicios/auth.service';
 import { TareasComponent } from './views/tareas/tareas.component';
-import { AdminComponent } from './views/admin/admin.component';
 
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 
 @NgModule({
@@ -75,6 +78,9 @@ import { AdminComponent } from './views/admin/admin.component';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features,
     ModalModule,
+    SweetAlert2Module,
+    
+    
     
     
   ],
@@ -86,7 +92,7 @@ import { AdminComponent } from './views/admin/admin.component';
     LoginComponent,
     RegisterComponent,
     TareasComponent,
-    AdminComponent,
+ 
   ],
   providers: [{
     provide: LocationStrategy,

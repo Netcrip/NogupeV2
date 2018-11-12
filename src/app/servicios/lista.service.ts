@@ -6,15 +6,15 @@ import { map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 import {AuthService} from './auth.service';
+import { Inscripciones } from '../interface/inscripciones';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListaService {
-  cursosCollection: AngularFirestoreCollection<Cursos>;
-  cursos: Observable<Cursos[]>;
-  cursoDoc: AngularFirestoreDocument<Cursos>;
-  cursosList = []
+  cursosCollection: AngularFirestoreCollection<Inscripciones>;
+  cursos: Observable<Inscripciones[]>;
+
   //
   inscriptosColection: AngularFirestoreCollection<Inscriptos>
   Inscriptos: Observable<Inscriptos[]>
@@ -22,10 +22,10 @@ export class ListaService {
 
   constructor(public afs: AngularFirestore, public auth: AuthService) {
     var uid=  auth.getuid();
-    this.cursosCollection = afs.collection<Cursos>('inscripciones', ref => ref.where('userid',"==",uid));
+    this.cursosCollection = afs.collection<Inscripciones>('inscripciones', ref => ref.where('uid',"==",uid));
     this.cursos = this.cursosCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Cursos;
+        const data = a.payload.doc.data() as Inscripciones;
         const id = a.payload.doc.id;
         return { id, ...data };
       }))

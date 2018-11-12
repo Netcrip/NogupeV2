@@ -23,9 +23,7 @@ export class RegisterComponent {
     })
     if(this.dn.length>0){
       this.dn.forEach(d => {
-        console.log(d.Dni)
         if(d.Dni==dni.value){
-          
           this.auth.usuariosdocu(dni.value).subscribe(succes=> {
             if(succes==true){
                 this.singup(email.value,pas.value,dni.value,nombre.value,document.querySelector<any>('input[name="optionsRadios"]:checked').value,d.cuenta);
@@ -36,7 +34,6 @@ export class RegisterComponent {
              });
             }
              else{
-        
               console.log("dni Incorrecto");
         }  
     })
