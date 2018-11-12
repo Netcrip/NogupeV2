@@ -202,11 +202,11 @@ getcountclas(a){
 emailLogin(email: string, password: string) {
   return this.afAuth.auth
     .signInWithEmailAndPassword(email, password)
-    /*.then(credential => {
+    .then(credential => {
      // this.notify.update('Welcome back!', 'success');
-      return this.updateUserData(credential.user);
+      //return this.updateUserData(credential.user);
     })
-    .catch(error => this.handleError(error));*/
+    .catch(error => {});
 }
 
 // Sends email allowing user to reset password

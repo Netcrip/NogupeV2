@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
+import { $ } from 'jquery';
+import { PatternValidator } from '@angular/forms';
+import swal from 'sweetalert2';
 //import { PassThrough } from 'stream';
 
 @Component({
@@ -34,9 +37,30 @@ ngOnInit() {
 
 
  async login(email,pas){
-   console.log("entro")
-    await this.auth.emailLogin(email.value,pas.value);
-    return await this.afterSignIn();
+    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i
+    if(!pattern.test(email.value)){
+      swal({
+        type: 'error',
+        title: 'email incorrecto',
+        toast: true,
+        position: 'center',
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }else if(pas.value.length<6){
+      swal({
+        type: 'error',
+        title: 'revise contraseña',
+        toast: true,
+        position: 'center',
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }
+    else{
+      await this.auth.emailLogin(email.value,pas.value);
+      return await this.afterSignIn();
+    }    
   }
   ////
   singout(){

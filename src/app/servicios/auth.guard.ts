@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,34 @@ export class AuthGuard implements CanActivate {
       map(user => !!user),
       tap(loggedIn => {
         if (!loggedIn) {
-          console.log('access denied');
-          this.router.navigate(['']);
+          this.router.navigate(['']).then(_=>{
+            this.error();
+          });
         }
         else{
+          this.succes();
         }
       })
     );
   }
+  succes(){
+    swal({
+      type: 'success',
+      title: 'Signed in successfully',
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  } 
+  error(){
+    swal({
+      type: 'error',
+      title: 'Signed in Error',
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  } 
 }

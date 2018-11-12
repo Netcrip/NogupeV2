@@ -12,11 +12,9 @@ import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
 
-export const routes: Routes = [
-  //{ path: 'clase', component: DefaultLayoutComponent, canActivate: [AuthGuard] },
-  
-  { path: '500', component: P500Component, data: { title: 'Page 500' } },
+export const routes: Routes = [  
   { path: '', component: LoginComponent, data: { title: 'Login Page' }},
+  { path: '500', component: P500Component, data: { title: 'Page 500' } },
   { path: 'registro', component: RegisterComponent, data: { title: 'Register Page'} },
   { path: 'nogupe', component: DefaultLayoutComponent, data: { title: 'Nogupe'},
    children: [ { path: 'cursos', loadChildren: './views/cursos/cursos.module#CursosModule' },
