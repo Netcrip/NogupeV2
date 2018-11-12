@@ -40,7 +40,7 @@ export class CursosComponent implements OnInit, OnChanges{
     "Tecnicatura Universitaria en Desarrollo de Software"];
     tipousuario=["alumno","profesor","admin"]
     
-    color=[{nombre:"Naranja",val:"orange"},{nombre:"rojo",val:"red"},{nombre:"azul",val:"blue"},{nombre:"blanco",val:"white"},{nombre:"violeta",val:"violet"},{nombre:"verde",val:"green"}]
+    color=[{nombre:"Naranja",val:"orange"},{nombre:"rojo",val:"red"},{nombre:"azul",val:"blue"},{nombre:"blanco",val:"white"},{nombre:"violeta",val:"purple"},{nombre:"verde",val:"green"}]
     submitted = false;
     onSubmit() { this.submitted = true; } 
 
