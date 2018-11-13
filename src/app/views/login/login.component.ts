@@ -14,11 +14,11 @@ export class LoginComponent {
       this.router.navigate(['nogupe/cursos'])
     }
   }
+
   ngOnInit() {
     if (this.auth.getuid) {
       return this.router.navigate(['nogupe/cursos'])
     }
-
   }
 
   //Inicio de Sesión Redes Sociales.
@@ -50,7 +50,7 @@ export class LoginComponent {
   }
 
   //Ruteo de registro.
-  irregistro() {
+  routerRegister() {
     this.router.navigate(['registro'])
   }
 
