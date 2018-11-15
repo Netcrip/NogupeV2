@@ -8,29 +8,30 @@ import { Dni } from '../../interface/dni'
 })
 export class RegisterComponent {
 
-  constructor(public auth: AuthService,
-    private router: Router) {
-
+  constructor(public auth: AuthService, private router: Router) {
 
   }
-  dn: Array<Dni> = [];
 
-  async create(email, nombre, pas, pas1, dni) {
-    // this.singup(email.value,pas.value,dni.value,nombre.value,document.querySelector('input[name="optionsRadios"]:checked').value);
-    this.auth.getcountclas(dni).subscribe(d => {
-      this.dn = d;
+  arrayDni: Array<Dni> = [];
+
+  // Creacion de cuenta.
+  async create(email, name, password, dni) {
+    this.auth.getcountclas(dni).subscribe(e => {
+      this.arrayDni = e;
     })
-    if (this.dn.length > 0) {
-      this.dn.forEach(d => {
+    if (this.arrayDni.length > 0) {
+      this.arrayDni.forEach(d => {
         if (d.Dni == dni.value) {
-          this.auth.usuariosdocu(dni.value).subscribe(succes => {
-            if (succes == true) {
-              this.singup(email.value, pas.value, dni.value, nombre.value, document.querySelector<any>('input[name="optionsRadios"]:checked').value, d.cuenta);
-            }
-            else {
-              console.log("DNI Repetido");
-            }
-          });
+          this.auth.usuariosdocu(dni.value)
+            .subscribe(succes => {
+              if (succes == true) {
+                this.singup(email.value, password.value, dni.value, name.value, document.querySelector<any>('input[name="optionsRadios"]:checked').value, d.cuenta);
+                console.log("Registro Exitoso");
+              }
+              else {
+                console.log("DNI Repetido");
+              }
+            });
         }
         else {
           console.log("DNI Incorrecto");
@@ -38,13 +39,13 @@ export class RegisterComponent {
       })
     }
     else {
-      console.log("DNI Incorrecto");
+      console.log("DNI vacio");
     }
   }
 
-  // Logeo.
-  async singup(email, pas, dni, nombre, avatar, cuenta) {
-    await this.auth.emailSignUp(email, pas, dni, nombre, avatar, cuenta);
+  // Login.
+  async singup(email, password, dni, name, avatar, acount) {
+    await this.auth.emailSignUp(email, password, dni, name, avatar, acount);
     await this.afterSignIn();
   }
 
@@ -53,8 +54,8 @@ export class RegisterComponent {
     return await this.router.navigate(['nogupe/cursos']);
   }
 
-  // Volver al login.
-  async back(){
+  // Logout.
+  async logout() {
     return this.router.navigate(['nogupe/']);
   }
 

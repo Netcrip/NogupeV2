@@ -145,7 +145,7 @@ export class AuthService {
     });
   }
 
-  //// Email/Password Auth ////
+  // Inicio de Sesión con Email/Password.
   async emailSignUp(email: string, password: string, dni: string, nombre: string, avatar: string, cuenta: string) {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
@@ -156,10 +156,11 @@ export class AuthService {
       .catch(error => this.handleError(error));
   }
 
-
+  // Buscador de Usuario con mismo DNI.
   usuariosdocu(nrodni: string): Observable<boolean> {
     return new Observable(observer => {
-      this.afs.collection("users").ref.where("dni", "==", nrodni).get().then(function (collection) {
+      this.afs.collection("users").ref.where("dni", "==", nrodni).get()
+      .then(function (collection) {
         if (collection.empty) {
           //console.log(collection.docs[0].data());
           observer.next(true);
@@ -176,6 +177,7 @@ export class AuthService {
     });
   }
 
+  // Buscador de DNI.
   getcountclas(a) {
     this.dniCollection = this.afs.collection<Dni>('Dni', ref => ref.where('Dni', '==', a.value));
     this.dni = this.dniCollection.snapshotChanges().pipe(
@@ -187,8 +189,8 @@ export class AuthService {
     );
     return this.dni;
   }
-  //logine email
 
+  // Inicio de Sesión con Email.
   emailLogin(email: string, password: string) {
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
@@ -209,25 +211,23 @@ export class AuthService {
       .catch(error => this.handleError(error));
   }
 
-
+  // Cerrar Sesión.
   signOut() {
-    this.afAuth.auth.signOut().then(() => {
+    this.afAuth.auth.signOut()
+    .then(() => {
       this.router.navigate(['']);
     });
   }
 
-  // If error, console log and notify user
+  // Si hay error, inicie la consola y notifique al usuario.
   private handleError(error: Error) {
     console.error(error);
     //this.notify.update(error.message, 'error');
   }
 
-
-  // Sets user data to firestore after succesful login
+  // Establece los datos del usuario en firestore después de un inicio de sesión exitoso.
   private updateUserData(user: User, dni, nombre, avatar, cuenta) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
-      `users/${user.uid}`
-    );
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
       uid: user.uid,
       email: user.email,
@@ -237,7 +237,6 @@ export class AuthService {
       facebook: 'unlink',
       google: 'unlink',
       cuenta: cuenta
-
     };
     return userRef.set(data);
   }
