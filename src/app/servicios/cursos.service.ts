@@ -79,7 +79,7 @@ export class CursosService {
     'Se creo con exito la materia!',
     'success')
   })
-  .catch(function(error) {
+  .catch(function() {
     return false;
   });
   } 
@@ -107,7 +107,7 @@ export class CursosService {
     'se creo con exito la Cursada!',
     'success')
   })
-  .catch(function(error) {
+  .catch(function() {
     return false;
   });
   } 
@@ -145,7 +145,7 @@ export class CursosService {
             'Se cargo con exito el Usuario!',
             'success')
             }) 
-          .catch(function(error) {
+          .catch(function() {
             return false;
           });
         }
@@ -234,7 +234,6 @@ export class CursosService {
           let id= this.afs.createId();
           let careraref: AngularFirestoreDocument <Cursada> =this.afs.doc(`inscripciones/${id}`);
           insc.inscripcionesid=id;
-          console.log(insc)
           careraref.set(insc).then(function() {
             swal('Creado!',
             'Se a Inscripto con exito!',

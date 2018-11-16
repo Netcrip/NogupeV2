@@ -6,6 +6,7 @@ export interface Inscripciones {
     img?:string,
     materiauid?:string,
     materia?:string,
+    dias?:string,
     numerocursada?:string,
     carrera?:string,
     color?:string,

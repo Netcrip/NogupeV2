@@ -41,9 +41,9 @@ export class CursosComponent implements OnInit, OnChanges{
     "Tecnicatura Universitaria en Desarrollo de Software"];
     tipousuario=["alumno","profesor","admin"]
     dias=["lunes","martes","miercoles","jueves","viernes","sabado"];
-    horarios=["08:00 -12:00","18:00 - 22:00","18:00-20:00","20:00-22:00"]
+    horarios=["08:00 -12:00","08:00-10:00","10:00-12:00","13:00-17:00","13:00-15:00","15:00-17:00","18:00 - 22:00","18:00-20:00","20:00-22:00"]
     
-    color=[{nombre:"Naranja",val:"orange"},{nombre:"rojo",val:"red"},{nombre:"azul",val:"blue"},{nombre:"blanco",val:"white"},{nombre:"violeta",val:"purple"},{nombre:"verde",val:"green"}]
+    color=[{nombre:"Naranja",val:"orange"},{nombre:"rojo",val:"red"},{nombre:"azul",val:"blue"},{nombre:"blanco",val:"bg-primary"},{nombre:"violeta",val:"purple"},{nombre:"verde",val:"green"}]
     submitted = false;
     onSubmit() { this.submitted = true; } 
 
@@ -177,9 +177,7 @@ export class CursosComponent implements OnInit, OnChanges{
           timer: 1500
         })
 
-      }
-
-      
+      }      
     }
     bceliminarmateria(){
       swal({
@@ -306,7 +304,6 @@ export class CursosComponent implements OnInit, OnChanges{
     }
 
     irclase(s){
-     console.log(s)
      this.router.navigate(['nogupe/clase/',s])
     }
 
@@ -363,6 +360,7 @@ export class CursosComponent implements OnInit, OnChanges{
         fechafin:element.fechafin,
         fechainc:element.fechainc,
         img:element.img,
+        dias:element.dias,
         materia:element.materia,
         materiauid:element.materiauid,
         numerocursada:element.numerocursada,
