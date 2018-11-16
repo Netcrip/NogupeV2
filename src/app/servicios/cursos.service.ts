@@ -83,7 +83,8 @@ export class CursosService {
     return false;
   });
   } 
-  altacursada(fechainc,fechafin,img,materiauid,materia,numerocursada,color,carrera,profesoruid){
+  
+  altacursada(fechainc,fechafin,img,materiauid,materia,dias,numerocursada,color,carrera,profesoruid){
     //const careraref: AngularFirestoreDocument<Materia> = this.afs.doc(`Materias/DyqR21SKtIUIvK7qVb5k`);
     let id= this.afs.createId();
     let careraref: AngularFirestoreDocument <Cursada> =this.afs.doc(`cursadas/${id}`);
@@ -92,6 +93,7 @@ export class CursosService {
     fechainc:fechainc,
     fechafin:fechafin,
     img:img,
+    dias:dias,
     materiauid:materiauid,
     materia:materia,
     color:color,
@@ -174,7 +176,7 @@ export class CursosService {
   getcursadas(  ){
     return this.cursadas;
   }
-  modificarcursada(cursadaid,fini,ffin,icono,materiauid,materia,numerocursada,color,carrera,profesor){
+  modificarcursada(cursadaid,fini,ffin,icono,materiauid,materia,diasyhorario,numerocursada,color,carrera,profesor){
     var Ref: AngularFirestoreDocument<any> = this.afs.collection('cursadas').doc(cursadaid);
     const data: Cursada = {
       cursadaid : cursadaid,
@@ -186,6 +188,7 @@ export class CursosService {
       color:color,
       numerocursada:numerocursada,
       carrera:carrera,
+      dias:diasyhorario,
       profesoruid:profesor,
       estado:"activa"
       }

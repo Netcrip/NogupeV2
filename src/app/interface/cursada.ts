@@ -6,6 +6,7 @@ export interface Cursada {
     materiauid?:string,
     materia?:string,
     numerocursada?:string,
+    dias?:string,
     carrera?:string,
     color?:string,
     profesoruid?:string,

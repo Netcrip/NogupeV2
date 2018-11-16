@@ -236,6 +236,24 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="dias">necesitamos asignar los dias de cursada</label>
+                            <select class="form-control mt-3" id="dias" >
+                                    <option value="" selected disabled hidden>seleccionemos un dia</option>
+                                    <option *ngFor="let dia of dias" [value]="dia">{{dia}}</option>
+                            </select>
+                            <select class="form-control mt-3" id="horario" >
+                                    <option value="" selected disabled hidden>seleccionemos un hoario</option>
+                                    <option *ngFor="let hora of horarios" [value]="hora">{{hora}}</option>
+                            </select>
+                            <button type="button" class="btn btn-danger mb-3 mt-3 float-lefth" (click)="borrarhorario()">Borrar!!</button>
+                            <button type="button" class="btn btn-info mb-3 mt-3 float-right" (click)="agregarhorario()">Agregar!!</button>
+                                                    
+                        </div>
+                        <div class="form-group">
+                                <textarea  style="resize:none" class="form-control mt-3"  id="diastext" rows="3" disabled required></textarea>   
+                        </div>
+                            
+                        <div class="form-group">
                             <label for="iconoclase">por favor selecciona un icono representativo</label>
                         <div class="form-check" id="iconoclase">
                             <label class="form-check-label col-4">
@@ -416,12 +434,30 @@
                                     <input type="date" min="1" max="6"class="form-control" id="bcffin" required disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label for="bcprofesor">¿si quiere cambiar el profesor seleccione uno nuevo?</label >
+                                    <label for="bcprofesor">si quiere cambiar el profesor seleccione uno nuevo</label >
                                     <select class="form-control" id="bcprofesor" required disabled>
                                         <option value="" selected disabled hidden>se habilitar cuando se seleccione la cursada</option>
                                         <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                        <label for="dias">Si quieres podemos cambiar el horario y dia de cursada</label>
+                                        <select class="form-control mt-3" id="diasmodificar" disabled>
+                                                <option value="" selected disabled hidden>seleccionemos un dia</option>
+                                                <option *ngFor="let dia of dias" [value]="dia">{{dia}}</option>
+                                        </select>
+                                        <select class="form-control mt-3" id="horariomodificar" disabled>
+                                                <option value="" selected disabled hidden>seleccionemos un hoario</option>
+                                                <option *ngFor="let hora of horarios" [value]="hora">{{hora}}</option>
+                                        </select>
+                                        <button type="button" class="btn btn-danger mb-3 mt-3 float-lefth" (click)="borrarhorariomodificar()">Borrar!!</button>
+                                        <button type="button" class="btn btn-info mb-3 mt-3 float-right" (click)="agregarhorariomodificar()">Agregar!!</button>
+                                                                
+                                    </div>
+                                    <div class="form-group">
+                                            <textarea  style="resize:none" class="form-control mt-3"  id="diastextmodificar" rows="3" disabled required></textarea>   
+                                    </div>
+
                                 <div class="form-group" >
                                     <label for="bciconoclase">Seleccione Icono</label>
                                     <div class="form-check" id="bciconoclase" >
@@ -460,11 +496,12 @@
                                 </div>
                         <div class="row mb-1">
                             <div class="col-6">
-                                    <button type="button" id="bcmodificar" (click)="bcmodificar()" class="btn btn-success btn-block eliminar" style="display: none;">Modificar</button>
+                                    <button type="button" id="bceliminar" (click)="bceliminarmateria()" class="btn btn-danger btn-block eliminar" style="display: none;">Eliminar</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" id="bceliminar" (click)="bceliminarmateria()" class="btn btn-danger btn-block eliminar" style="display: none;">Eliminar</button>
+                                    <button type="button" id="bcmodificar" (click)="bcmodificar()" class="btn btn-success btn-block eliminar" style="display: none;">Modificar</button>
                             </div>
+                            
                         </div>
                        
                     </form>                        

@@ -15,6 +15,7 @@ import { Cursada } from '../../interface/cursada';
 import { Inscripciones } from '../../interface/inscripciones';
 
 
+
 @Component({
   templateUrl: 'cursos.component.html',
   styleUrls: ['./cursos.component.scss']
@@ -39,6 +40,8 @@ export class CursosComponent implements OnInit, OnChanges{
     "Licenciatura en  Logística",
     "Tecnicatura Universitaria en Desarrollo de Software"];
     tipousuario=["alumno","profesor","admin"]
+    dias=["lunes","martes","miercoles","jueves","viernes","sabado"];
+    horarios=["08:00 -12:00","18:00 - 22:00","18:00-20:00","20:00-22:00"]
     
     color=[{nombre:"Naranja",val:"orange"},{nombre:"rojo",val:"red"},{nombre:"azul",val:"blue"},{nombre:"blanco",val:"white"},{nombre:"violeta",val:"purple"},{nombre:"verde",val:"green"}]
     submitted = false;
@@ -75,6 +78,16 @@ export class CursosComponent implements OnInit, OnChanges{
         this.cursosacargo=clase
       })
     }
+    agregarhorario(){
+      var dia= $('#dias').find(":selected").val();
+      var horario=$('#horario').find(":selected").val();
+      if(dia!="" && horario!=""){
+        $("#diastext").val($("#diastext").val()+dia+" "+horario+" /-/ ")
+        var dia= $('#dias').find(":selected").attr("disabled","disabled");;
+        $('#dias').prop("selectedIndex",0)
+        $('#horario').prop("selectedIndex",0)
+      }
+    }
     cargarcursada(){
       this.cursadas.forEach(element => {
         if(element.cursadaid==$('#bccursadas').find(":selected").val()){
@@ -83,19 +96,38 @@ export class CursosComponent implements OnInit, OnChanges{
           $("#bcprofesor option[value="+element.profesoruid+"]").attr("selected", true);
           $("input[value="+element.img+"]").prop("checked", true);
           $("#bccolormateria option[value="+element.color+"]").attr("selected", true);
+          $("#diastextmodificar").val(element.dias)
 
           $("#bcfinicio").prop( "disabled", false );
           $("#bcffin").prop( "disabled", false );
           $("#bcprofesor").prop( "disabled", false );
           $("input[type=radio]").prop( "disabled", false );
           $("#bccolormateria").prop( "disabled", false );
-
+          $("#diasmodificar").prop( "disabled", false );
+          $("#horariomodificar").prop( "disabled", false );
           $("#bcmodificar").show();
           $("#bceliminar").show();
 
         }
         
       });
+    }
+    borrarhorariomodificar(){
+      $("#diastextmodificar").val("");
+    }
+    agregarhorariomodificar(){
+      var dia= $('#diasmodificar').find(":selected").val();
+      var horario=$('#horariomodificar').find(":selected").val();
+      if(dia!="" && horario!=""){
+        $("#diastextmodificar").val($("#diastextmodificar").val()+dia+" "+horario+" /-/ ")
+        var dia= $('#dias').find(":selected").attr("disabled","disabled");;
+        $('#diasmodificar').prop("selectedIndex",0)
+        $('#horariomodificar').prop("selectedIndex",0)
+      }
+      
+    }
+    borrarhorario(){
+      $("#diastext").val("");
     }
     bcmodificar(){
       var fini=$("#bcfinicio").val();
@@ -108,31 +140,46 @@ export class CursosComponent implements OnInit, OnChanges{
       var profesor =$('#bcprofesor').find(":selected").val();
       var icono =$("input[name=bccolorradio]:checked").val();
       var color =$('#bccolormateria').find(":selected").val();
-      swal({
-        title: 'Estas Seguro?',
-        text: "Modificara los datos de la cursada",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, Modificar!'
-      }).then((result) => {
-        if (result.value) {
-        this.cursoService.modificarcursada(cursadaid,fini,ffin,icono,materiauid,materia,numerocursada,color,carrera,profesor)
-          $("#bcformcursada").trigger('reset');
-          $("#buscarcursada .close").click();
-          $("#bcfinicio").prop( "disabled", true );
-          $("#bcffin").prop( "disabled", true );
-          $("#bcprofesor").prop( "disabled", true );
-          $("input[type=radio]").prop( "disabled", true );
-          $("#bccolormateria").prop( "disabled", true );
-        swal(
-          'Modificado!',
-          'Se a modificado la cursada',
-          'success'
-        )
+      var diasyhorario =$('#diastextmodificar').val();
+      if(diasyhorario!=""){
+        swal({
+          title: 'Estas Seguro?',
+          text: "Modificara los datos de la cursada",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Modificar!'
+        }).then((result) => {
+          if (result.value) {
+          this.cursoService.modificarcursada(cursadaid,fini,ffin,icono,materiauid,materia,diasyhorario,numerocursada,color,carrera,profesor)
+            $("#bcformcursada").trigger('reset');
+            $("#buscarcursada .close").click();
+            $("#bcfinicio").prop( "disabled", true );
+            $("#bcffin").prop( "disabled", true );
+            $("#bcprofesor").prop( "disabled", true );
+            $("input[type=radio]").prop( "disabled", true );
+            $("#bccolormateria").prop( "disabled", true );
+          swal(
+            'Modificado!',
+            'Se a modificado la cursada',
+            'success'
+          )
+        }
+      })
       }
-    })
+      else{
+        swal({
+          type: 'error',
+          title: 'Ups!!!',
+          text:"Parece que no cargaste el dia de cursada",
+          showConfirmButton: false,
+          timer: 1500
+        })
+
+      }
+
+      
     }
     bceliminarmateria(){
       swal({
@@ -186,7 +233,7 @@ export class CursosComponent implements OnInit, OnChanges{
       });
     }
     materiacursada(){
-      this.materias.forEach(element=>{
+      /*this.materias.forEach(element=>{
         if(element.materia==$("#bccmateria").find(":selected").text()){
           $("#bcaño").val(element.año);
           this.cursoService.starcursadas(element.materiaid)
@@ -195,7 +242,16 @@ export class CursosComponent implements OnInit, OnChanges{
          })
           
         }
+      })*/
+      this.materias.forEach(element=>{
+        if(element.materiaid==$("#bccmateria").find(":selected").val()){
+          $("#bcaño").val(element.año);
+        }
       })
+      this.cursoService.starcursadas($("#bccmateria").find(":selected").val())
+      this.cursoService.getcursadas().subscribe(cursada =>{
+      this.cursadas=cursada;
+    })
     }
     datosmateria(){
       this.materias.forEach(element=>{
@@ -223,9 +279,24 @@ export class CursosComponent implements OnInit, OnChanges{
       var profesor =$('#profesor').find(":selected").val();
       var icono =$("input[name=colorradio]:checked").val();
       var color =$('#colormateria').find(":selected").val();
-      this.cursoService.altacursada(fini,ffin,icono,materiauid,materia,numerocursada,color,carrera,profesor)
-      $("#Crearclase .close").click()
-      $("#fcrearclase").trigger('reset');
+      var dias=$('#diastext').val();
+      if(dias==""){
+        swal({
+          type: 'error',
+          title: 'Ups!!!',
+          text:"Parece que no cargaste el dia de cursada",
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+      else
+      {
+        this.cursoService.altacursada(fini,ffin,icono,materiauid,materia,dias,numerocursada,color,carrera,profesor)
+        $("#Crearclase .close").click()
+         $("#fcrearclase").trigger('reset');
+      }
+     
+      
     }
     Altausuario(){
       var dni=$("#documento").val();
