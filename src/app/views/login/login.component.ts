@@ -82,16 +82,16 @@ ngOnInit() {
     
   async recuperar(){
     const {value: email} = await swal({
-      title: 'Ingrese su direccion de email ',
+      title: 'Ya falta menos, no desesperes',
       input: 'email',
-      inputPlaceholder: 'Ingrese su'
+      inputPlaceholder: 'Por favor ingresa tu email'
     })
     
     if (email) {
       this.auth.resetPassword(email)
       swal({
         type: 'success',
-        title: 'Se envio correo de recuperacion',
+        title: 'Listo!, revisa tu correo!',
         toast: true,
         position: 'center',
         showConfirmButton: false,

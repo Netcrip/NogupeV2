@@ -195,8 +195,8 @@
                     <h1>Crear cursada</h1>
                     <form ngNativeValidate (ngSubmit)="altaclase()" id="fcrearclase" >
                         <div class="form-group">
-                            <label for="cursadan">fecha inicio</label>
-                            <input type="number" min="1" class="form-control" id="cursadan" required>
+                            <label for="cursadan">Codigo de la Cursada</label>
+                            <input type="text" minlength="1" class="form-control" id="cursadan" required>
                         </div>
                       <div class="form-group">
                         <label for="finicio">fecha inicio</label>
@@ -327,14 +327,14 @@
                         </div>
                         <div class="form-group">
                             <label for="mat">Seleccione Materia</label>
-                            <select class="form-control" id="materias" required (change)="datosmateria()" selectedIndex=-1>
+                            <select class="form-control" id="materiase" required (change)="datosmateria()" selectedIndex=-1>
                                 <option value="" selected disabled hidden>Seleccionar</option>
                                 <option *ngFor="let materia of materias" [value]=materia.materiaid >{{materia.materia}}</option>
                             </select>
                         </div>
                         <div class="form-group">
                                 <label for="año">año</label>
-                                <input type="number" min="1" max="6"class="form-control" id="año" required disabled>
+                                <input type="number" min="1" max="6"class="form-control" id="año" disabled>
                         </div>
                         <button type="button" id="eliminar" (click)="eliminarmateria()" class="btn btn-danger btn-block" style="display: none;">Eliminar</button>
                         <button type="submit" class="btn btn-info btn-block" data-dismiss="modal" >Cerrar</button>

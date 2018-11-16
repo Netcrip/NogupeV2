@@ -161,10 +161,14 @@ export class CursosComponent implements OnInit, OnChanges{
           )
         }
       })
+      $("#bcmodificar").hide();
+      $("#bceliminar").hide();
+      $("#bcformcursada").trigger('reset');
+      $("#buscarcursada .close").click();
       
     }
     cargarmaterias(){
-      this.mat.start($('#carreras').find(":selected").text());
+      this.mat.start($('#carreramat').find(":selected").text());
       this.mat.getMaterias().subscribe(materia=>{
         this.materias=materia;
       });
@@ -189,9 +193,9 @@ export class CursosComponent implements OnInit, OnChanges{
     }
     datosmateria(){
       this.materias.forEach(element=>{
-        if(element.materiaid==$("#materias").find(":selected").val()){
+        if(element.materiaid==$("#materiase").find(":selected").val()){
           $("#año").val(element.año)
-          $("#año").prop('disabled', false);
+          //$("#año").prop('disabled', false);
           $("#eliminar").show()
         }
       })
@@ -229,7 +233,8 @@ export class CursosComponent implements OnInit, OnChanges{
      this.router.navigate(['nogupe/clase/',s])
     }
 
-    eliminarmateria(){
+    eliminarmateria(){   
+      let materia=$("#materiase").find(":selected").val();
       swal({
         title: 'Estas Seguro?',
         text: "No podra revertir la eliminacion",
@@ -240,7 +245,7 @@ export class CursosComponent implements OnInit, OnChanges{
         confirmButtonText: 'Si, Eliminar!'
       }).then((result) => {
         if (result.value) {
-          this.mat.eliminarmateria($("#materias").find(":selected").val());
+         this.mat.eliminarmateria(materia);
           
           swal(
             'Eliminado!',
@@ -252,6 +257,8 @@ export class CursosComponent implements OnInit, OnChanges{
       this.materias=[];
       $("#formeliminar").trigger('reset');
       $("#buscarmateria .close").click();
+      $("#eliminar").hide();
+      
   }
 
   imaterias(){
