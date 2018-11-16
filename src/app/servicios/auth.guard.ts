@@ -35,7 +35,7 @@ export class AuthGuard implements CanActivate {
   succes(){
     swal({
       type: 'success',
-      title: 'Signed in successfully',
+      title: 'Gracias Por volcer',
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
@@ -45,7 +45,7 @@ export class AuthGuard implements CanActivate {
   error(){
     swal({
       type: 'error',
-      title: 'Signed in Error',
+      title: 'Ups.! algo salio mal prueba entrar de nuevo',
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
