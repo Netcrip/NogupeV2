@@ -35,7 +35,7 @@ export class AuthGuard implements CanActivate {
   succes(){
     swal({
       type: 'success',
-      title: 'Gracias Por volcer',
+      title: 'Gracias Por volver',
       toast: true,
       position: 'top-end',
       showConfirmButton: false,

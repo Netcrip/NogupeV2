@@ -4,11 +4,11 @@
             <div class="card">
             <div class="card-header">                
                 <nav class="nav nav-pills flex-column flex-sm-row">
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#crearmateria">Crear materia</a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#buscarmateria">Buscar materia</a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#Crearclase">Crear cursada</a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#buscarcursada">Buscar cursada</a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#Altausuario">Alta usuario</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#crearmateria">Crear nueva materia</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#buscarmateria">Buscar materia por carrera</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#Crearclase">Crear nueva cursada</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#buscarcursada">Buscar cursada por materias</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#Altausuario">Crear pre-inscripcion del usuario</a>
                 </nav>
             </div>
         </div>
@@ -144,7 +144,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Crear Materia</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Crear nueva materia</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -152,27 +152,32 @@
             <div class="modal-body">
     
                     <div class="container">
-                            <h1>Crear Materia</h1>
-                            <form ngNativeValidate  (ngSubmit)="altamateria()" >
+                            <h4>Vamos a crear una nueva materia..</h4>
+                            <form class="form" ngNativeValidate  (ngSubmit)="altamateria()" >
                               <div class="form-group">
-                                <label for="ano">año</label>
+                                <label for="ano">por favor ingresa el año en que se desarrolla</label>
                                 <input type="number" min="1" max="6"class="form-control" id="ano" required>
                               </div>
                          
                               <div class="form-group">
-                                <label for="carrera">Nombre Carrera</label>
+                                <label for="carrera">¿de que carrera se trata?</label>
                                 <select class="form-control" id="carrera" required>
+                                    <option value="" selected disabled hidden>por favor seleciona una carrera..</option>
                                     <option *ngFor="let nomcarrera of carreras" [value]="nomcarrera">{{nomcarrera}}</option>
                                 </select>
                               </div>
                               <div class="form-group">
-                                    <label for="materia">Nombre materia</label>
+                                    <label for="materia">para finalizar ingresa el nombre de la materia</label>
                                     <input type="text" class="form-control" id="materia" #materia required>
                                 </div>
-                              <button type="submit" class="btn btn-success btn-block" >cargar</button>
+                              <button type="submit" class="btn btn-success btn-block mb-2" >Crear la Materia!!</button>
                             </form>
                             
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+                  
+                          </div>
             </div>
             
  
@@ -184,7 +189,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Crear cursada</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Crear nueva cursada</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -192,46 +197,46 @@
             <div class="modal-body">
     
                 <div class="container">
-                    <h1>Crear cursada</h1>
-                    <form ngNativeValidate (ngSubmit)="altaclase()" id="fcrearclase" >
+                    <h4>Vamos a crear una nueva cursada..</h4>
+                    <form class="form" ngNativeValidate (ngSubmit)="altaclase()" id="fcrearclase" >
                         <div class="form-group">
-                            <label for="cursadan">Codigo de la Cursada</label>
+                            <label for="cursadan">por favor ingresa el codigo de la cursdada</label>
                             <input type="text" minlength="1" class="form-control" id="cursadan" required>
                         </div>
                       <div class="form-group">
-                        <label for="finicio">fecha inicio</label>
+                        <label for="finicio"> ahora necesitamos la fecha inicio</label>
                         <input type="date" min="1" max="6"class="form-control" id="finicio" required>
                       </div>
                       <div class="form-group">
-                        <label for="finicio">fecha finalizacion</label>
+                        <label for="finicio"> y la fecha finalizacion</label>
                         <input type="date" min="1" max="6"class="form-control" id="ffin" required>
                       </div>
 
                       <div class="form-group">
-                        <label for="carreramat">Nombre Carrera</label>
-                        <select class="form-control" id="carreramat" required (change)="cargarmaterias()">
-                                <option value="" selected disabled hidden>Seleccionar</option>
+                        <label for="carreramat">¿a que carrera pertenece?</label>
+                        <select class="form-control" id="carreramat" required (change)="cargarmateriascur()">
+                                <option value="" selected disabled hidden>por favor selecciona una carrera</option>
                             <option *ngFor="let nomcarrera of carreras" [value]="nomcarrera">{{nomcarrera}}</option>
                         </select>
                       </div>
                       
                       <div class="form-group">
-                        <label for="mat">Seleccione Materia</label>
+                        <label for="mat">¿de que materia?</label>
                         <select class="form-control" id="mat" required>
-                                <option value="" selected disabled hidden>Seleccionar</option>
+                                <option value="" selected disabled hidden>por favor selecciona una materia</option>
                             <option *ngFor="let materia of materias" [value]=materia.materiaid >{{materia.materia}}</option>
                         </select>
 
                       </div>
                         <div class="form-group">
-                            <label for="profesor">Seleccione profesor</label>
+                            <label for="profesor">necesitamos asignar a un profesor</label>
                             <select class="form-control" id="profesor" required>
-                                <option value="" selected disabled hidden>Seleccionar</option>
+                                <option value="" selected disabled hidden>por favor selecciona un profesor</option>
                                 <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="iconoclase">Seleccione Icono</label>
+                            <label for="iconoclase">por favor selecciona un icono representativo</label>
                         <div class="form-check" id="iconoclase">
                             <label class="form-check-label col-4">
                               <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios1" value="fa-calculator" checked="">
@@ -260,8 +265,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="colormateria">Seleccione color</label>
+                            <label for="colormateria">y por ultimo un color</label>
                             <select class="form-control" id="colormateria" required>
+                                <option value="" selected disabled hidden>por favor selecciona un color</option>
                                 <option *ngFor="let color of color" [value]="color.val">{{color.nombre}}</option>
                             </select>
                         </div>
@@ -270,6 +276,10 @@
                     </form>
                     
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+              
+                      </div>
             </div>
           </div>
         </div>
@@ -279,20 +289,21 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Crear Usuario</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Crear pre-inscripcion del usuario</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-                <form ngNativeValidate (ngSubmit)="Altausuario()" >
+                <form class="form" ngNativeValidate (ngSubmit)="Altausuario()" >
                     <div class="form-group">
-                        <label for="documento">Documento</label>
+                        <label for="documento">por favor ingrese documento</label>
                         <input type="text"  class="form-control" id="documento" required minlength="6" maxlength="8" pattern="[0-9.]+">
                     </div>
                     <div class="form-group">
-                        <label for="usuariotipo">tipo de Usuario</label>
+                        <label for="usuariotipo">¿Que tipo de usuario es?</label>
                         <select class="form-control" id="usuariotipo" required>
+                                <option value="" selected disabled hidden>Seleccione una opcion..</option>
                             <option *ngFor="let tipo of tipousuario" [value]=tipo>{{tipo}}</option>
                         </select>
                         
@@ -300,6 +311,10 @@
                     <button type="submit" class="btn btn-success btn-block">cargar</button>
                 </form>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+      
+              </div>
           </div>
         </div>
 </div>
@@ -308,7 +323,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Buscar</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Buscar materia por carrera</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -316,30 +331,34 @@
             <div class="modal-body">
     
                 <div class="container">
-                    <h1>Buscar Materia</h1>
-                    <form ngNativeValidate id="formeliminar">
+                    <h4>Vamos a buscar una materia..</h4>
+                    <form  class="form" ngNativeValidate id="formeliminar">
                         <div class="form-group">
-                            <label for="mate">Nombre Carrera</label>
+                            <label for="carreras">¿de que  carrera quieres buscar?</label>
                             <select class="form-control" id="carreras" required (change)="cargarmaterias()">
-                                <option value="" selected disabled hidden>Seleccionar</option>
+                                <option value="" selected disabled hidden>por favor seleciona una carrera..</option>
                                 <option *ngFor="let nomcarrera of carreras" [value]="carreras">{{nomcarrera}}</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="mat">Seleccione Materia</label>
+                            <label for="mat">¿cual materia es?</label>
                             <select class="form-control" id="materiase" required (change)="datosmateria()" selectedIndex=-1>
-                                <option value="" selected disabled hidden>Seleccionar</option>
+                                <option value="" selected disabled hidden>por favor seleciona una materia</option>
                                 <option *ngFor="let materia of materias" [value]=materia.materiaid >{{materia.materia}}</option>
                             </select>
                         </div>
                         <div class="form-group">
-                                <label for="año">año</label>
+                                <label for="año"> el año correspondiente a la materia selecionada es </label>
                                 <input type="number" min="1" max="6"class="form-control" id="año" disabled>
                         </div>
-                        <button type="button" id="eliminar" (click)="eliminarmateria()" class="btn btn-danger btn-block" style="display: none;">Eliminar</button>
-                        <button type="submit" class="btn btn-info btn-block" data-dismiss="modal" >Cerrar</button>
+                        <button type="button" id="eliminar" (click)="eliminarmateria()" class="btn btn-danger btn-block eliminar" style="display: none;">Eliminar</button>
+                     
                     </form>                        
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+          
+                  </div>
             </div>
           </div>
         </div>
@@ -350,7 +369,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Buscar</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Buscar cursada por materias</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -358,48 +377,48 @@
             <div class="modal-body">
     
                 <div class="container">
-                    <h1>Buscar Materia</h1>
-                    <form ngNativeValidate id="bcformcursada">
+                        <h4>Vamos a buscar una cursada..</h4>
+                    <form class="form" ngNativeValidate id="bcformcursada">
                         <div class="form-group">
-                            <label for="bccarrera">Nombre Carrera</label>
+                            <label for="bccarrera">¿de que  carrera quieres buscar?</label>
                             <select class="form-control" id="bccarrera" required (change)="carreracursada()">
-                                <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option value="" selected disabled hidden>por favor seleciona una carrera..</option>
                                 <option *ngFor="let nomcarrera of carreras" [value]="carreras">{{nomcarrera}}</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="bccmateria">Seleccione Materia</label>
-                            <select class="form-control" id="bccmateria" required (change)="materiacursada()" selectedIndex=-1>
-                                <option value="" selected disabled hidden>Seleccionar</option>
+                                <label for="bccmateria">¿de que materia es?</label>
+                                <select class="form-control" id="bccmateria" required (change)="materiacursada()" selectedIndex=-1>
+                                <option value="" selected disabled hidden>por favor seleciona una materia</option>
                                 <option *ngFor="let cursadabaj of materias" [value]=cursadabaj.materiaid >{{cursadabaj.materia}}</option>
                             </select>
                         </div>
                         <div class="form-group">
-                                <label for="bcaño">año</label>
+                                <label for="bcaño"> el año correspondiente a la materia selecionada es </label>
                                 <input type="number" min="1" max="6"class="form-control" id="bcaño" required disabled>
                         </div>
 
                         <div class="form-group">
-                                <label for="bccursadas">Seleccione cursada</label> 
+                                <label for="bccursadas">¿cual cursada es?</label> 
                                 <select class="form-control" id="bccursadas" required (change)="cargarcursada()" selectedIndex=-1>
-                                    <option value="" selected disabled hidden>Seleccionar</option>
+                                    <option value="" selected disabled hidden>por favor seleciona una cursada</option>
                                     <option *ngFor="let cursadas of cursadas" [value]=cursadas.cursadaid >{{cursadas.numerocursada}}</option>
                                 </select>
                             </div>
 
                      
                                 <div class="form-group">
-                                    <label for="bcfinicio">fecha inicio</label>
+                                    <label for="bcfinicio">la fecha inicio de la cursada es</label>
                                     <input type="date" min="1" max="6"class="form-control" id="bcfinicio" required disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label for="bcffin">fecha finalizacion</label>
+                                    <label for="bcffin">la fecha finalizacion de la cursada es</label>
                                     <input type="date" min="1" max="6"class="form-control" id="bcffin" required disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label for="bcprofesor">Seleccione profesor</label >
+                                    <label for="bcprofesor">¿si quiere cambiar el profesor seleccione uno nuevo?</label >
                                     <select class="form-control" id="bcprofesor" required disabled>
-                                        <option value="" selected disabled hidden>Seleccionar</option>
+                                        <option value="" selected disabled hidden>se habilitar cuando se seleccione la cursada</option>
                                         <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
                                     </select>
                                 </div>
@@ -433,23 +452,27 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="bccolormateria">Seleccione color</label>
+                                    <label for="bccolormateria">¿si quiere cambiar el color por favor seleccione uno nuevo?</label>
                                     <select class="form-control" id="bccolormateria" required disabled>
-                                        <option value="" selected disabled hidden>Seleccionar</option>
+                                        <option value="" selected disabled hidden>se habilitar cuando se seleccione la cursada</option>
                                         <option *ngFor="let color of color" [value]="color.val">{{color.nombre}}</option>
                                     </select>
                                 </div>
                         <div class="row mb-1">
                             <div class="col-6">
-                                    <button type="button" id="bcmodificar" (click)="bcmodificar()" class="btn btn-success btn-block" style="display: none;">Modificar</button>
+                                    <button type="button" id="bcmodificar" (click)="bcmodificar()" class="btn btn-success btn-block eliminar" style="display: none;">Modificar</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" id="bceliminar" (click)="bceliminarmateria()" class="btn btn-danger btn-block" style="display: none;">Eliminar</button>
+                                <button type="button" id="bceliminar" (click)="bceliminarmateria()" class="btn btn-danger btn-block eliminar" style="display: none;">Eliminar</button>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-info btn-block" data-dismiss="modal" >Cerrar</button>
+                       
                     </form>                        
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+          
+                  </div>
             </div>
           </div>
         </div>
@@ -469,7 +492,7 @@
     
                     <div class="container">
                             <h1>Crear Materia</h1>
-                            <form ngNativeValidate (ngSubmit)="inscripcioncursada()" >                         
+                            <form class="form" ngNativeValidate (ngSubmit)="inscripcioncursada()" >                         
                               <div class="form-group">
                                 <label for="icarrera">Nombre Carrera</label>
                                 <select class="form-control" id="icarrera" required>
@@ -501,6 +524,10 @@
                               <button type="submit" class="btn btn-success btn-block" >Inscribirse</button>
                             </form>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+                  
+                          </div>
             </div>
             
  

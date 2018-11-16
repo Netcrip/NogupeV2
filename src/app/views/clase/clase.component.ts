@@ -200,5 +200,9 @@ export class ClaseComponent implements OnInit {
     })
     
   }
+  cerrarmodal(){
+    $(".close").click()
+    $(".form").trigger('reset');
+  }
   
 }

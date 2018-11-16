@@ -168,6 +168,12 @@ export class CursosComponent implements OnInit, OnChanges{
       
     }
     cargarmaterias(){
+      this.mat.start($('#carreras').find(":selected").text());
+      this.mat.getMaterias().subscribe(materia=>{
+        this.materias=materia;
+      });
+    }
+    cargarmateriascur(){
       this.mat.start($('#carreramat').find(":selected").text());
       this.mat.getMaterias().subscribe(materia=>{
         this.materias=materia;
@@ -297,5 +303,9 @@ export class CursosComponent implements OnInit, OnChanges{
     });
     this.cursoService.altainscripcion(this.inscripciones)
   }
-
+  cerrarmodal(){
+    $(".close").click();
+    $(".form").trigger('reset');
+    $(".eliminar").hide();
+  }
 }

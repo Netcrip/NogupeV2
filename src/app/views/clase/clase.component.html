@@ -7,9 +7,9 @@
                 <div class="card-header">
                     <nav class="nav nav-pills flex-column flex-sm-row">
                     <a class="flex-sm-fill text-sm-center nav-link" *ngFor="let dato of datosclase" >{{dato.materia}}</a>
-                    <a class="flex-fill text-sm-center nav-link active" href="#" data-toggle="modal" data-target="#apresente">Presentismo</a>
-                    <a class="flex-sm-fill text-sm-center nav-link" (click)=promedio() data-toggle="modal" data-target="#vernotas" href="#">Notas</a>
-                    <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#listadopresentes">Listado Presentes</a>
+                    <a class="flex-fill text-sm-center nav-link active" href="#" data-toggle="modal" data-target="#apresente">Dar presente!!!</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" (click)=promedio() data-toggle="modal" data-target="#vernotas" href="#">Ver listado de notas</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#listadopresentes">Listado de Presentes</a>
                     </nav>
                 </div>
               </div>
@@ -23,12 +23,12 @@
         <div class="card-header">
             <nav class="nav nav-pills flex-column flex-sm-row">
             <a class="flex-sm-fill text-sm-center nav-link" *ngFor="let dato of datosclase" >{{dato.materia}}</a>
-            <a class="flex-fill text-sm-center nav-link active" href="#" data-toggle="modal" data-target="#presente"> Genera Presentismo</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#verpresentes">Ver Presentismo Token</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#listadopresentes">Listado Presentes</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" (click)=promedio() data-toggle="modal" data-target="#vernotas">Ver Notas</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#notascarga">Cargar Notas</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#autorizacion">Autorizaciones cursada</a>
+            <a class="flex-fill text-sm-center nav-link active" href="#" data-toggle="modal" data-target="#presente"> Tomar Asistencia</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#verpresentes">Ver la Asistencia Tomada</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#listadopresentes">Listado de Presemtes</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="#" (click)=promedio() data-toggle="modal" data-target="#vernotas">Ver Notas cargadas</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#notascarga">Cargar Nuevas Notas</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#autorizacion">Autorizaciones de Alumnos</a>
             </nav>
         </div>
       </div>
@@ -93,7 +93,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <form (ngSubmit)=Generarcodigo() ngNativeValidate id="generartoken">
+              <form class="form" (ngSubmit)=Generarcodigo() ngNativeValidate id="generartoken">
                 <div class="container mb-2 text-center" *ngFor="let dato of datosclase" >
                   <h2>{{dato.materia}}</h2>
                   <div> Genere el codigo</div>
@@ -102,13 +102,17 @@
                 <div class="form-group">
                     <label for="mat">Seleccione Tiempo</label>
                     <select class="form-control" id="segundos" required selectedIndex=-1>
-                        <option value="" selected disabled hidden>Seleccionar</option>
+                        <option value="" selected disabled hidden>Seleccione la duracion</option>
                         <option *ngFor="let seg of tiempo" [value]=seg>{{seg}} seg</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-success btn-block">Generar Token</button>
+                <button type="submit" class="btn btn-success btn-block">Generar codigo para tomar asistencia</button>
               </form>
-            
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+    
             </div>
             
           </div>
@@ -119,7 +123,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cargar Notas</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Formulario para cargar Nuevas Notas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -147,7 +151,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
 
           </div>
         </div>
@@ -159,10 +163,11 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Autorizar usuario</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Autorizaciones de cursada para alumnos</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+       
       </div>
       <div class="modal-body">
         <div class="form-group col-12">
@@ -173,7 +178,7 @@
           </div>
         </div>      
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
         </div>
       </div>
     </div>
@@ -185,22 +190,26 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Presentismo</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Presente!!!</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)=confirmarasistencia(user.uid,user.displayName) ngNativeValidate id="afpresente">
+        <form class="form" (ngSubmit)=confirmarasistencia(user.uid,user.displayName) ngNativeValidate id="afpresente">
           <div class="container mb-2 text-center" *ngFor="let dato of datosclase" >
             <h2>{{dato.materia}}</h2>
-            <div> Genere el codigo
+            <div> Ingrese el Codigo para dar el presente!!
             </div>
             <input type="text" maxlength="6" minlength="3" id="acodigo" required>
           </div>
-        <button type="submit" class="btn btn-success btn-block">Confirmar Presentismo</button>
+        <button type="submit" class="btn btn-success btn-block">Confirmar Asistencia</button>
         </form>    
-      </div>    
+      </div> 
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+
+      </div>   
     </div>
   </div>
 </div>
@@ -210,7 +219,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ver Notas</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Listado de las notas cargadas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -238,7 +247,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
 
           </div>
         </div>
@@ -251,7 +260,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Token Generados</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Asistencias generadas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -261,8 +270,8 @@
             <table class="table table-dark">
               <thead>
                 <tr>
-                  <th>Dia</th>
-                  <th>Token</th>
+                  <th>dia y hora</th>
+                  <th>codigo</th>
                 </tr>
               </thead>
               <tbody>
@@ -275,7 +284,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
 
           </div>
         </div>
@@ -288,7 +297,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header bg-gray">
-          <h5 class="modal-title" id="exampleModalLabel">Alumnos Presentes</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Alumnos que confirmaron asistencia</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -311,7 +320,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
 
           </div>
         </div>
@@ -324,7 +333,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Token Generados</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Listado de toda la asistencia tomada</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -347,7 +356,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
 
         </div>
       </div>
