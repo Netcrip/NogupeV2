@@ -2,18 +2,23 @@
     <div *ngIf="user.cuenta=='admin';else usuarioyprofe" class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header">
+                <div class="card-body">
                     <nav class="nav nav-pills flex-column flex-sm-row">
-                        <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#crearmateria">Crear
-                            materia</a>
-                        <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#buscarmateria">Buscar
-                            materia</a>
-                        <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#Crearclase">Crear
-                            cursada</a>
-                        <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#buscarcursada">Buscar
-                            cursada</a>
-                        <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#Altausuario">Alta
-                            usuario</a>
+                        <a class="flex-sm-fill text-center nav-link" href="#" data-toggle="modal" data-target="#crearmateria">
+                            <h4>Crear Materia</h4>
+                        </a>
+                        <a class="flex-sm-fill text-center nav-link" href="#" data-toggle="modal" data-target="#buscarmateria">
+                            <h4>Buscar Materia</h4>
+                        </a>
+                        <a class="flex-sm-fill text-center nav-link" href="#" data-toggle="modal" data-target="#Crearclase">
+                            <h4>Crear Cursada</h4>
+                        </a>
+                        <a class="flex-sm-fill text-center nav-link" href="#" data-toggle="modal" data-target="#buscarcursada">
+                            <h4>Buscar Cursada</h4>
+                        </a>
+                        <a class="flex-sm-fill text-center nav-link" href="#" data-toggle="modal" data-target="#Altausuario">
+                            <h4>Alta Usuario</h4>
+                        </a>
                     </nav>
                 </div>
             </div>
@@ -148,6 +153,8 @@
 
 
     <!----Modales-->
+
+    <!----Alta Materia-->
     <div class="modal fade" id="crearmateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -159,37 +166,33 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
                     <div class="container">
-                        <h1>Crear Materia</h1>
                         <form ngNativeValidate (ngSubmit)="altamateria()">
                             <div class="form-group">
-                                <label for="ano">año</label>
+                                <label for="ano">Año de Carrera</label>
                                 <input type="number" min="1" max="6" class="form-control" id="ano" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="carrera">Nombre Carrera</label>
+                                <label for="carrera">Carrera</label>
                                 <select class="form-control" id="carrera" required>
                                     <option *ngFor="let nomcarrera of carreras" [value]="nomcarrera">{{nomcarrera}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="materia">Nombre materia</label>
+                                <label for="materia">Nombre Materia</label>
                                 <input type="text" class="form-control" id="materia" #materia required>
                             </div>
-                            <button type="submit" class="btn btn-success">Cargar</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success btn-block" data-dismiss="crearmateria">Cargar</button>
+                            <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">Cancelar</button>
                         </form>
-
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
 
+    <!----Alta Cursada-->
     <div class="modal fade" id="Crearclase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -202,18 +205,20 @@
                 <div class="modal-body">
 
                     <div class="container">
-                        <h1>Crear cursada</h1>
                         <form ngNativeValidate (ngSubmit)="altaclase()" id="fcrearclase">
+
                             <div class="form-group">
-                                <label for="cursadan">fecha inicio</label>
+                                <label for="cursadan">Fecha Inicio</label>
                                 <input type="number" min="1" class="form-control" id="cursadan" required>
                             </div>
+
                             <div class="form-group">
-                                <label for="finicio">fecha inicio</label>
+                                <label for="finicio">Fecha Inicio</label>
                                 <input type="date" min="1" max="6" class="form-control" id="finicio" required>
                             </div>
+
                             <div class="form-group">
-                                <label for="finicio">fecha finalizacion</label>
+                                <label for="finicio">Fecha Finalizacion</label>
                                 <input type="date" min="1" max="6" class="form-control" id="ffin" required>
                             </div>
 
@@ -231,15 +236,16 @@
                                     <option value="" selected disabled hidden>Seleccionar</option>
                                     <option *ngFor="let materia of materias" [value]=materia.materiaid>{{materia.materia}}</option>
                                 </select>
-
                             </div>
+
                             <div class="form-group">
-                                <label for="profesor">Seleccione profesor</label>
+                                <label for="profesor">Seleccione Profesor</label>
                                 <select class="form-control" id="profesor" required>
                                     <option value="" selected disabled hidden>Seleccionar</option>
                                     <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label for="iconoclase">Seleccione Icono</label>
                                 <div class="form-check" id="iconoclase">
@@ -275,6 +281,7 @@
                                     </label>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label for="colormateria">Seleccione color</label>
                                 <select class="form-control" id="colormateria" required>
@@ -282,7 +289,8 @@
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-success btn-block " data-dismiss="crearmateria">cargar</button>
+                            <button type="submit" class="btn btn-success btn-block" data-dismiss="crearmateria">Cargar</button>
+                            <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">Cancelar</button>
                         </form>
 
                     </div>
@@ -291,6 +299,7 @@
         </div>
     </div>
 
+    <!----Alta Usuario-->
     <div class="modal fade" id="Altausuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -309,25 +318,27 @@
                                 pattern="[0-9.]+">
                         </div>
                         <div class="form-group">
-                            <label for="usuariotipo">tipo de Usuario</label>
+                            <label for="usuariotipo">Tipo de Usuario</label>
                             <select class="form-control" id="usuariotipo" required>
                                 <option *ngFor="let tipo of tipousuario" [value]=tipo>{{tipo}}</option>
                             </select>
-
                         </div>
-                        <button type="submit" class="btn btn-success btn-block">cargar</button>
+
+                        <button type="submit" class="btn btn-success btn-block" data-dismiss="crearmateria">Cargar</button>
+                        <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">Cancelar</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <!----Busqueda Materia-->
     <div class="modal fade" id="buscarmateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Buscar</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Buscar Materia</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -335,7 +346,6 @@
                 <div class="modal-body">
 
                     <div class="container">
-                        <h1>Buscar Materia</h1>
                         <form ngNativeValidate id="formeliminar">
                             <div class="form-group">
                                 <label for="mate">Nombre Carrera</label>
@@ -353,12 +363,12 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="año">año</label>
+                                <label for="año">Año</label>
                                 <input type="number" min="1" max="6" class="form-control" id="año" required disabled>
                             </div>
-                            <button type="button" id="eliminar" (click)="eliminarmateria()" class="btn btn-danger btn-block"
+                            <button type="button" class="btn btn-danger btn-block" id="eliminar" (click)="eliminarmateria()" 
                                 style="display: none;">Eliminar</button>
-                            <button type="submit" class="btn btn-info btn-block" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary btn-block" data-dismiss="modal">Cancelar</button>
                         </form>
                     </div>
                 </div>
@@ -366,13 +376,13 @@
         </div>
     </div>
 
-
+    <!----Busqueda Cursada-->
     <div class="modal fade" id="buscarcursada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Buscar</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Buscar Cursada</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -380,15 +390,16 @@
                 <div class="modal-body">
 
                     <div class="container">
-                        <h1>Buscar Materia</h1>
                         <form ngNativeValidate id="bcformcursada">
+
                             <div class="form-group">
-                                <label for="bccarrera">Nombre Carrera</label>
+                                <label for="bccarrera">Carrera</label>
                                 <select class="form-control" id="bccarrera" required (change)="carreracursada()">
                                     <option value="" selected disabled hidden>Seleccionar</option>
                                     <option *ngFor="let nomcarrera of carreras" [value]="carreras">{{nomcarrera}}</option>
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label for="bccmateria">Seleccione Materia</label>
                                 <select class="form-control" id="bccmateria" required (change)="materiacursada()"
@@ -398,12 +409,12 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="bcaño">año</label>
+                                <label for="bcaño">Año</label>
                                 <input type="number" min="1" max="6" class="form-control" id="bcaño" required disabled>
                             </div>
 
                             <div class="form-group">
-                                <label for="bccursadas">Seleccione cursada</label>
+                                <label for="bccursadas">Seleccione Cursada</label>
                                 <select class="form-control" id="bccursadas" required (change)="cargarcursada()"
                                     selectedIndex=-1>
                                     <option value="" selected disabled hidden>Seleccionar</option>
@@ -411,23 +422,25 @@
                                 </select>
                             </div>
 
-
                             <div class="form-group">
-                                <label for="bcfinicio">fecha inicio</label>
+                                <label for="bcfinicio">Fecha Inicio</label>
                                 <input type="date" min="1" max="6" class="form-control" id="bcfinicio" required
                                     disabled>
                             </div>
+
                             <div class="form-group">
-                                <label for="bcffin">fecha finalizacion</label>
+                                <label for="bcffin">Fecha Finalizacion</label>
                                 <input type="date" min="1" max="6" class="form-control" id="bcffin" required disabled>
                             </div>
+
                             <div class="form-group">
-                                <label for="bcprofesor">Seleccione profesor</label>
+                                <label for="bcprofesor">Seleccione Profesor</label>
                                 <select class="form-control" id="bcprofesor" required disabled>
                                     <option value="" selected disabled hidden>Seleccionar</option>
                                     <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label for="bciconoclase">Seleccione Icono</label>
                                 <div class="form-check" id="bciconoclase">
@@ -463,13 +476,15 @@
                                     </label>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label for="bccolormateria">Seleccione color</label>
+                                <label for="bccolormateria">Seleccione Color</label>
                                 <select class="form-control" id="bccolormateria" required disabled>
                                     <option value="" selected disabled hidden>Seleccionar</option>
                                     <option *ngFor="let color of color" [value]="color.val">{{color.nombre}}</option>
                                 </select>
                             </div>
+
                             <div class="row mb-1">
                                 <div class="col-6">
                                     <button type="button" id="bcmodificar" (click)="bcmodificar()" class="btn btn-success btn-block"
@@ -480,7 +495,8 @@
                                         style="display: none;">Eliminar</button>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-info btn-block" data-dismiss="modal">Cerrar</button>
+
+                            <button type="submit" class="btn btn-info btn-block" data-dismiss="modal">Cancelar</button>
                         </form>
                     </div>
                 </div>

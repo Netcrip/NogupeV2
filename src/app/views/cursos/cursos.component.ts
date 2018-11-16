@@ -38,10 +38,13 @@ export class CursosComponent implements OnInit, OnChanges{
     "Licenciatura en Gestión Aeroportuaria",
     "Licenciatura en  Logística",
     "Tecnicatura Universitaria en Desarrollo de Software"];
-    tipousuario=["alumno","profesor","admin"]
+
+    tipousuario=["Alumno","Profesor","Admin"]
     
-    color=[{nombre:"Naranja",val:"orange"},{nombre:"rojo",val:"red"},{nombre:"azul",val:"blue"},{nombre:"blanco",val:"white"},{nombre:"violeta",val:"violet"},{nombre:"verde",val:"green"}]
+    color=[{nombre:"Naranja",val:"orange"},{nombre:"Rojo",val:"red"},{nombre:"Azul",val:"blue"},{nombre:"Blanco",val:"white"},{nombre:"Violeta",val:"violet"},{nombre:"Verde",val:"green"}]
+    
     submitted = false;
+
     onSubmit() { this.submitted = true; } 
 
     constructor(private cursoService: CursosService, private router: Router,public auth: AuthService,private afs: AngularFirestore,private profesores:ListadoprofesorService, private mat:MateriaService) {
@@ -59,7 +62,7 @@ export class CursosComponent implements OnInit, OnChanges{
       this.profesores.getProfes().subscribe(profe => {
         this.profes = profe;
       });
-      this.cargarclasesprofesor()
+      this.cargarclasesprofesor();
       
     }
     ngOnChanges(){
