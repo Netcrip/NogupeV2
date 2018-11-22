@@ -11,6 +11,7 @@ import * as firebase from 'firebase/app';
 import {User} from '../interface/user';
 import {Dni} from '../interface/dni';
 import { map } from 'rxjs/operators';
+import swal from 'sweetalert2';
 
 
 @Injectable()
@@ -128,9 +129,25 @@ async googleLogin() {
     if(result.additionalUserInfo.isNewUser){
 
       result.user.delete();
+      swal({
+        type: 'error',
+        title: 'Google no pudo autenticar tu cuenta',
+        toast: true,
+        position: 'center',
+        showConfirmButton: false,
+        timer: 3000
+      });
 
     }
   }).catch(function(error){
+    swal({
+      type: 'error',
+      title: 'No se pude establecer conexion con Google',
+      toast: true,
+      position: 'center',
+      showConfirmButton: false,
+      timer: 3000
+    });
         
   });
 
@@ -142,17 +159,25 @@ async facebookLogin() {
     if(result.additionalUserInfo.isNewUser){
 
       result.user.delete();
+      swal({
+        type: 'error',
+        title: 'Facebook no pudo autenticar tu cuenta',
+        toast: true,
+        position: 'center',
+        showConfirmButton: false,
+        timer: 3000
+      });
 
     }
   }).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // The email of the user's account used.
-    var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
-    // ...
+    swal({
+      type: 'error',
+      title: 'No se pude establecer conexion con Facebook',
+      toast: true,
+      position: 'center',
+      showConfirmButton: false,
+      timer: 3000
+    });
   });
 }
 
@@ -210,7 +235,16 @@ emailLogin(email: string, password: string) {
      // this.notify.update('Welcome back!', 'success');
       //return this.updateUserData(credential.user);
     })
-    .catch(error => {});
+    .catch(error => {
+      swal({
+        type: 'error',
+        title: 'Revisa la contraseña y/o usuario',
+        toast: true,
+        position: 'center',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    });
 }
 
 // Sends email allowing user to reset password

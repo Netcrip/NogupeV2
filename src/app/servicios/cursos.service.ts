@@ -31,11 +31,14 @@ export class CursosService {
   consultainscipciones: Observable<Inscripciones[]>;
   profeclasesCollection:AngularFirestoreCollection<Cursada>;
   profeclases: Observable<Cursada[]>;
+  cursadasadm:Observable<Cursada[]>;
+  cursadasCollectionadm:AngularFirestoreCollection<Cursada>;
 
 
 
   constructor(public afs: AngularFirestore, public auth: AuthService) {
     this.start();
+    this.starttodaslascursadas();
   }
   start(){
     var uid=  this.auth.getuid();
@@ -254,5 +257,20 @@ export class CursosService {
       }
     });
   }
+  getcursadasadm(){
+    return this.cursadasadm;
+  }
 
+  starttodaslascursadas(){
+    this.cursadasCollectionadm = this.afs.collection<Cursada>('cursadas', ref => ref.where("estado","==","activa"));
+    this.cursadasadm = this.cursadasCollectionadm.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Cursada;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+
+  
 }

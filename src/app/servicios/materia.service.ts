@@ -13,9 +13,11 @@ export class MateriaService {
   Materiacollection: AngularFirestoreCollection<Materia>;
   Materias: Observable<Materia[]>;
   Materiasaño: Observable<Materia[]>;
+  Materiacollectionadm: AngularFirestoreCollection<Materia>;
+  Materiasadm: Observable<Materia[]>;
 
   constructor(public afs: AngularFirestore) {
-    
+    this.startmateriasadm();
    }
 
    start(carrera){
@@ -28,6 +30,20 @@ export class MateriaService {
       }))
     );
    }
+   
+   startmateriasadm(){
+    this.Materiacollectionadm = this.afs.collection<Materia>('Materias', ref => ref.where('estado',"==","activa"));
+    this.Materiasadm = this.Materiacollectionadm.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Materia;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+   }
+   getMateriasadm() {
+    return this.Materiasadm;
+  }
    getMaterias() {
     return this.Materias;
   }
@@ -37,7 +53,7 @@ export class MateriaService {
       Ref.update({"estado":"inactiva"}).then(_ => console.log('update!'));
   }
   startmateriaaño(carrera,año){
-    this.Materiacollection = this.afs.collection<Materia>('Materias', ref => ref.where('carrera',"==",carrera).where('estado',"==","activa").where("año","==",año));
+    this.Materiacollection = this.afs.collection<Materia>('Materias', ref => ref.where('carrera',"==",carrera).where('estado',"==","activa").where("ano","==",año));
     this.Materiasaño = this.Materiacollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Materia;

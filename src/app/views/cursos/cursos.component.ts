@@ -33,7 +33,9 @@ export class CursosComponent implements OnInit, OnChanges{
     inscripciones: Inscripciones;
     cursosacargo:Cursada[];
     nombre:string;
-
+    materiasadm:Materia[];
+    cursadasadm:Cursada[];
+    
     carreras = ["Licenciatura en Comercio Internacional",
     "Licenciatura en Turismo", "Licenciatura en Seguridad e Higiene",    
     "Licenciatura en Gestión Aeroportuaria",
@@ -63,6 +65,8 @@ export class CursosComponent implements OnInit, OnChanges{
         this.profes = profe;
       });
       this.cargarclasesprofesor()
+      this.getcursadasadm();
+      this.getmaterias();
       
     }
     ngOnChanges(){
@@ -71,6 +75,8 @@ export class CursosComponent implements OnInit, OnChanges{
         this.cursos = cursos;
       });
       this.cargarclasesprofesor()
+      this.getcursadasadm();
+      this.getmaterias();
     }
     cargarclasesprofesor(){
       this.cursoService.clasesprofesorstart();
@@ -307,7 +313,7 @@ export class CursosComponent implements OnInit, OnChanges{
      this.router.navigate(['nogupe/clase/',s])
     }
 
-    eliminarmateria(){   
+    /*eliminarmateria(){   
       let materia=$("#materiase").find(":selected").val();
       swal({
         title: 'Estas Seguro?',
@@ -334,7 +340,7 @@ export class CursosComponent implements OnInit, OnChanges{
       $("#eliminar").hide();
       
   }
-
+*/
   imaterias(){
     this.mat.startmateriaaño($("#icarrera").find(":selected").text(),$("#iano").find(":selected").val())
     this.mat.getmateriaaño().subscribe(materia=>{
@@ -342,6 +348,20 @@ export class CursosComponent implements OnInit, OnChanges{
    });
    }
 
+   getmaterias(){
+     this.mat.startmateriasadm();
+     this.mat.getMateriasadm().subscribe(materias=>{
+      this.materiasadm=materias;
+     })
+     
+   
+   }
+   getcursadasadm(){
+    this.cursoService.getcursadasadm().subscribe(cursadas=>{
+      this.cursadasadm=cursadas;
+    })
+    
+   }
   
    icursadas(){
     this.cursoService.starcursadas($("#imateria").find(":selected").val())
@@ -377,4 +397,48 @@ export class CursosComponent implements OnInit, OnChanges{
     $(".form").trigger('reset');
     $(".eliminar").hide();
   }
+  eliminarmateria($mat){   
+    let materia=$mat;
+    swal({
+      title: 'Estas Seguro?',
+      text: "No podra revertir la eliminacion",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!'
+    }).then((result) => {
+      if (result.value) {
+       this.mat.eliminarmateria(materia);
+        
+        swal(
+          'Eliminado!',
+          'No podra crear mas cursadas de esta materia',
+          'success'
+        )
+      }
+    })
+    
+}
+eliminarcursada($cursada){
+  swal({
+    title: 'Estas Seguro?',
+    text: "Cerrara la cursada impidiendo nuevas inscripciones",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, Eliminar'
+  }).then((result) => {
+    if (result.value) {
+      this.cursoService.eliminarcursada($cursada);          
+      swal(
+        'Eliminado!',
+        'Cursada cerrada',
+        'success'
+      )
+    }
+  })
+  
+}
 }

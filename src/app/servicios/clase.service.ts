@@ -34,7 +34,7 @@ export class ClasesService {
   alpretoke:Observable<Alumnipresente[]>
   listadocoleccionpresentes:AngularFirestoreCollection<Alumnipresente>
   presenteslista:Observable<Alumnipresente[]>
-
+  flagpresentismo=0;
   public v:string;
   constructor(public afs: AngularFirestore, public auth:AuthService) {
   this.cargar();
@@ -171,7 +171,7 @@ export class ClasesService {
       });
   }
   confirmarpresentismo(curso,cod,tiempo,uid,uname){
-    
+   this.flagpresentismo=1; 
     let valcol = this.afs.collection<Presentismo>(`cursadas/`+curso+`/presentismo`, ref => ref.where('codigo',"==",cod));
     let val= valcol.snapshotChanges().pipe(
       map(actions => actions.map(a => {
@@ -188,11 +188,12 @@ export class ClasesService {
           showConfirmButton: false,
           timer: 1500
         })
+        this.flagpresentismo=0;
       }
       else{
         let x=0;
         element.forEach(element => {
-          if(new Date(element.valido)> new Date(tiempo)){
+          if(new Date(element.valido).getTime()> new Date().getTime() && this.flagpresentismo==1){
             x=1;
             let id=this.afs.createId();
             let presentismoref: AngularFirestoreDocument <Alumnipresente> =this.afs.doc(`cursadas/`+curso+`/presentismo/`+element.presenteid+`/alumnos/${id}`);
@@ -200,16 +201,17 @@ export class ClasesService {
               alpresenteid:id,
               uid:uid,
               uname:uname,
-              dia:tiempo,
+              dia: tiempo.getDate()+"/"+(tiempo.getMonth()+1)+"/"+tiempo.getFullYear()+" "+tiempo.getHours()+":"+tiempo.getMinutes(),
             }).then(_ =>{
+              this.flagpresentismo=0;
               let aid=this.afs.createId();
-              let dia=  tiempo.split(" ", 1);
+              let dia=  tiempo.getDate()+"/"+(tiempo.getMonth()+1)+"/"+tiempo.getFullYear();
               let presentismoref: AngularFirestoreDocument <Alumnipresente> =this.afs.doc(`cursadas/`+curso+`/Asistencia/${aid}`);
                 presentismoref.set({
                 alpresenteid:id,
                 uid:uid,
                 uname:uname,
-                dia:dia[0],
+                dia:dia,
             }).then(function(){
               swal({
                 type: 'success',
@@ -222,6 +224,7 @@ export class ClasesService {
           }
         });
         if(x==0){
+          this.flagpresentismo=0;
           swal({
             type: 'error',
             title: 'Confirme el Token!',

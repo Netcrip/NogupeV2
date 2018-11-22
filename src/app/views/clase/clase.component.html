@@ -1,298 +1,351 @@
-
 <div *ngIf="auth.user | async as user">
-    <div *ngIf="user.cuenta=='alumno'; else profesor">
-            <div class="row">
-                <div class="col">
-                <div class="card">
-                <div class="card-header">
-                    <nav class="nav nav-pills flex-column flex-sm-row">
-                    <a class="flex-sm-fill text-sm-center nav-link" *ngFor="let dato of datosclase" >{{dato.materia}}</a>
-                    <a class="flex-fill text-sm-center nav-link active" href="#" data-toggle="modal" data-target="#apresente">Dar presente!!!</a>
-                    <a class="flex-sm-fill text-sm-center nav-link" (click)=promedio() data-toggle="modal" data-target="#vernotas" href="#">Ver listado de notas</a>
-                    <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#listadopresentes">Listado de Presentes</a>
-                    </nav>
+
+  <div *ngIf="user.cuenta=='alumno'; else profesor">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="text-center" *ngFor="let dato of datosclase">{{dato.materia}}</h2>
+          </div>
+          <div class="card-body">
+            <nav class="nav flex-column flex-sm-row justify-content-center">
+              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2" data-toggle="modal" data-target="#apresente">
+                <h5>Dar presente</h5>
+              </button>
+              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2" (click)=promedio() data-toggle="modal" data-target="#vernotas">
+                <h5>Notas</h5>
+              </button>
+              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2" data-toggle="modal" data-target="#listadopresentes">
+                <h5>Presentes</h5>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #profesor>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="text-center" *ngFor="let dato of datosclase">{{dato.materia}}</h2>
+          </div>
+          <div class="card-body">
+            <nav class="nav flex-column flex-sm-row justify-content-center">
+              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2" data-toggle="modal" data-target="#presente">
+                <h5>Tomar asistencia</h5>
+              </button>
+              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2" data-toggle="modal" data-target="#verpresentes">
+                <h5>Registro de asistencias</h5>
+              </button>
+              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3 col-xl-2" data-toggle="modal" data-target="#listadopresentes">
+                <h5>Listado de presentes</h5>
+              </button>
+              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2" (click)=promedio() data-toggle="modal"
+                data-target="#vernotas">
+                <h5>Listado de notas</h5>
+              </button>
+              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2" data-toggle="modal" data-target="#notascarga">
+                <h5>Cargar notas</h5>
+              </button>
+              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2" data-toggle="modal" data-target="#autorizacion">
+                <h5>Solicitudes de alumnos</h5>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class="card">
+    <div class="card-header" data-spy="scroll">
+      <h4 class="text-center"><i class="fa fa-align-justify mr-2"></i>Muro</h4>
+    </div>
+    <div id="muro" data-spy="scroll" #scrollMe [scrollTop]="scrollMe.scrollHeight" data-offset="5" style="max-height: 400px; overflow: auto;">
+      <div *ngIf="clases?.length > 0;else noClase">
+        <div *ngFor="let clases of clases">
+          <div class="list-group">
+            <a class="list-group-item flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{clases.nombre}}</h5>
+                <small class="text-muted">{{clases.fecha}}</small>
+              </div>
+              <p class="mb-1">{{clases.texto}}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <ng-template #noClase>
+        <h5 class="text-center">¡Todavia no hay mensajes! </h5>
+      </ng-template>
+
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <div class="input-group">
+                <textarea class="form-control" #text type="text" #txt placeholder="Enviar un mensaje..." style="overflow:auto;resize:none"></textarea>
+                <div class="input-group-append">
+                  <a class="btn input-group-text" (click)="post(user.displayName,txt)">
+                    <i class="fa fa-send p-auto"></i>
+                  </a>
                 </div>
               </div>
             </div>
-            </div>
-      </div>
-<ng-template #profesor>
-    <div class="row">
-        <div class="col">
-        <div class="card">
-        <div class="card-header">
-            <nav class="nav nav-pills flex-column flex-sm-row">
-            <a class="flex-sm-fill text-sm-center nav-link" *ngFor="let dato of datosclase" >{{dato.materia}}</a>
-            <a class="flex-fill text-sm-center nav-link active" href="#" data-toggle="modal" data-target="#presente"> Tomar Asistencia</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#verpresentes">Ver la Asistencia Tomada</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#listadopresentes">Listado de Presemtes</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" (click)=promedio() data-toggle="modal" data-target="#vernotas">Ver Notas cargadas</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#notascarga">Cargar Nuevas Notas</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#" data-toggle="modal" data-target="#autorizacion">Autorizaciones de Alumnos</a>
-            </nav>
-        </div>
-      </div>
-    </div>
-    </div>
-
-</ng-template>
-<div class="card">
-    <div class="card-header" data-spy="scroll">
-        <i class="fa fa-align-justify"></i> Muro
-        <small>content</small>
-    </div>
-    <div id="muro" data-spy="scroll" #scrollMe [scrollTop]="scrollMe.scrollHeight" data-offset="5" style="max-height: 400px; overflow: auto;">
-        <div *ngIf="clases?.length > 0;else noClase">
-            <div class="card-body"></div>
-            <div *ngFor="let clases of clases " >
-        
-                
-                <div class="list-group">
-                    <a class="list-group-item list-group-item-action flex-column align-items-start" href="#">
-                    <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{clases.nombre}}</h5>
-                    <small class="text-muted">{{clases.fecha}}</small>
-                    </div>
-                    <p class="mb-1">{{clases.texto}}</p>
-                    </a>
-                </div>
-            </div>
-     </div>  
-    <ng-template #noClase>
-            <h5 class="text-center">No hay mensajes!! Puedes ser el primero... </h5>
-        </ng-template> 
-
-</div>
-    <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12">
-                 
-            <div class="form-group">
-              <div class="input-group">
-                <textarea class="form-control" #text type="text" #txt placeholder="Contenido..." style="overflow:auto;resize:none"></textarea>
-                <div class="input-group-append">
-                <a class="btn input-group-text" (click)="post(user.displayName,txt)">
-                <i class="fa fa-send"></i>
-                </a>
-            </div>
           </div>
-          </div> 
         </div>
+      </div>
+    </div>
   </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="presente" tabindex="-1" >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Presentismo</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form class="form" (ngSubmit)=Generarcodigo() ngNativeValidate id="generartoken">
-                <div class="container mb-2 text-center" *ngFor="let dato of datosclase" >
-                  <h2>{{dato.materia}}</h2>
-                  <div> Genere el codigo</div>
-                  <input type="text" maxlength="6" minlength="3" id="codigo" required>
-                </div>
-                <div class="form-group">
-                    <label for="mat">Seleccione Tiempo</label>
-                    <select class="form-control" id="segundos" required selectedIndex=-1>
-                        <option value="" selected disabled hidden>Seleccione la duracion</option>
-                        <option *ngFor="let seg of tiempo" [value]=seg>{{seg}} seg</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-success btn-block">Generar codigo para tomar asistencia</button>
-              </form>
-              
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
-    
-            </div>
-            
-          </div>
-        </div>
-</div>
 
-<div class="modal fade" id="notascarga" tabindex="-1" >
+
+  <!-- Modal Profesor -->
+  <div class="modal fade" id="presente" tabindex="-1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Presentismo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form" (ngSubmit)=Generarcodigo() ngNativeValidate id="generartoken">
+            <div class="mb-2 text-center" *ngFor="let dato of datosclase">
+              <h2>{{dato.materia}}</h2>
+              <p>Ingrese Token</p>
+              <input type="text" maxlength="6" minlength="3" id="codigo" required>
+            </div>
+            <div class="form-group">
+              <label for="mat">Seleccione duración</label>
+              <select class="form-control" id="segundos" required selectedIndex=-1>
+                <option *ngFor="let seg of tiempo" [value]=seg>{{seg}} seg</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-success btn-block">Generar código</button>
+            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="notascarga" tabindex="-1">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Formulario para cargar Nuevas Notas</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Alta notas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group col-12">
-            <table class="table table-dark">
-              <thead>
+            <table class="table">
+              <thead class="thead-light">
                 <tr>
                   <th>Nombre</th>
-                  <th>Nota 1</th>
-                  <th>Nota 2</th>
+                  <th>Nota 1º</th>
+                  <th>Nota 2º</th>
                   <th>Nota Final</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                  <tr *ngFor="let alumno of alumnos">                 
-                    <td>{{alumno.uname}} </td>
-                    <td><input type="number" min="0" max="10" #nota1 required></td>
-                    <td><input type="number" min="0" max="10" #nota2 required ></td>
-                    <td><input type="number" min="0" max="10" #nota3 required></td>
-                    <td><button type="submit" (click)="cargarnota(nota1.value,nota2.value,nota3.value,alumno.notaid)">cargar</button></td>
+                <tr *ngFor="let alumno of alumnos">
+                  <td>{{alumno.uname}} </td>
+                  <td><input type="number" min="0" max="10" #nota1 required></td>
+                  <td><input type="number" min="0" max="10" #nota2 required></td>
+                  <td><input type="number" min="0" max="10" #nota3 required></td>
+                  <td><button type="submit" class="btn btn-success" (click)="cargarnota(nota1.value,nota2.value,nota3.value,alumno.notaid)">Cargar</button></td>
                 </tr>
               </tbody>
             </table>
-          </div>
-          <div class="modal-footer">
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
-
           </div>
         </div>
       </div>
     </div>
-</div>
+  </div>
 
-<div class="modal fade" id="autorizacion" tabindex="-1" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Autorizaciones de cursada para alumnos</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-       
-      </div>
-      <div class="modal-body">
-        <div class="form-group col-12">
-          <div *ngFor="let pendiente of pendientes" class="col-12 text-center">
-            {{pendiente.uname}}
-            <button class="bg-green rounded offset-5"(click)="aceptar(pendiente.inscripcionesid,pendiente.uid,pendiente.uname)"><i class="fa fa-check" aria-hidden="true"></i></button>
-            <button class="bg-red rounded offset-1 "(click)="eliminar(pendiente.inscripcionesid)"><i class="fa fa-ban"  aria-hidden="true"></i></button>
+  <div class="modal fade" id="autorizacion" tabindex="-1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Solicitud de alumnos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group col-12">
+            <div *ngFor="let pendiente of pendientes" class="col-12 text-center">
+              {{pendiente.uname}}
+              <button class="btn bg-green rounded offset-5" (click)="aceptar(pendiente.inscripcionesid,pendiente.uid,pendiente.uname)"><i
+                  class="fa fa-check" aria-hidden="true"></i></button>
+              <button class="btn bg-red rounded offset-1 " (click)="eliminar(pendiente.inscripcionesid)"><i class="fa fa-ban"
+                  aria-hidden="true"></i></button>
+            </div>
+            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
           </div>
-        </div>      
-        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="vernotas" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Notas</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group col-12">
+            <h3 *ngIf="prom>0;">Promedio de calificaicon es: {{prom}}</h3>
+           
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th>Alumno</th>
+                  <th>Nota 1º</th>
+                  <th>Nota 2º</th>
+                  <th>Nota final</th>
+                  <th>Situacion</th>  
+                </tr>
+              </thead>
+              <tbody>
+                <div *ngIf="notas?.length>0; else sinalumnos"></div>
+                <tr *ngFor="let al of notas">
+                  <td>{{al.uname}} </td>
+                  <td>{{al.nota1}}</td>
+                  <td>{{al.nota2}}</td>
+                  <td class="notafinal">{{al.notafinal}}</td>
+                  <td *ngIf="al.notafinal>7; else notabaja">Promoción</td>
+                  <ng-template #notabaja>
+                    <td *ngIf="al.notafinal>4; else aplazo">Regular</td>
+                  </ng-template>
+                  <ng-template #aplazo>
+                    <td>Aplazado</td>
+                  </ng-template>
+                </tr>
+                <ng-template #sinalumnos>
+                  <td>No ha cargado las notas de los alumnos</td>
+                </ng-template>
+              </tbody>
+            </table>
+            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="verpresentes" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Asistencias</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group col-12">
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th>Día y hora</th>
+                  <th>Código</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ptes of lospresentes">
+                  <td>{{ptes.valido}} </td>
+                  <td>{{ptes.codigo}}</td>
+                  <td>
+                    <a href="#" (click)="cargaralumnostoken(ptes.id)" data-toggle="modal" data-target="#alumnostoken"><i
+                        class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-
-<div class="modal fade" id="apresente" tabindex="-1" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Presente!!!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form class="form" (ngSubmit)=confirmarasistencia(user.uid,user.displayName) ngNativeValidate id="afpresente">
-          <div class="container mb-2 text-center" *ngFor="let dato of datosclase" >
-            <h2>{{dato.materia}}</h2>
-            <div> Ingrese el Codigo para dar el presente!!
-            </div>
-            <input type="text" maxlength="6" minlength="3" id="acodigo" required>
+  <div class="modal fade" id="listadopresentes" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Presentes</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group col-12">
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th>Día</th>
+                  <th>Nombre</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ptes of listadopresentes">
+                  <td>{{ptes.dia}} </td>
+                  <td>{{ptes.uname}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        <button type="submit" class="btn btn-success btn-block">Confirmar Asistencia</button>
-        </form>    
-      </div> 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
-
-      </div>   
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-
-<div class="modal fade" id="vernotas" tabindex="-1" >
-    <div class="modal-dialog modal-lg" role="document">
+  <!-- Modal Alumno-->
+  <div class="modal fade" id="apresente" tabindex="-1">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Listado de las notas cargadas</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Presente</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <div><h3>El Promedio Total de la clase es: {{prom}}</h3></div>
-          <div class="form-group col-12">
-            <table class="table table-dark">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Nota 1</th>
-                  <th>Nota 2</th>
-                  <th>Nota Final</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor="let al of notas">                 
-                    <td >{{al.uname}} </td>
-                    <td>{{al.nota1}}</td>
-                    <td>{{al.nota2}}</td>
-                    <td class="notafinal">{{al.notafinal}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
-
-          </div>
+          <form class="form" (ngSubmit)=confirmarasistencia(user.uid,user.displayName) ngNativeValidate id="afpresente">
+            <div class="container mb-2 text-center" *ngFor="let dato of datosclase">
+              <h2>{{dato.materia}}</h2>
+              <p>Ingrese Token para dar presente</p>
+              <div> 
+              </div>
+              <input type="text" maxlength="6" minlength="3" id="acodigo" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-block">Confirmar asistencia</button>
+            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cerrar</button>
+          </form>
         </div>
       </div>
     </div>
-</div>
+  </div>
 
-
-<div class="modal fade" id="verpresentes" tabindex="-1" >
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Asistencias generadas</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group col-12">
-            <table class="table table-dark">
-              <thead>
-                <tr>
-                  <th>dia y hora</th>
-                  <th>codigo</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor="let ptes of lospresentes">                 
-                    <td>{{ptes.valido}} </td>
-                    <td>{{ptes.codigo}}</td>
-                    <td><a href="#" (click)="cargaralumnostoken(ptes.id)"data-toggle="modal" data-target="#alumnostoken"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
-
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="alumnostoken" tabindex="-1" >
+  <div class="modal fade" id="alumnostoken" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header bg-gray">
@@ -311,54 +364,17 @@
                 </tr>
               </thead>
               <tbody>
-                  <tr *ngFor="let alp of alpresente">                 
-                    <td>{{alp.uname}} </td>
-                    <td>{{alp.dia}}</td>
+                <tr *ngFor="let alp of alpresente">
+                  <td>{{alp.uname}} </td>
+                  <td>{{alp.dia}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
-
           </div>
         </div>
       </div>
     </div>
-</div>
-
-
-<div class="modal fade" id="listadopresentes" tabindex="-1" >
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Listado de toda la asistencia tomada</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group col-12">
-          <table class="table table-dark">
-            <thead>
-              <tr>
-                <th>Dia</th>
-                <th>Nombre</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let ptes of listadopresentes">                 
-                  <td>{{ptes.dia}} </td>
-                  <td>{{ptes.uname}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
-
-        </div>
-      </div>
-    </div>
   </div>
-</div>

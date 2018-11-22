@@ -29,7 +29,7 @@ export class ClaseComponent implements OnInit {
   datosclase:Cursada[]
   tiempo=["15","30","60","120"]
   notas:Notas[];
-  prom:number;
+  prom:number=0;
   lospresentes:Presentismo[];
   alpresente:Alumnipresente[];
   listadopresentes:Alumnipresente[];
@@ -80,8 +80,20 @@ export class ClaseComponent implements OnInit {
     if(nota1>10||nota2>10||nota3>10||nota1<0||nota2<0||nota3<0||nota1==''||nota2==''||nota3==''){
       swal('la nota tiene que ser entre 0 y 10')
     }
-    else{
+    if(nota1>=7 && nota2>=7 && nota3>=7){
       this.claseService.cargarnota(nota1,nota2,nota3,this.route.snapshot.paramMap.get('id'),notaid)
+    }
+    else if(nota1>=7 && nota2>=4 && nota3>=4 && nota3<7 || nota2>=7 && nota1>=4 && nota1>=4 && nota3<7 ){
+      this.claseService.cargarnota(nota1,nota2,nota3,this.route.snapshot.paramMap.get('id'),notaid)
+    }
+    else if(nota1>=4 && nota2>=4 && nota3>=4 && nota3<7){
+      this.claseService.cargarnota(nota1,nota2,nota3,this.route.snapshot.paramMap.get('id'),notaid)
+    }
+    else if(nota1<4 && nota2<4 && nota3<4 || nota1<4 && nota2>4 && nota3<4 || nota1>4 && nota2<4 && nota3<4  ){
+      this.claseService.cargarnota(nota1,nota2,nota3,this.route.snapshot.paramMap.get('id'),notaid)
+    }
+    else{
+      swal('Revise los criterios de calificacion')
     }
     
   }
@@ -147,18 +159,18 @@ export class ClaseComponent implements OnInit {
     if(min.length<2) min='0'+min;
     if(hora.length<2) hora='0'+hora;
   
-    return `${day}/${month}/${year} ${hora}:${min}:${sec}`;
+    return `${year}/${month}/${day} ${hora}:${min}:${sec}`;
   }
 
   Generarcodigo(){
     let valid =this.validtime($('#segundos').find(":selected").val());
     console.log(valid)
     this.claseService.generarpresentismo($("#codigo").val(),valid,this.route.snapshot.paramMap.get('id'))
-    $("#generartoken .close").click()
-    $("#presente").trigger('reset');
+    $("#presente .close").click()
+    $("#generartoken").trigger('reset');
   }
   confirmarasistencia(uid,uname){
-    let t=this.formattedDate();
+    let t=new Date();
     this.claseService.confirmarpresentismo(this.route.snapshot.paramMap.get('id'),$("#acodigo").val(),t,uid,uname);
     $("#apresente .close").click()
     $("#afpresente").trigger('reset');

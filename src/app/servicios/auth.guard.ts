@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
       tap(loggedIn => {
         if (!loggedIn) {
           this.router.navigate(['']).then(_=>{
-            this.error();
+            
           });
         }
         else{
@@ -35,21 +35,12 @@ export class AuthGuard implements CanActivate {
   succes(){
     swal({
       type: 'success',
-      title: 'Gracias Por volver',
+      title: 'Gracias por volver',
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
       timer: 3000
     });
   } 
-  error(){
-    swal({
-      type: 'error',
-      title: 'Ups.! algo salio mal prueba entrar de nuevo',
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
-  } 
+  
 }
