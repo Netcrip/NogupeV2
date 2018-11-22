@@ -6,6 +6,7 @@ import { Cursos } from '../../interface/cursos';
 import { navItems } from '../../_nav';
 import swal from 'sweetalert2';
 import { Inscripciones } from '../../interface/inscripciones';
+import { Router } from '@angular/router';
 
 
 
@@ -22,7 +23,7 @@ export class DefaultLayoutComponent implements OnInit  {
   cur: Inscripciones[];
   v:Object;
   
-  constructor(public auth:AuthService,private curso:ListaService) {
+  constructor(public auth:AuthService,private curso:ListaService, private router:Router) {
     
     this.actualizarcursos();
 

@@ -117,7 +117,7 @@
           <form class="form" (ngSubmit)=Generarcodigo() ngNativeValidate id="generartoken">
             <div class="mb-2 text-center" *ngFor="let dato of datosclase">
               <h2>{{dato.materia}}</h2>
-              <p>Ingrese Token</p>
+              <p>Ingrese token</p>
               <input type="text" maxlength="6" minlength="3" id="codigo" required>
             </div>
             <div class="form-group">
@@ -156,13 +156,18 @@
                 </tr>
               </thead>
               <tbody>
+                <div *ngIf="alumnos?.length>0; else nomasalumnos">
                 <tr *ngFor="let alumno of alumnos">
                   <td>{{alumno.uname}} </td>
                   <td><input type="number" min="0" max="10" #nota1 required></td>
                   <td><input type="number" min="0" max="10" #nota2 required></td>
                   <td><input type="number" min="0" max="10" #nota3 required></td>
                   <td><button type="submit" class="btn btn-success" (click)="cargarnota(nota1.value,nota2.value,nota3.value,alumno.notaid)">Cargar</button></td>
-                </tr>
+                  </tr>
+                </div>
+                  <ng-template #nomasalumnos>
+                      <td class="text-center">No hay mas alumnos para cargar notas</td>
+                  </ng-template>
               </tbody>
             </table>
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
@@ -183,13 +188,18 @@
         </div>
         <div class="modal-body">
           <div class="form-group col-12">
-            <div *ngFor="let pendiente of pendientes" class="col-12 text-center">
-              {{pendiente.uname}}
-              <button class="btn bg-green rounded offset-5" (click)="aceptar(pendiente.inscripcionesid,pendiente.uid,pendiente.uname)"><i
-                  class="fa fa-check" aria-hidden="true"></i></button>
-              <button class="btn bg-red rounded offset-1 " (click)="eliminar(pendiente.inscripcionesid)"><i class="fa fa-ban"
-                  aria-hidden="true"></i></button>
+            <div *ngIf="pendientes?.length>0; else nosolicitud">
+              <div *ngFor="let pendiente of pendientes" class="col-12 text-center">
+                {{pendiente.uname}}
+                <button class="btn bg-green rounded offset-5" (click)="aceptar(pendiente.inscripcionesid,pendiente.uid,pendiente.uname)"><i
+                    class="fa fa-check" aria-hidden="true"></i></button>
+                <button class="btn bg-red rounded offset-1 " (click)="eliminar(pendiente.inscripcionesid)"><i class="fa fa-ban"
+                    aria-hidden="true"></i></button>
+              </div>
             </div>
+            <ng-template #nosolicitud>
+                <p>No hay solicitudes pendientes</p>
+              </ng-template>
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
           </div>
         </div>
@@ -208,7 +218,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group col-12">
-            <h3 *ngIf="prom>0;">Promedio de calificaicon es: {{prom}}</h3>
+            <h3 *ngIf="prom>0;">Promedio de calificaicon: {{prom}}</h3>
            
             <table class="table">
               <thead class="thead-light">
@@ -263,6 +273,7 @@
                 <tr>
                   <th>Día y hora</th>
                   <th>Código</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -332,7 +343,7 @@
           <form class="form" (ngSubmit)=confirmarasistencia(user.uid,user.displayName) ngNativeValidate id="afpresente">
             <div class="container mb-2 text-center" *ngFor="let dato of datosclase">
               <h2>{{dato.materia}}</h2>
-              <p>Ingrese Token para dar presente</p>
+              <p>Ingrese token para dar presente</p>
               <div> 
               </div>
               <input type="text" maxlength="6" minlength="3" id="acodigo" required>
@@ -372,7 +383,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+            <button type="button" class="btn btn-secondary btn-block"  data-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>
