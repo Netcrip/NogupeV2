@@ -84,6 +84,12 @@ export class CursosComponent implements OnInit, OnChanges{
         this.cursosacargo=clase
       })
     }
+    reset(){
+      $('#imateria').prop('selectedIndex',0);
+      $('#icursada ').prop('selectedIndex',0);
+    }
+
+
     agregarhorario(){
       var dia= $('#dias').find(":selected").val();
       var horario=$('#horario').find(":selected").val();
@@ -116,7 +122,13 @@ export class CursosComponent implements OnInit, OnChanges{
 
         }
         else{
-          console.log("nro de cursada repetido")
+          swal({
+            type: 'error',
+            title: 'Cuidado!',
+            text:"El numero de cursada esta repetido",
+            showConfirmButton: false,
+            timer: 1500
+          })
         }
         
       });
@@ -300,8 +312,6 @@ export class CursosComponent implements OnInit, OnChanges{
       }
       else{
         this.cursadasadm.forEach(element => {
-          console.log(element.numerocursada)
-          console.log(numerocursada)
           if(element.numerocursada==numerocursada && x==1){
             x=0
             swal({
@@ -373,10 +383,20 @@ export class CursosComponent implements OnInit, OnChanges{
 
   }
   imaterias(){
+    this.reset();
     this.mat.startmateriaaño($("#icarrera").find(":selected").text(),$("#iano").find(":selected").val())
     this.mat.getmateriaaño().subscribe(materia=>{
      this.materiasao=materia;
    });
+   }
+   imaterias1(){
+    $("#iano").prop('selectedIndex',0);
+    $("#imateria").prop('selectedIndex',0);
+    $("#icursada").prop('selectedIndex',0);
+    
+    
+    this.materiasao=[];
+    this.cursadas=[];
    }
 
    getmaterias(){

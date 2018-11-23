@@ -574,7 +574,7 @@
                         <form class="form" ngNativeValidate (ngSubmit)="inscripcioncursada()">
                             <div class="form-group">
                                 <label for="icarrera">Carrera</label>
-                                <select class="form-control" id="icarrera" required>
+                                <select class="form-control" id="icarrera" required (change)="imaterias1()">
                                     <option value="" selected disabled hidden>Seleccione una carrera</option>
                                     <option *ngFor="let nomcarrera of carreras" [value]="nomcarrera">{{nomcarrera}}</option>
                                 </select>
