@@ -161,7 +161,7 @@ export class CursosComponent implements OnInit, OnChanges{
           confirmButtonText: 'Si, Modificar!'
         }).then((result) => {
           if (result.value) {
-          this.cursoService.modificarcursada(cursadaid,fini,ffin,icono,materiauid,materia,diasyhorario,numerocursada,color,carrera,profesor)
+          //this.cursoService.modificarcursada(cursadaid,fini,ffin,icono,materiauid,materia,diasyhorario,numerocursada,color,carrera,profesor)
             $("#bcformcursada").trigger('reset');
             $("#buscarcursada .close").click();
             $("#bcfinicio").prop( "disabled", true );
@@ -277,34 +277,53 @@ export class CursosComponent implements OnInit, OnChanges{
       $("#crearmateria .close").click()
     }
     altaclase(){
+      let x=1;
       var fini=$("#finicio").val();
       var ffin=$("#ffin").val();
-      var carrera =$('#carreramat').find(":selected").text();
+      var carrera =$('#carreramat').val();
       var numerocursada=$('#cursadan').val();
-      var materia=$('#mat').find(":selected").text();
-      var materiauid =$('#mat').find(":selected").val();
+      var materia=$('#mat').val();
+      var materiauid =$('#matid').val();
       var profesor =$('#profesor').find(":selected").val();
-      var icono =$("input[name=colorradio]:checked").val();
-      var color =$('#colormateria').find(":selected").val();
+      var icono =$("input[name=editarimgradio]:checked").val();
+      var color =$('#colormateriaalta').find(":selected").val();
+      var profesorname =$('#profesor').find(":selected").text();
       var dias=$('#diastext').val();
       if(dias==""){
         swal({
           type: 'error',
-          title: 'Ups!!!',
+          title: 'Ups!',
           text:"Parece que no cargaste el dia de cursada",
           showConfirmButton: false,
           timer: 1500
         })
       }
-      else
-      {
-        this.cursoService.altacursada(fini,ffin,icono,materiauid,materia,dias,numerocursada,color,carrera,profesor)
-        $("#Crearclase .close").click()
-         $("#fcrearclase").trigger('reset');
-      }
-     
-      
+      else{
+        this.cursadasadm.forEach(element => {
+          console.log(element.numerocursada)
+          console.log(numerocursada)
+          if(element.numerocursada==numerocursada && x==1){
+            x=0
+            swal({
+              type: 'error',
+              title: 'Cursada repetida',
+              text:"El numer de cursada se encuentra usado",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        })
+        if(x==1){
+          console.log("entro en crear")
+          x=0
+          this.cursoService.altacursada(fini,ffin,icono,materiauid,materia,dias,numerocursada,color,carrera,profesor,profesorname)
+          $("#Crearclase .close").click()
+          $("#fcrearclase").trigger('reset');
+        }
+    
     }
+      
+  }
     Altausuario(){
       var dni=$("#documento").val();
       var cuenta =$('#usuariotipo').find(":selected").text();
@@ -382,8 +401,9 @@ export class CursosComponent implements OnInit, OnChanges{
     });
   }
   inscripcioncursada(){
+    let c=1;
     this.cursadas.forEach(element => {
-      if(element.cursadaid==$("#icursada").find(":selected").val()){
+      if(element.cursadaid==$("#icursada").find(":selected").val() && c==1){
         this.auth.user.subscribe(u=>{
         this.inscripciones = {
         carrera:element.carrera,
@@ -399,10 +419,12 @@ export class CursosComponent implements OnInit, OnChanges{
         uid: this.auth.getuid(),
         uname:u.displayName,
         estado:"pendiente"
-      }})
+      }
+      this.cursoService.altainscripcion(this.inscripciones)})
+      c=0;
       } 
     });
-    this.cursoService.altainscripcion(this.inscripciones)
+
   }
   cerrarmodal(){
     $(".close").click();
