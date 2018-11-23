@@ -462,18 +462,15 @@ cargareditar(cursadaid,
   $("#colormateriar option[value='"+color+"']").attr("selected", "selected");
 }
 editarcursadaadm(){
-  
   var carreracursadaid=$("#cursadaidr").val()
-  var numerocursada= $("#cursadan").val();
-  var carrera = $("#carreareditar").val();
-  var  materia=$("#matditar").val();
-  var fechainc= $("#finicio").text();
-  var fechafin= $("#ffin").text();
-  var profesoruid= $("#profesor").val();
-  var dias= $("#diastext").val();
-  var img= $("input[name=colorradio]").val();
-  var color= $("#colormateria").val();
-  console.log(carreracursadaid)
+  var profesoruid= $("#profesorr").find(":selected").val();
+  var profesorname= $("#profesorr").find(":selected").text();
+  var dias= $("#diastextr").val();
+  var img= $("input[name=editarimgradio]:checked").val();
+  var color= $("#colormateriar").find(":selected").val();
+  this.cursoService.updatecursadas(carreracursadaid,profesoruid,profesorname,dias,img,color);
+  this.cerrarmodal();
+
 }
 agregarhorarior(){
   var dia= $('#diasr').find(":selected").val();
@@ -486,6 +483,5 @@ agregarhorarior(){
 }
 borrarhorarior(){
   $("#diastextr").val("");
-
 }
 }
