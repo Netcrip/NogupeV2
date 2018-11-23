@@ -441,4 +441,51 @@ eliminarcursada($cursada){
   })
   
 }
+cargareditar(cursadaid,
+  fechainc, fechafin,
+  img,
+  materia,
+  numerocursada,
+  dias,
+  carrera,
+  color,
+  profesoruid){
+  $("#cursadaidr").val(cursadaid)
+  $("#cursadanr").val(numerocursada);
+  $("#carreareditare").val(carrera)
+  $("#matditarr").val(materia)
+  $("#finicior").val(fechainc)
+  $("#ffinr").val(fechafin)
+  $("#profesorr option[value='"+profesoruid+"']").attr("selected", "selected");
+  $("#diastextr").val(dias);
+  $("input[name=editarimgradio][value='"+img+"']").prop("checked",true);
+  $("#colormateriar option[value='"+color+"']").attr("selected", "selected");
+}
+editarcursadaadm(){
+  
+  var carreracursadaid=$("#cursadaidr").val()
+  var numerocursada= $("#cursadan").val();
+  var carrera = $("#carreareditar").val();
+  var  materia=$("#matditar").val();
+  var fechainc= $("#finicio").text();
+  var fechafin= $("#ffin").text();
+  var profesoruid= $("#profesor").val();
+  var dias= $("#diastext").val();
+  var img= $("input[name=colorradio]").val();
+  var color= $("#colormateria").val();
+  console.log(carreracursadaid)
+}
+agregarhorarior(){
+  var dia= $('#diasr').find(":selected").val();
+  var horario=$('#horarior').find(":selected").val();
+  if(dia!="" && horario!=""){
+    $("#diastextr").val($("#diastextr").val()+dia+" "+horario+" /-/ ")
+    $('#diasr').prop("selectedIndex",0)
+    $('#horarior').prop("selectedIndex",0)
+  }
+}
+borrarhorarior(){
+  $("#diastextr").val("");
+
+}
 }

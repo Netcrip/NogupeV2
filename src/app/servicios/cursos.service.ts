@@ -11,6 +11,7 @@ import { Cursada } from '../interface/cursada';
 import { Dni } from '../interface/dni';
 import { async } from '@angular/core/testing';
 import { Inscripciones } from '../interface/inscripciones';
+import $ from 'jquery';
 
 @Injectable({
   providedIn: 'root'
@@ -271,6 +272,5 @@ export class CursosService {
       }))
     );
   }
-
   
 }

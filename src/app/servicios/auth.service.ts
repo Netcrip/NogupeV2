@@ -189,7 +189,16 @@ async emailSignUp(email: string, password: string, dni:string, nombre: string, a
       //this.notify.update('Welcome new user!', 'success');
       return this.updateUserData(credential.user,dni,nombre,avatar,cuenta); // if using firestore
     })
-    .catch(error => this.handleError(error));
+    .catch(error =>{
+      swal({
+        type: 'error',
+        title: 'El email esta usado, inicia secion',
+        toast: true,
+        position: 'center',
+        showConfirmButton: false,
+        timer: 3500
+      });
+    } );
 }
 
 

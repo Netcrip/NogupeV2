@@ -57,7 +57,15 @@
                         <td>{{cursada.materia}}</td>
                         <td>{{cursada.proferosname}}</td>
                         <td><button class="bg-red rounded offset-1 " (click)="eliminarcursada(cursada.cursadaid)"><i class="fa fa-ban"  aria-hidden="true"></i></button></td>
-                        <td><button class="bg-green rounded offset-1 "><i class="fa fa-check"  aria-hidden="true"></i></button></td>
+                        <td><button class="bg-green rounded offset-1 " data-target="#crearcursada" data-toggle="modal"  (click)="cargareditar(cursada.cursadaid,
+                            cursada.fechainc, cursada.fechafin,
+                            cursada.img,
+                            cursada.materia,
+                            cursada.numerocursada,
+                            cursada.dias,
+                            cursada.carrera,
+                            cursada.color,
+                            cursada.profesoruid)"><i class="fa fa-check"  aria-hidden="true"></i></button></td>
                     </tr>
                 </tbody>
             </table>
@@ -339,7 +347,7 @@
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-success btn-block" data-dismiss="crearmateria">Crear</button>
+                            <button type="submit" class="btn btn-success btn-block" (click)="cargarcursada()">Crear</button>
                             <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cerrar</button>
                         </form>
 
@@ -607,3 +615,118 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="crearcursada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Nueva cursada</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+    
+                        <div class="container">
+                            <form class="form" ngNativeValidate  id="crearclaser">
+                                <input type="text" name="" id="cursadaidr" hidden>
+                                <div class="form-group">
+                                    <label for="cursadan">Numero de comisión</label>
+                                    <input type="text" minlength="1" class="form-control" id="cursadanr" disabled>
+                                </div>
+                                <div class="form-group">
+                                        <label for="carreareditar">Carrera: </label>
+                                        <input type="text" min="1" max="6" class="form-control" id="carreareditare" disabled>
+                                    </div>
+                                <div class="form-group">
+                                    <label for="matditar">Materia: </label>
+                                    <input type="text" min="1" max="6" class="form-control" id="matditarr" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="finicio">Fecha inicio</label>
+                                    <input type="date" min="1" max="6" class="form-control" id="finicior" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="finicio">Fecha finalización</label>
+                                    <input type="date" min="1" max="6" class="form-control" id="ffinr" required>
+                                </div>
+                               
+                                <div class="form-group">
+                                    <label for="profesor">Profesor</label>
+                                    <select class="form-control" id="profesorr" required>
+                                        <option value="" selected disabled hidden>Seleccione un profesor</option>
+                                        <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dias">Días y horarios</label>
+                                    <select class="form-control" id="diasr">
+                                        <option value="" selected disabled hidden>Seleccione día</option>
+                                        <option *ngFor="let dia of dias" [value]="dia">{{dia}}</option>
+                                    </select>
+                                    <select class="form-control mt-3" id="horarior">
+                                        <option value="" selected disabled hidden>Seleccione horario</option>
+                                        <option *ngFor="let hora of horarios" [value]="hora">{{hora}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-success float-right mb-4 col-3" (click)="agregarhorarior()">Agregar</button>
+                                </div>
+                                <div class="form-group">
+                                    <textarea style="resize:none" class="form-control " id="diastextr" rows="3" disabled required></textarea>
+                                </div>
+    
+                                <button type="button" class="btn btn-danger float-right mb-4 col-3" (click)="borrarhorarior()">Borrar</button>
+                                <div class="form-group">
+                                    <label for="iconoclase">Icono representativo</label>
+                                    <input type="text"id="cursadaiddd" hidden>
+                                    <div class="form-check" id="iconoclase">
+                                        <label class="form-check-label col-4">
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios1"
+                                                value="fa-calculator" checked="">
+                                            <i class="fa fa-calculator" aria-hidden="true"></i>
+                                        </label>
+                                        <label class="form-check-label col-4">
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios2"
+                                                value="fa-pencil" checked="">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </label>
+                                        <label class="form-check-label col-4">
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios3"
+                                                value="fa-plane" checked="">
+                                            <i class="fa fa-plane" aria-hidden="true"></i>
+                                        </label>
+                                        <label class="form-check-label col-4">
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios4"
+                                                value="fa-history" checked="">
+                                            <i class="fa fa-history" aria-hidden="true"></i>
+                                        </label>
+                                        <label class="form-check-label col-4">
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios5"
+                                                value="fa-pie-chart" checked="">
+                                            <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                                        </label>
+                                        <label class="form-check-label col-4">
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios6"
+                                                value="fa-desktop" checked="">
+                                            <i class="fa fa-desktop" aria-hidden="true"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="colormateria">Color</label>
+                                    <select class="form-control" id="colormateriar" required>
+                                        <option value="" selected disabled hidden>Seleccione un color</option>
+                                        <option *ngFor="let color of color" [value]="color.val">{{color.nombre}}</option>
+                                    </select>
+                                </div>
+    
+                                <button type="submit" class="btn btn-success btn-block" (click)="editarcursadaadm()">Editar</button>
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cerrar</button>
+                            </form>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -61,8 +61,7 @@ export class RegisterComponent {
           });
         }
         else{
-          this.auth.getcountclas(dni).subscribe(d => {
-                   
+          this.auth.getcountclas(dni).subscribe(d => {           
           if(d.length>0){
              d.forEach(d => {
               if(d.Dni==dni.value){
@@ -95,7 +94,14 @@ export class RegisterComponent {
           })
           }  
           else{
-            console.log("dni Incorrecto");
+            swal({
+              type: 'error',
+              title: 'Documento Incorrecto',
+              toast: true,
+              position: 'center',
+              showConfirmButton: false,
+              timer: 2000
+            });
           }
         })
         }
