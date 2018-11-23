@@ -158,7 +158,7 @@ export class CursosComponent implements OnInit, OnChanges{
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, Modificar!'
+          confirmButtonText: 'Si, Modificar'
         }).then((result) => {
           if (result.value) {
           this.cursoService.modificarcursada(cursadaid,fini,ffin,icono,materiauid,materia,diasyhorario,numerocursada,color,carrera,profesor)
@@ -171,7 +171,7 @@ export class CursosComponent implements OnInit, OnChanges{
             $("#bccolormateria").prop( "disabled", true );
           swal(
             'Modificado!',
-            'Se a modificado la cursada',
+            'Se ha modificado la cursada.',
             'success'
           )
         }
@@ -180,8 +180,8 @@ export class CursosComponent implements OnInit, OnChanges{
       else{
         swal({
           type: 'error',
-          title: 'Ups!!!',
-          text:"Parece que no cargaste el dia de cursada",
+          title: 'Error',
+          text:"El dia de cursada no puede estar vacio.",
           showConfirmButton: false,
           timer: 1500
         })
@@ -191,12 +191,12 @@ export class CursosComponent implements OnInit, OnChanges{
     bceliminarmateria(){
       swal({
         title: 'Estas Seguro?',
-        text: "No podra revertir la eliminacion",
+        text: "No podra revertir la operación.",
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, Eliminar!'
+        confirmButtonText: 'Si, Eliminar'
       }).then((result) => {
         if (result.value) {
           this.cursoService.eliminarcursada($('#bccursadas').find(":selected").val());
@@ -210,7 +210,7 @@ export class CursosComponent implements OnInit, OnChanges{
           
           swal(
             'Eliminado!',
-            'No podra crear mas cursadas de esta materia',
+            'No podra crear más cursadas de esta materia.',
             'success'
           )
         }
@@ -290,8 +290,8 @@ export class CursosComponent implements OnInit, OnChanges{
       if(dias==""){
         swal({
           type: 'error',
-          title: 'Ups!!!',
-          text:"Parece que no cargaste el dia de cursada",
+          title: 'Error',
+          text:"El dia de cursada no puede estar vacio.",
           showConfirmButton: false,
           timer: 1500
         })
@@ -413,19 +413,19 @@ export class CursosComponent implements OnInit, OnChanges{
     let materia=$mat;
     swal({
       title: 'Estas Seguro?',
-      text: "No podra revertir la eliminacion",
+      text: "No podra revertir la operación.",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Eliminar!'
+      confirmButtonText: 'Si, Eliminar'
     }).then((result) => {
       if (result.value) {
        this.mat.eliminarmateria(materia);
         
         swal(
           'Eliminado!',
-          'No podra crear mas cursadas de esta materia',
+          'No podra crear más cursadas de esta materia.',
           'success'
         )
       }
@@ -435,7 +435,7 @@ export class CursosComponent implements OnInit, OnChanges{
 eliminarcursada($cursada){
   swal({
     title: 'Estas Seguro?',
-    text: "Cerrara la cursada impidiendo nuevas inscripciones",
+    text: "Cerrara la cursada impidiendo nuevas inscripciones.",
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -483,7 +483,7 @@ editarcursadaadm(){
   if(dias==""){
     swal(
       'Error!',
-      'Asigne día y horario de cursada',
+      'Asigne día y horario de cursada.',
       'error'
     )
   }
