@@ -296,18 +296,54 @@
                                     <textarea style="resize:none" class="form-control " id="diastext" rows="3"
                                         disabled required></textarea>
                                 </div>
+                                <div class="form-group">
                                     <button type="button" class="btn btn-danger float-right mb-4 col-3" (click)="borrarhorario()">Borrar</button>
                                 </div>
-                            
+                            </div>   
+                                <div class="form-group mt-5">
+                                        <label for="iconoclasealta">Icono representativo</label>
+                                        <div class="form-check" id="iconoclasealta">
+                                            <label class="form-check-label col-4">
+                                                <input type="radio" class="form-check-input" name="imgradioclase" id="optionsRadiosclase1"
+                                                    value="fa-calculator" checked="">
+                                                <i class="fa fa-calculator" aria-hidden="true"></i>
+                                            </label>
+                                            <label class="form-check-label col-4">
+                                                <input type="radio" class="form-check-input" name="imgradioclase" id="optionsRadiosclase2"
+                                                    value="fa-pencil" checked="">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </label>
+                                            <label class="form-check-label col-4">
+                                                <input type="radio" class="form-check-input" name="imgradioclase" id="optionsRadiosclase3"
+                                                    value="fa-plane" checked="">
+                                                <i class="fa fa-plane" aria-hidden="true"></i>
+                                            </label>
+                                            <label class="form-check-label col-4">
+                                                <input type="radio" class="form-check-input" name="imgradioclase" id="optionsRadiosclase4"
+                                                    value="fa-history" checked="">
+                                                <i class="fa fa-history" aria-hidden="true"></i>
+                                            </label>
+                                            <label class="form-check-label col-4">
+                                                <input type="radio" class="form-check-input" name="imgradioclase" id="optionsRadiosclase5"
+                                                    value="fa-pie-chart" checked="">
+                                                <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                                            </label>
+                                            <label class="form-check-label col-4">
+                                                <input type="radio" class="form-check-input" name="imgradioclase" id="optionsRadiosclase6"
+                                                    value="fa-desktop" checked="">
+                                                <i class="fa fa-desktop" aria-hidden="true"></i>
+                                            </label>
+                                        </div>
+                                    </div>
                             <div class="form-group">
                                 <label for="colormateria">Color</label>
-                                <select class="form-control" id="colormateria" required>
+                                <select class="form-control" id="colormateriaalta" required>
                                     <option value="" selected disabled hidden>Seleccione un color</option>
                                     <option *ngFor="let color of color" [value]="color.val">{{color.nombre}}</option>
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-success btn-block" (click)="cargarcursada()">Crear</button>
+                            <button type="submit" class="btn btn-success btn-block">Crear</button>
                             <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cerrar</button>
                         </form>
 
@@ -538,7 +574,7 @@
                         <form class="form" ngNativeValidate (ngSubmit)="inscripcioncursada()">
                             <div class="form-group">
                                 <label for="icarrera">Carrera</label>
-                                <select class="form-control" id="icarrera" required>
+                                <select class="form-control" id="icarrera" required (change)="imaterias1()">
                                     <option value="" selected disabled hidden>Seleccione una carrera</option>
                                     <option *ngFor="let nomcarrera of carreras" [value]="nomcarrera">{{nomcarrera}}</option>
                                 </select>
@@ -637,37 +673,37 @@
                                 </div>
     
                                 <button type="button" class="btn btn-danger float-right mb-4 col-3" (click)="borrarhorarior()">Borrar</button>
-                                <div class="form-group">
+                                <div class="form-group mt-5">
                                     <label for="iconoclase">Icono representativo</label>
                                     <input type="text"id="cursadaiddd" hidden>
                                     <div class="form-check" id="iconoclase">
                                         <label class="form-check-label col-4">
-                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios1"
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadioseclase1"
                                                 value="fa-calculator" checked="">
                                             <i class="fa fa-calculator" aria-hidden="true"></i>
                                         </label>
                                         <label class="form-check-label col-4">
-                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios2"
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadioseclase12"
                                                 value="fa-pencil" checked="">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </label>
                                         <label class="form-check-label col-4">
-                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios3"
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadioseclase13"
                                                 value="fa-plane" checked="">
                                             <i class="fa fa-plane" aria-hidden="true"></i>
                                         </label>
                                         <label class="form-check-label col-4">
-                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios4"
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadioseclase14"
                                                 value="fa-history" checked="">
                                             <i class="fa fa-history" aria-hidden="true"></i>
                                         </label>
                                         <label class="form-check-label col-4">
-                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios5"
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadioseclase15"
                                                 value="fa-pie-chart" checked="">
                                             <i class="fa fa-pie-chart" aria-hidden="true"></i>
                                         </label>
                                         <label class="form-check-label col-4">
-                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadios6"
+                                            <input type="radio" class="form-check-input" name="editarimgradio" id="optionsRadioseclase16"
                                                 value="fa-desktop" checked="">
                                             <i class="fa fa-desktop" aria-hidden="true"></i>
                                         </label>
