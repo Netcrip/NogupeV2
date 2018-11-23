@@ -50,7 +50,7 @@
                 <h5>Cargar notas</h5>
               </button>
               <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2" data-toggle="modal" data-target="#autorizacion">
-                <h5>Solicitudes de alumnos</h5>
+                <h5>Solicitud alumnos</h5>
               </button>
             </nav>
           </div>
@@ -166,7 +166,7 @@
                   </tr>
                 </div>
                   <ng-template #nomasalumnos>
-                      <td class="text-center">No hay mas alumnos para cargar notas</td>
+                      <td class="">No hay alumnos pendientes.</td>
                   </ng-template>
               </tbody>
             </table>
@@ -218,7 +218,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group col-12">
-            <h3 *ngIf="prom>0;">Promedio de calificaicon: {{prom}}</h3>
+            <h3 *ngIf="prom>0;">Promedio de calificación: {{prom}}</h3>
            
             <table class="table">
               <thead class="thead-light">
@@ -227,7 +227,7 @@
                   <th>Nota 1º</th>
                   <th>Nota 2º</th>
                   <th>Nota final</th>
-                  <th>Situacion</th>  
+                  <th>Situación</th>  
                 </tr>
               </thead>
               <tbody>
@@ -246,7 +246,7 @@
                   </ng-template>
                 </tr>
                 <ng-template #sinalumnos>
-                  <td>No ha cargado las notas de los alumnos</td>
+                  <td>No hay notas cargadas.</td>
                 </ng-template>
               </tbody>
             </table>
@@ -288,8 +288,9 @@
                 </tr>
               </tbody>
             </table>
+            <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
           </div>
-          <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
+          
         </div>
       </div>
     </div>
@@ -320,8 +321,6 @@
                 </tr>
               </tbody>
             </table>
-          </div>
-          <div class="modal-footer">
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
           </div>
         </div>

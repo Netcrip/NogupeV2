@@ -42,7 +42,7 @@ ngOnInit() {
     if(!pattern.test(email.value)){
       swal({
         type: 'error',
-        title: 'Revise formato de email',
+        title: 'Revise email y/o contraseña.',
         toast: true,
         position: 'center',
         showConfirmButton: false,
@@ -51,7 +51,7 @@ ngOnInit() {
     }else if(pas.value.length<6){
       swal({
         type: 'error',
-        title: 'Revise formato de contraseña',
+        title: 'Revise email y/o contraseña.',
         toast: true,
         position: 'center',
         showConfirmButton: false,
@@ -83,16 +83,16 @@ ngOnInit() {
     
   async recuperar(){
     const {value: email} = await swal({
-      title: 'Ingrese el email para recuperar su cuenta',
+      title: 'Por favor, ingrese su Email:',
       input: 'email',
-      inputPlaceholder: 'Por favor ingresa tu email'
+      inputPlaceholder: 'Correo@example.com'
     })
     
     if (email) {
       this.auth.resetPassword(email)
       swal({
         type: 'success',
-        title: 'Listo!, revisa la cuenta de email proporcionada',
+        title: 'Listo, ya puedes revisar tu correo.',
         toast: true,
         position: 'center',
         showConfirmButton: false,
