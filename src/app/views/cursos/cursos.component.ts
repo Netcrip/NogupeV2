@@ -168,6 +168,7 @@ export class CursosComponent implements OnInit, OnChanges{
           text: "Modificara los datos de la cursada",
           type: 'warning',
           showCancelButton: true,
+          cancelButtonText: 'Cancelar',
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Si, Modificar'
@@ -206,6 +207,7 @@ export class CursosComponent implements OnInit, OnChanges{
         text: "No podra revertir la operación.",
         type: 'warning',
         showCancelButton: true,
+        cancelButtonText: 'Cancelar',
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, Eliminar'
@@ -408,6 +410,7 @@ export class CursosComponent implements OnInit, OnChanges{
    
    }
    getcursadasadm(){
+     this.cursoService.starttodaslascursadas();
     this.cursoService.getcursadasadm().subscribe(cursadas=>{
       this.cursadasadm=cursadas;
     })
@@ -458,6 +461,7 @@ export class CursosComponent implements OnInit, OnChanges{
       text: "No podra revertir la operación.",
       type: 'warning',
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Eliminar'
@@ -480,6 +484,7 @@ eliminarcursada($cursada){
     text: "Cerrara la cursada impidiendo nuevas inscripciones.",
     type: 'warning',
     showCancelButton: true,
+    cancelButtonText: 'Cancelar',
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Si, Eliminar'

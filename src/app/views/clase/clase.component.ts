@@ -135,6 +135,7 @@ export class ClaseComponent implements OnInit {
       text: "El alumno no podra ingresar a la clase.",
       type: 'warning',
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si'

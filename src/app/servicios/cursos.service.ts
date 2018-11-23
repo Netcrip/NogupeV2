@@ -231,8 +231,6 @@ export class CursosService {
     return this.profeclases
   }
   altainscripcion(insc:Inscripciones){
-    console.log("entro")
-    console.log(insc.materiauid);
     this.consultarinsc(insc.materiauid,insc.uid);
     let x=0;
     this.consultainscipciones.subscribe( result=> { 

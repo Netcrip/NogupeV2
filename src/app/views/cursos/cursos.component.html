@@ -17,7 +17,7 @@
                     <thead>
                         <tr>
                         <th scope="col">Carrera</th>
-                        <th scope="col">año</th>
+                        <th scope="col" class="d-none d-sm-block">Año</th>
                         <th scope="col">Materia</th>
                         <th scope="col">Eliminar</th>
                         <th scope="col">Asignar cursada</th>
@@ -26,7 +26,7 @@
                     <tbody >
                     <tr *ngFor="let materia of materiasadm">
                         <td>{{materia.carrera}}</td>
-                        <td>{{materia.ano}}</td>
+                        <td class="d-none d-sm-block">{{materia.ano}}</td>
                         <td>{{materia.materia}}</td>
                         <td><button class="bg-red rounded offset-1" (click)="eliminarmateria(materia.materiaid)"><i class="fa fa-ban"  aria-hidden="true"></i></button></td>
                         <td><button class="bg-green rounded offset-1 " (click)="cargardatoscursadanuevoadm(materia.carrera,materia.materia,materia.materiaid)" data-toggle="modal" data-target="#Crearclase"><i class="fa fa-check"  aria-hidden="true"></i></button></td>
@@ -37,14 +37,14 @@
         <div class="card mt-5">
             <a href="#" data-toggle="collapse" data-target="#cursadastabla"><h1 class="text-center">Cursadas</h1></a>   
         </div>
-        <div class="table-responsive collapse show" id="cursadastabla" data-spy="scroll" style="max-height: 400px; overflow: auto;">
+        <div class="table-responsive collapse show mb-5" id="cursadastabla" data-spy="scroll" style="max-height: 400px; overflow: auto;">
             <table class="table table-striped table-dark ">
                     <thead>
                         <tr>
                         <th scope="col">Codigo Cursada</th>
-                        <th scope="col">Carrera</th>
+                        <th scope="col" class="d-none d-sm-block">Carrera</th>
                         <th scope="col">Materia</th>
-                        <th scope="col">Profesor</th>
+                        <th scope="col" class="d-none d-sm-block">Profesor</th>
                         <th scope="col">Eliminar</th>
                         <th scope="col">Modificar</th>
                         </tr>
@@ -52,9 +52,9 @@
                     <tbody >
                     <tr *ngFor="let cursada of cursadasadm">
                         <td>{{cursada.numerocursada}}</td>
-                        <td>{{cursada.carrera}}</td>
+                        <td class="d-none d-sm-block">{{cursada.carrera}}</td>
                         <td>{{cursada.materia}}</td>
-                        <td>{{cursada.proferosname}}</td>
+                        <td class="d-none d-sm-block">{{cursada.proferosname}}</td>
                         <td><button class="bg-red rounded offset-1 " (click)="eliminarcursada(cursada.cursadaid)"><i class="fa fa-ban"  aria-hidden="true"></i></button></td>
                         <td><button class="bg-green rounded offset-1 " data-target="#modificarlacursadaadm" data-toggle="modal"  (click)="cargareditar(cursada.cursadaid,
                             cursada.fechainc, cursada.fechafin,
