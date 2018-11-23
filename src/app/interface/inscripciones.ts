@@ -8,6 +8,7 @@ export interface Inscripciones {
     materia?:string,
     dias?:string,
     numerocursada?:string,
+    proferosname?:string,
     carrera?:string,
     color?:string,
     uid?:string,

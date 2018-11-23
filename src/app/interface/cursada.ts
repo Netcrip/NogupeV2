@@ -10,5 +10,6 @@ export interface Cursada {
     carrera?:string,
     color?:string,
     profesoruid?:string,
+    proferosname?:string,
     estado?:string
 }

@@ -272,5 +272,32 @@ export class CursosService {
       }))
     );
   }
+  updatecursadas(carreracursadaid,profesoruid,profesorname,dias,img,color){
+    var Ref: AngularFirestoreDocument<any> = this.afs.collection('cursadas').doc(carreracursadaid);
+    Ref.update({"profesoruid":profesoruid,"proferosname":profesorname,"dias":dias,"img":img,"color":color}).then(_ => 
+      swal(
+        'Actualizada!',
+        'Cursada actualizada',
+        'success'
+      )
+      );
+      let inscripcioncellection = this.afs.collection<Inscripciones>('inscripciones', ref => ref.where("cursadaid","==",carreracursadaid));
+      let inscripcion = inscripcioncellection.snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Inscripciones;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+      inscripcion.forEach(element => {
+        console.log(inscripcion)
+        element.forEach(element => {
+          console.log(element.cursadaid)
+          var Ref: AngularFirestoreDocument<any> = this.afs.collection('inscripciones').doc(element.inscripcionesid);
+          Ref.update({"profesoruid":profesoruid,"proferosname":profesorname,"dias":dias,"img":img,"color":color})
+        });
+      });
+    
+  }
   
 }
