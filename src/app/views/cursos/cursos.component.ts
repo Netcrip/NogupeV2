@@ -41,7 +41,7 @@ export class CursosComponent implements OnInit, OnChanges{
     "Licenciatura en Gestión Aeroportuaria",
     "Licenciatura en  Logística",
     "Tecnicatura en Desarrollo de Software"];
-    tipousuario=["Alumno","Profesor","Admin"]
+    tipousuario=["alumno","profesor","admin"]
     dias=["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
     horarios=["08:00-12:00","08:00-10:00","10:00-12:00","13:00-17:00","13:00-15:00","15:00-17:00","18:00-22:00","18:00-20:00","20:00-22:00"]
     

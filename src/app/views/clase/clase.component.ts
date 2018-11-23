@@ -79,8 +79,8 @@ export class ClaseComponent implements OnInit {
   cargarnota(nota1, nota2, nota3, notaid) {
     if (nota1 > 10 || nota2 > 10 || nota3 > 10 || nota1 < 0 || nota2 < 0 || nota3 < 0 || nota1 == '' || nota2 == '' || nota3 == '') {
       swal('La nota debe ser de 1-10.')
-    }
-    if (nota1 >= 7 && nota2 >= 7 && nota3 >= 7) {
+    } 
+    else if (nota1 >= 7 && nota2 >= 7 && nota3 >= 7) {
       this.claseService.cargarnota(nota1, nota2, nota3, this.route.snapshot.paramMap.get('id'), notaid)
     }
     else if (nota1 >= 7 && nota2 >= 4 && nota3 >= 4 && nota3 < 7 || nota2 >= 7 && nota1 >= 4 && nota1 >= 4 && nota3 < 7) {
@@ -89,12 +89,11 @@ export class ClaseComponent implements OnInit {
     else if (nota1 >= 4 && nota2 >= 4 && nota3 >= 4 && nota3 < 7) {
       this.claseService.cargarnota(nota1, nota2, nota3, this.route.snapshot.paramMap.get('id'), notaid)
     }
-    else if (nota1 < 4 && nota2 < 4 && nota3 < 4 || nota1 < 4 && nota2 > 4 && nota3 < 4 || nota1 > 4 && nota2 < 4 && nota3 < 4) {
+    else if (nota1 <= 4 && nota2 < 4 && nota3 < 4 ||nota1 < 4 && nota2 <= 4 && nota3 < 4 || nota1 < 4 && nota2 > 4 && nota3 < 4 || nota1 > 4 && nota2 < 4 && nota3 < 4) {
       this.claseService.cargarnota(nota1, nota2, nota3, this.route.snapshot.paramMap.get('id'), notaid)
     }
     else {
-      swal('Revise los criterios de calificación.')
-      nota3 = "";
+      swal('Revise los criterios de calificación.');
     }
 
   }
