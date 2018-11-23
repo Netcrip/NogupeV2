@@ -5,7 +5,6 @@
             <div class="card-header">                
                 <nav class="nav flex-column flex-sm-row justify-content-center">
                 <button class="btn btn-outline-primary p-auto col-12 col-md-4" href="#" data-toggle="modal" data-target="#crearmateria">Crear nueva materia</button>
-                <button class="btn btn-outline-primary p-auto col-12 col-md-4 " href="#" data-toggle="modal" data-target="#Crearclase">Crear nueva cursada</button>
                 <button class="btn btn-outline-primary p-auto col-12 col-md-4 " href="#" data-toggle="modal" data-target="#Altausuario">Crear pre-inscripcion del usuario</button>
             </nav>
             </div>
@@ -30,7 +29,7 @@
                         <td>{{materia.ano}}</td>
                         <td>{{materia.materia}}</td>
                         <td><button class="bg-red rounded offset-1" (click)="eliminarmateria(materia.materiaid)"><i class="fa fa-ban"  aria-hidden="true"></i></button></td>
-                        <td><button class="bg-green rounded offset-1 "><i class="fa fa-check"  aria-hidden="true"></i></button></td>
+                        <td><button class="bg-green rounded offset-1 " (click)="cargardatoscursadanuevoadm(materia.carrera,materia.materia,materia.materiaid)" data-toggle="modal" data-target="#Crearclase"><i class="fa fa-check"  aria-hidden="true"></i></button></td>
                     </tr>
                 </tbody>
             </table>
@@ -57,7 +56,7 @@
                         <td>{{cursada.materia}}</td>
                         <td>{{cursada.proferosname}}</td>
                         <td><button class="bg-red rounded offset-1 " (click)="eliminarcursada(cursada.cursadaid)"><i class="fa fa-ban"  aria-hidden="true"></i></button></td>
-                        <td><button class="bg-green rounded offset-1 " data-target="#crearcursada" data-toggle="modal"  (click)="cargareditar(cursada.cursadaid,
+                        <td><button class="bg-green rounded offset-1 " data-target="#modificarlacursadaadm" data-toggle="modal"  (click)="cargareditar(cursada.cursadaid,
                             cursada.fechainc, cursada.fechafin,
                             cursada.img,
                             cursada.materia,
@@ -253,6 +252,14 @@
 
                     <div class="container">
                         <form class="form" ngNativeValidate (ngSubmit)="altaclase()" id="fcrearclase">
+                        <div class="form-group">
+                                <label for="carreramat">Carrera</label>
+                                <input type="text"  class="form-control" id="carreramat" disabled>                            </div>
+                            <div class="form-group">
+                                <label for="mat">Materia</label>
+                                <input type="text"  class="form-control" id="mat" disabled>
+                                <input type="text"  class="form-control" id="matid" hidden>
+                            </div>
                             <div class="form-group">
                                 <label for="cursadan">Numero de comisión</label>
                                 <input type="text" minlength="1" class="form-control" id="cursadan" required>
@@ -264,20 +271,6 @@
                             <div class="form-group">
                                 <label for="finicio">Fecha finalización</label>
                                 <input type="date" min="1" max="6" class="form-control" id="ffin" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="carreramat">Carrera</label>
-                                <select class="form-control" id="carreramat" required (change)="cargarmateriascur()">
-                                    <option value="" selected disabled hidden>Seleccione una carrera</option>
-                                    <option *ngFor="let nomcarrera of carreras" [value]="nomcarrera">{{nomcarrera}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="mat">Materia</label>
-                                <select class="form-control" id="mat" required>
-                                    <option value="" selected disabled hidden>Seleccione una materia</option>
-                                    <option *ngFor="let materia of materias" [value]=materia.materiaid>{{materia.materia}}</option>
-                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="profesor">Profesor</label>
@@ -297,48 +290,15 @@
                                     <option *ngFor="let hora of horarios" [value]="hora">{{hora}}</option>
                                 </select>
                                 <div class="form-group">
-                                    <textarea style="resize:none" class="form-control mt-3" id="diastext" rows="3"
+                                    <button type="button" class="btn btn-success float-right mb-4 mt-3 col-3" (click)="agregarhorario()">Agregar</button>
+                                </div>
+                                <div class="form-group">
+                                    <textarea style="resize:none" class="form-control " id="diastext" rows="3"
                                         disabled required></textarea>
                                 </div>
-                                <button type="button" class="btn btn-success " (click)="agregarhorario()">Agregar</button>
-                                <button type="button" class="btn btn-danger ml-1" (click)="borrarhorario()">Borrar</button>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="iconoclase">Icono representativo</label>
-                                <div class="form-check" id="iconoclase">
-                                    <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios1"
-                                            value="fa-calculator" checked="">
-                                        <i class="fa fa-calculator" aria-hidden="true"></i>
-                                    </label>
-                                    <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios2"
-                                            value="fa-pencil" checked="">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </label>
-                                    <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios3"
-                                            value="fa-plane" checked="">
-                                        <i class="fa fa-plane" aria-hidden="true"></i>
-                                    </label>
-                                    <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios4"
-                                            value="fa-history" checked="">
-                                        <i class="fa fa-history" aria-hidden="true"></i>
-                                    </label>
-                                    <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios5"
-                                            value="fa-pie-chart" checked="">
-                                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                                    </label>
-                                    <label class="form-check-label col-4">
-                                        <input type="radio" class="form-check-input" name="colorradio" id="optionsRadios6"
-                                            value="fa-desktop" checked="">
-                                        <i class="fa fa-desktop" aria-hidden="true"></i>
-                                    </label>
+                                    <button type="button" class="btn btn-danger float-right mb-4 col-3" (click)="borrarhorario()">Borrar</button>
                                 </div>
-                            </div>
+                            
                             <div class="form-group">
                                 <label for="colormateria">Color</label>
                                 <select class="form-control" id="colormateria" required>
@@ -616,7 +576,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="crearcursada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modificarlacursadaadm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -636,24 +596,24 @@
                                 </div>
                                 <div class="form-group">
                                         <label for="carreareditar">Carrera: </label>
-                                        <input type="text" min="1" max="6" class="form-control" id="carreareditare" disabled>
+                                        <input type="text" class="form-control" id="carreareditare" disabled>
                                     </div>
                                 <div class="form-group">
                                     <label for="matditar">Materia: </label>
-                                    <input type="text" min="1" max="6" class="form-control" id="matditarr" disabled>
+                                    <input type="text" class="form-control" id="matditarr" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="finicio">Fecha inicio</label>
-                                    <input type="date" min="1" max="6" class="form-control" id="finicior" required>
+                                    <input type="date" class="form-control" id="finicior" (change)="habilitarmodificarmateria()" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="finicio">Fecha finalización</label>
-                                    <input type="date" min="1" max="6" class="form-control" id="ffinr" required>
+                                    <input type="date"  class="form-control" id="ffinr" (change)="habilitarmodificarmateria()" required>
                                 </div>
                                
                                 <div class="form-group">
                                     <label for="profesor">Profesor</label>
-                                    <select class="form-control" id="profesorr" required>
+                                    <select class="form-control" id="profesorr" required (change)="habilitarmodificarmateria()">
                                         <option value="" selected disabled hidden>Seleccione un profesor</option>
                                         <option *ngFor="let profe of profes" [value]="profe.uid">{{profe.displayName}}</option>
                                     </select>
@@ -721,7 +681,7 @@
                                     </select>
                                 </div>
     
-                                <button type="submit" class="btn btn-success btn-block" (click)="editarcursadaadm()">Editar</button>
+                                <button type="submit" class="btn btn-success btn-block" id="btnadmeditarmateria" disabled (click)="editarcursadaadm()">Editar</button>
                                 <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cerrar</button>
                             </form>
     
@@ -729,4 +689,4 @@
                     </div>
                 </div>
             </div>
-        </div>
+    </div>

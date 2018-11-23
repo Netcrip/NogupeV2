@@ -102,7 +102,6 @@
     </div>
   </div>
 
-
   <!-- Modal Profesor -->
   <div class="modal fade" id="presente" tabindex="-1">
     <div class="modal-dialog" role="document">
@@ -138,13 +137,13 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Alta notas</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Carga de notas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <div class="form-group col-12">
+          <div class="form-group col-12" data-spy="scroll" style="max-height: 400px; overflow: auto;">
             <table class="table">
               <thead class="thead-light">
                 <tr>
@@ -155,20 +154,23 @@
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
-                <div *ngIf="alumnos?.length>0; else nomasalumnos">
+              <tbody *ngIf="alumnos?.length>0; else nomasalumnos">
                 <tr *ngFor="let alumno of alumnos">
                   <td>{{alumno.uname}} </td>
                   <td><input type="number" min="0" max="10" #nota1 required></td>
                   <td><input type="number" min="0" max="10" #nota2 required></td>
                   <td><input type="number" min="0" max="10" #nota3 required></td>
-                  <td><button type="submit" class="btn btn-success" (click)="cargarnota(nota1.value,nota2.value,nota3.value,alumno.notaid)">Cargar</button></td>
+                  <td><button type="submit" class="btn btn-success" (click)="cargarnota(nota1.value,nota2.value,nota3.value,alumno.notaid,nota3.value='')">Cargar</button></td>
                   </tr>
-                </div>
-                  <ng-template #nomasalumnos>
-                      <td class="text-center">No hay mas alumnos para cargar notas</td>
-                  </ng-template>
+                  
               </tbody>
+              <ng-template #nomasalumnos>
+                <tbody>
+                  <tr>
+                      <td class="text-center">No hay mas alumnos para cargar notas</td>
+                  </tr>
+                </tbody>
+                </ng-template>
             </table>
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
           </div>
@@ -189,7 +191,7 @@
         <div class="modal-body">
           <div class="form-group col-12">
             <div *ngIf="pendientes?.length>0; else nosolicitud">
-              <div *ngFor="let pendiente of pendientes" class="col-12 text-center">
+              <div *ngFor="let pendiente of pendientes" class="col-12 text-center" >
                 {{pendiente.uname}}
                 <button class="btn bg-green rounded offset-5" (click)="aceptar(pendiente.inscripcionesid,pendiente.uid,pendiente.uname)"><i
                     class="fa fa-check" aria-hidden="true"></i></button>
@@ -218,8 +220,8 @@
         </div>
         <div class="modal-body">
           <div class="form-group col-12">
-            <h3 *ngIf="prom>0;">Promedio de calificaicon: {{prom}}</h3>
-           
+            <h3 *ngIf="prom>0;">Promedio de calificación: {{prom}}</h3>
+           <div data-spy="scroll" style="max-height: 400px; overflow: auto;">
             <table class="table">
               <thead class="thead-light">
                 <tr>
@@ -250,6 +252,7 @@
                 </ng-template>
               </tbody>
             </table>
+            </div>
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
           </div>
         </div>
@@ -267,8 +270,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="form-group col-12">
-            <table class="table">
+          <div class="form-group col-12" data-spy="scroll" style="max-height: 400px; overflow: auto;">
+            <table class="table" >
               <thead class="thead-light">
                 <tr>
                   <th>Día y hora</th>
@@ -304,16 +307,16 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <div class="form-group col-12">
-            <table class="table">
+        <div class="modal-body" >
+          <div class="form-group col-12" data-spy="scroll" style="max-height: 400px; overflow: auto;">
+            <table class="table" >
               <thead class="thead-light">
                 <tr>
                   <th>Día</th>
                   <th>Nombre</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody >
                 <tr *ngFor="let ptes of listadopresentes">
                   <td>{{ptes.dia}} </td>
                   <td>{{ptes.uname}}</td>
@@ -367,7 +370,7 @@
         </div>
         <div class="modal-body bg-gray">
           <div class="form-group col-12">
-            <table class="table table-dark">
+            <table class="table table-dark" data-spy="scroll" style="max-height: 400px; overflow: auto;">
               <thead>
                 <tr>
                   <th>Nombre</th>
