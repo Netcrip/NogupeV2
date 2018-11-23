@@ -40,12 +40,12 @@ export class CursosComponent implements OnInit, OnChanges{
     "Licenciatura en Turismo", "Licenciatura en Seguridad e Higiene",    
     "Licenciatura en Gestión Aeroportuaria",
     "Licenciatura en  Logística",
-    "Tecnicatura Universitaria en Desarrollo de Software"];
-    tipousuario=["alumno","profesor","admin"]
-    dias=["lunes","martes","miercoles","jueves","viernes","sabado"];
-    horarios=["08:00 -12:00","08:00-10:00","10:00-12:00","13:00-17:00","13:00-15:00","15:00-17:00","18:00 - 22:00","18:00-20:00","20:00-22:00"]
+    "Tecnicatura en Desarrollo de Software"];
+    tipousuario=["Alumno","Profesor","Admin"]
+    dias=["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+    horarios=["08:00-12:00","08:00-10:00","10:00-12:00","13:00-17:00","13:00-15:00","15:00-17:00","18:00-22:00","18:00-20:00","20:00-22:00"]
     
-    color=[{nombre:"Naranja",val:"orange"},{nombre:"rojo",val:"red"},{nombre:"azul",val:"blue"},{nombre:"blanco",val:"bg-primary"},{nombre:"violeta",val:"purple"},{nombre:"verde",val:"green"}]
+    color=[{nombre:"Naranja",val:"orange"},{nombre:"Rojo",val:"red"},{nombre:"Azul",val:"blue"},{nombre:"Celeste",val:"bg-primary"},{nombre:"Violeta",val:"purple"},{nombre:"Verde",val:"green"}]
     submitted = false;
     onSubmit() { this.submitted = true; } 
 
@@ -96,7 +96,7 @@ export class CursosComponent implements OnInit, OnChanges{
     }
     cargarcursada(){
       this.cursadas.forEach(element => {
-        if(element.cursadaid==$('#bccursadas').find(":selected").val()){
+        if(element.numerocursada==$('#bccursadas').find(":selected").val()){
           $("#bcfinicio").val(element.fechainc)
           $("#bcffin").val(element.fechafin)
           $("#bcprofesor option[value="+element.profesoruid+"]").attr("selected", true);
@@ -114,6 +114,9 @@ export class CursosComponent implements OnInit, OnChanges{
           $("#bcmodificar").show();
           $("#bceliminar").show();
 
+        }
+        else{
+          console.log("nro de cursada repetido")
         }
         
       });
@@ -249,7 +252,7 @@ export class CursosComponent implements OnInit, OnChanges{
       })*/
       this.materias.forEach(element=>{
         if(element.materiaid==$("#bccmateria").find(":selected").val()){
-          $("#bcaño").val(element.año);
+          $("#bcaño").val(element.ano);
         }
       })
       this.cursoService.starcursadas($("#bccmateria").find(":selected").val())
@@ -260,7 +263,7 @@ export class CursosComponent implements OnInit, OnChanges{
     datosmateria(){
       this.materias.forEach(element=>{
         if(element.materiaid==$("#materiase").find(":selected").val()){
-          $("#año").val(element.año)
+          $("#año").val(element.ano)
           //$("#año").prop('disabled', false);
           $("#eliminar").show()
         }
@@ -341,6 +344,15 @@ export class CursosComponent implements OnInit, OnChanges{
       
   }
 */
+  habilitarmodificarmateria(){
+    $("#btnadmeditarmateria").prop( "disabled", false );
+  }
+  cargardatoscursadanuevoadm(carrera,materia,materiauid){
+    $("#carreramat").val(carrera)
+    $("#mat").val(materia)
+    $("#matid").val(materiauid)
+
+  }
   imaterias(){
     this.mat.startmateriaaño($("#icarrera").find(":selected").text(),$("#iano").find(":selected").val())
     this.mat.getmateriaaño().subscribe(materia=>{
@@ -468,10 +480,21 @@ editarcursadaadm(){
   var dias= $("#diastextr").val();
   var img= $("input[name=editarimgradio]:checked").val();
   var color= $("#colormateriar").find(":selected").val();
-  this.cursoService.updatecursadas(carreracursadaid,profesoruid,profesorname,dias,img,color);
-  this.cerrarmodal();
+  if(dias==""){
+    swal(
+      'Error!',
+      'Asigne día y horario de cursada',
+      'error'
+    )
+  }
+  else{
+    this.cursoService.updatecursadas(carreracursadaid,profesoruid,profesorname,dias,img,color);
+    this.cerrarmodal();
+  }
+  
 
 }
+
 agregarhorarior(){
   var dia= $('#diasr').find(":selected").val();
   var horario=$('#horarior').find(":selected").val();
@@ -479,6 +502,7 @@ agregarhorarior(){
     $("#diastextr").val($("#diastextr").val()+dia+" "+horario+" /-/ ")
     $('#diasr').prop("selectedIndex",0)
     $('#horarior').prop("selectedIndex",0)
+    this.habilitarmodificarmateria()
   }
 }
 borrarhorarior(){

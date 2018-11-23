@@ -94,6 +94,7 @@ export class ClaseComponent implements OnInit {
     }
     else{
       swal('Revise los criterios de calificacion')
+      nota3="";
     }
     
   }

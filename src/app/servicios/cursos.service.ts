@@ -34,7 +34,8 @@ export class CursosService {
   profeclases: Observable<Cursada[]>;
   cursadasadm:Observable<Cursada[]>;
   cursadasCollectionadm:AngularFirestoreCollection<Cursada>;
-
+  inscreditar:Observable<Inscripciones[]>;
+  inscripcioncellectioneditar:AngularFirestoreCollection<Inscripciones>;
 
 
   constructor(public afs: AngularFirestore, public auth: AuthService) {
@@ -73,7 +74,7 @@ export class CursosService {
     let careraref: AngularFirestoreDocument <Materia> =this.afs.doc(`Materias/${id}`);
     const data: Materia = {
       materiaid:id,
-      año: ano,
+      ano: ano,
       carrera:carrera,
       materia:materia,
       estado:"activa",
@@ -273,6 +274,7 @@ export class CursosService {
     );
   }
   updatecursadas(carreracursadaid,profesoruid,profesorname,dias,img,color){
+    let x=1;
     var Ref: AngularFirestoreDocument<any> = this.afs.collection('cursadas').doc(carreracursadaid);
     Ref.update({"profesoruid":profesoruid,"proferosname":profesorname,"dias":dias,"img":img,"color":color}).then(_ => 
       swal(
@@ -281,21 +283,23 @@ export class CursosService {
         'success'
       )
       );
-      let inscripcioncellection = this.afs.collection<Inscripciones>('inscripciones', ref => ref.where("cursadaid","==",carreracursadaid));
-      let inscripcion = inscripcioncellection.snapshotChanges().pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as Inscripciones;
-          const id = a.payload.doc.id;
-          return { id, ...data };
+      this.inscripcioncellectioneditar = this.afs.collection<Inscripciones>('inscripciones', ref => ref.where("cursadaid","==",carreracursadaid));
+      this.inscreditar = this.inscripcioncellectioneditar.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Inscripciones;
+        const id = a.payload.doc.id;
+        return { id, ...data };
         }))
       );
-      inscripcion.forEach(element => {
-        console.log(inscripcion)
-        element.forEach(element => {
-          console.log(element.cursadaid)
-          var Ref: AngularFirestoreDocument<any> = this.afs.collection('inscripciones').doc(element.inscripcionesid);
-          Ref.update({"profesoruid":profesoruid,"proferosname":profesorname,"dias":dias,"img":img,"color":color})
-        });
+      this.inscreditar.forEach(element => {
+        if(x==1){
+          element.forEach(element => {
+            var Ref: AngularFirestoreDocument<any> = this.afs.collection('inscripciones').doc(element.inscripcionesid);
+            Ref.update({"profesoruid":profesoruid,"proferosname":profesorname,"dias":dias,"img":img,"color":color})
+          });
+          x=0;
+        }
+        
       });
     
   }
