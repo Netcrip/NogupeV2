@@ -82,7 +82,7 @@ export class DefaultLayoutComponent implements OnInit  {
   async cambiarcontra(){
      this.auth.user.subscribe(e=>{
       swal(
-        'Se a enviado un correo para cambiar la contraseña a:',
+        'Se ha enviado un correo para cambiar contraseña a:',
         e.email,
         'info'
       )

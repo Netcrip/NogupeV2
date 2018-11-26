@@ -1,6 +1,6 @@
 export interface Materia {
     materiaid?: string;
-    año?:string;
+    ano?:string;
     carrera?:string;
     materia?:string;
     estado?:string;

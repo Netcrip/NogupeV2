@@ -1,103 +1,93 @@
 <div *ngIf="auth.user | async as user">
   <div *ngIf="user.cuenta!='alumno'; else resto">
-    <app-header
-    [fixed]="true" [sidebarToggler]=false [asideMenuToggler]=false [mobileAsideMenuToggler]=false [mobileSidebarToggler]=false
-    [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 150, height: 50, alt:''}"
-   >
-    <ul class="nav navbar-nav d-md-down-none">
-      <li class="nav-item px-3">
-        <h5>Bienvenido</h5>
-      </li>
-      <li class="nav-item px-3">
-        <h4>{{user.displayName}}</h4>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav ml-auto">
-      <li class="nav-item dropdown" dropdown placement="bottom right">
-        <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
-          <img src="{{user.avatarURL}}" class="img-avatar" />
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
-          <div class="dropdown-header text-center"><strong>Account</strong></div>
-          <a class="dropdown-item" (click)=cambiarcontra()><i class="fa fa-bell-o"></i> Contraseña</a>
-          <div class="dropdown-header text-center"><strong>Account Linked</strong></div>
-         <div *ngIf="user.google=='link'; else noLinkgoogle">
-          <a class="dropdown-item bg-success" (click)="unLinkgoogle()"><i class="fa fa-google"></i> Google</a>
-         </div>
-          <div *ngIf="user.facebook=='link';else noLinkfacebook">
-            <a class="dropdown-item bg-success" (click)="unLinkfacebook()"><i class="fa fa-facebook"></i> facebook</a>
-          </div>
-          <ng-template #noLinkgoogle>
-            <a class="dropdown-item bg-danger" (click)="Linkgoogle()"><i class="fa fa-google"></i> Google</a>
-          </ng-template>
-          <ng-template #noLinkfacebook>
-            <a class="dropdown-item bg-danger" (click)="Linkfacebook()"><i class="fa fa-facebook"></i> facebook</a>
-          </ng-template>
-         
-          <div class="divider"></div>
-          <a class="dropdown-item" (click)="signOut()"><i class="fa fa-power-off"></i> Logout</a>
-        </div>
-      </li>
-    </ul>
-  </app-header>
-</div>
+    <app-header [fixed]="true" [sidebarToggler]=false [asideMenuToggler]=false [mobileAsideMenuToggler]=false
+      [mobileSidebarToggler]=false [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 150, height: 50, alt:''}">
+      <ul class="nav navbar-nav d-md-down-none">
+        <h5 class="mr-1">Bienvenido</h5>
+        <h5>{{user.displayName}}</h5>
+      </ul>
+      <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown" dropdown placement="bottom right">
+          <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+            dropdownToggle (click)="false">
+            <img src="{{user.avatarURL}}" class="img-avatar" />
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+            <div class="dropdown-header text-center"><strong>Cuenta</strong></div>
+            <a class="dropdown-item" (click)=cambiarcontra()><i class="fa fa-bell-o"></i>Cambiar contraseña</a>
+            <div class="dropdown-header text-center"><strong>Redes sociales</strong></div>
+            <div *ngIf="user.google=='link'; else noLinkgoogle">
+              <a class="dropdown-item bg-success" (click)="unLinkgoogle()"><i class="fa fa-google"></i> Google</a>
+            </div>
+            <div *ngIf="user.facebook=='link';else noLinkfacebook">
+              <a class="dropdown-item bg-success" (click)="unLinkfacebook()"><i class="fa fa-facebook"></i> facebook</a>
+            </div>
+            <ng-template #noLinkgoogle>
+              <a class="dropdown-item bg-danger" (click)="Linkgoogle()"><i class="fa fa-google"></i> Google</a>
+            </ng-template>
+            <ng-template #noLinkfacebook>
+              <a class="dropdown-item bg-danger" (click)="Linkfacebook()"><i class="fa fa-facebook"></i> facebook</a>
+            </ng-template>
 
-<ng-template #resto>
-<app-header
-  [fixed]="true"
-  [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 150, height: 50, alt:''}"
-  [asideMenuToggler]=false
-  [sidebarToggler]="'lg'"
-  [asideMenuToggler]=false [mobileAsideMenuToggler]=false>
-  <ul class="nav navbar-nav d-md-down-none">
-    <li class="nav-item px-3">
-      <h5>Bienvenido</h5>
-    </li>
-    <li class="nav-item px-3">
-      <h4>{{user.displayName}}</h4>
-    </li>
-  </ul>
-  <ul class="nav navbar-nav ml-auto">
-    <li class="nav-item dropdown" dropdown placement="bottom right">
-      <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
-        <img src="{{user.avatarURL}}" class="img-avatar" />
-      </a>
-      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
-        <div class="dropdown-header text-center"><strong>Account</strong></div>
-        <a class="dropdown-item" (click)=cambiarcontra()><i class="fa fa-bell-o"></i> Contraseña</a>
-        <div class="dropdown-header text-center"><strong>Account Linked</strong></div>
-       <div *ngIf="user.google=='link'; else noLinkgoogle">
-        <a class="dropdown-item bg-success" (click)="unLinkgoogle()"><i class="fa fa-google"></i> Google</a>
-       </div>
-        <div *ngIf="user.facebook=='link';else noLinkfacebook">
-          <a class="dropdown-item bg-success" (click)="unLinkfacebook()"><i class="fa fa-facebook"></i> facebook</a>
-        </div>
-        <ng-template #noLinkgoogle>
-          <a class="dropdown-item bg-danger" (click)="Linkgoogle()"><i class="fa fa-google"></i> Google</a>
-        </ng-template>
-        <ng-template #noLinkfacebook>
-          <a class="dropdown-item bg-danger" (click)="Linkfacebook()"><i class="fa fa-facebook"></i> facebook</a>
-        </ng-template>
-       
-        <div class="divider"></div>
-        <a class="dropdown-item" (click)="signOut()"><i class="fa fa-power-off"></i> Logout</a>
-      </div>
-    </li>
-  </ul>
-</app-header>
-</ng-template>
+            <div class="divider"></div>
+            <a class="dropdown-item" (click)="signOut()"><i class="fa fa-power-off"></i>Cerrar sesión</a>
+          </div>
+        </li>
+      </ul>
+    </app-header>
+  </div>
+
+  <ng-template #resto>
+    <app-header [fixed]="true" [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 150, height: 50, alt:''}"
+      [asideMenuToggler]=false [sidebarToggler]="'lg'" [asideMenuToggler]=false [mobileAsideMenuToggler]=false>
+      <ul class="nav navbar-nav d-md-down-none">
+        <h5 class="mr-1">Bienvenido</h5>
+        <h5>{{user.displayName}}</h5>
+      </ul>
+      <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown" dropdown placement="bottom right">
+          <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+            dropdownToggle (click)="false">
+            <img src="{{user.avatarURL}}" class="img-avatar" />
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+            <div class="dropdown-header text-center"><strong>Cuenta</strong></div>
+            <a class="dropdown-item" (click)=cambiarcontra()><i class="fa fa-bell-o"></i>Cambiar contraseña</a>
+            <div class="dropdown-header text-center"><strong>Redes sociales</strong></div>
+            <div *ngIf="user.google=='link'; else noLinkgoogle">
+              <a class="dropdown-item bg-success" (click)="unLinkgoogle()"><i class="fa fa-google"></i> Google</a>
+            </div>
+            <div *ngIf="user.facebook=='link';else noLinkfacebook">
+              <a class="dropdown-item bg-success" (click)="unLinkfacebook()"><i class="fa fa-facebook"></i> facebook</a>
+            </div>
+            <ng-template #noLinkgoogle>
+              <a class="dropdown-item bg-danger" (click)="Linkgoogle()"><i class="fa fa-google"></i> Google</a>
+            </ng-template>
+            <ng-template #noLinkfacebook>
+              <a class="dropdown-item bg-danger" (click)="Linkfacebook()"><i class="fa fa-facebook"></i> facebook</a>
+            </ng-template>
+
+            <div class="divider"></div>
+            <a class="dropdown-item" (click)="signOut()"><i class="fa fa-power-off"></i>Cerrar sesión</a>
+          </div>
+        </li>
+      </ul>
+    </app-header>
+  </ng-template>
   <div class="app-body">
     <div *ngIf="user.cuenta=='alumno'">
       <app-sidebar [fixed]="true" [display]="'lg'">
-            <app-sidebar-nav [navItems]="navItem" ></app-sidebar-nav>
-            <app-sidebar-minimizer></app-sidebar-minimizer>   
+        <app-sidebar-nav [navItems]="navItem"></app-sidebar-nav>
+        <app-sidebar-minimizer></app-sidebar-minimizer>
       </app-sidebar>
     </div>
     <!-- Main content -->
     <main class="main">
       <!-- Breadcrumb -->
       <ol class="breadcrumb">
-        <a class="btn"><app-breadcrumb ></app-breadcrumb></a>
+        <a class="btn">
+          <app-breadcrumb></app-breadcrumb>
+        </a>
         <!-- Breadcrumb Menu-->
         <li class="breadcrumb-menu d-md-down-none">
           <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -109,19 +99,12 @@
       </div>
     </main>
   </div>
-
   <app-footer>
-    <nav class="navbar navbar-dark bg-dark mt-5 fixed-bottom">
+    <nav class="navbar navbar-light bg-light mt-5 fixed-bottom">
       <div class="navbar-expand m-auto navbar-text">
-        <span><a href="">Nogupe</a> &copy; 2018 UpeLabs</span>
-        <span class="ml-auto">Powered by <a href="">Gurpo4</a></span>
+        Nogupe &copy; 2018 UpeLabs by Grupo 4
       </div>
     </nav>
   </app-footer>
+
 </div>
-
-
-
-
-
-  
