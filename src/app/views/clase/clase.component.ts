@@ -14,6 +14,8 @@ import $ from 'jquery';
 import { getTime } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { Alumnipresente } from '../../interface/alumnipresente';
 import { Presentismo } from '../../interface/presentismo';
+import { AngularFireStorage } from 'angularfire2/storage';
+import { finalize } from 'rxjs/operators';
 
 
 @Component({
@@ -35,7 +37,12 @@ export class ClaseComponent implements OnInit {
   listadopresentes: Alumnipresente[];
   al
   s;
-  constructor(private claseService: ClasesService, public auth: AuthService, private route: ActivatedRoute, private cur: CursosService
+
+  // Variables de upload
+  uploadProgress: Observable<number>;
+  uploadURL: Observable<string>;
+
+  constructor(private claseService: ClasesService, private _storage: AngularFireStorage, public auth: AuthService, private route: ActivatedRoute, private cur: CursosService
   ) {
 
   }
@@ -79,7 +86,7 @@ export class ClaseComponent implements OnInit {
   cargarnota(nota1, nota2, nota3, notaid) {
     if (nota1 > 10 || nota2 > 10 || nota3 > 10 || nota1 < 0 || nota2 < 0 || nota3 < 0 || nota1 == '' || nota2 == '' || nota3 == '') {
       swal('La nota debe ser de 1-10.')
-    } 
+    }
     else if (nota1 >= 7 && nota2 >= 7 && nota3 >= 7) {
       this.claseService.cargarnota(nota1, nota2, nota3, this.route.snapshot.paramMap.get('id'), notaid)
     }
@@ -89,7 +96,7 @@ export class ClaseComponent implements OnInit {
     else if (nota1 >= 4 && nota2 >= 4 && nota3 >= 4 && nota3 < 7) {
       this.claseService.cargarnota(nota1, nota2, nota3, this.route.snapshot.paramMap.get('id'), notaid)
     }
-    else if (nota1 <= 4 && nota2 < 4 && nota3 < 4 ||nota1 < 4 && nota2 <= 4 && nota3 < 4 || nota1 < 4 && nota2 > 4 && nota3 < 4 || nota1 > 4 && nota2 < 4 && nota3 < 4) {
+    else if (nota1 <= 4 && nota2 < 4 && nota3 < 4 || nota1 < 4 && nota2 <= 4 && nota3 < 4 || nota1 < 4 && nota2 > 4 && nota3 < 4 || nota1 > 4 && nota2 < 4 && nota3 < 4) {
       this.claseService.cargarnota(nota1, nota2, nota3, this.route.snapshot.paramMap.get('id'), notaid)
     }
     else {
@@ -105,6 +112,30 @@ export class ClaseComponent implements OnInit {
     this.claseService.addPost(this.mensaje);
     txt.value = "";
   }
+
+  upload(event){
+    const file = event.target.files[0];
+
+    const randomId = Math.random().toString(36).substring(2);
+    console.log(randomId);
+    const filepath = 'images/${randomId}';
+
+    const fileRef = this._storage.ref(filepath);
+
+    // subir imagen
+    const task = this._storage.upload(filepath, file);
+
+    // Porcentaje de subida
+    this.uploadProgress = task.percentageChanges();
+
+    // mostrar notificacion cuando la descarga este disponible
+    task.snapshotChanges().pipe(
+      finalize(() => this.uploadURL = fileRef.getDownloadURL())
+    ).subscribe();
+  }
+
+
+
   notaexistente() {
   }
 

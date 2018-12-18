@@ -90,6 +90,7 @@
               <div class="input-group">
                 <textarea class="form-control" #text type="text" #txt placeholder="Enviar un mensaje..." style="overflow:auto;resize:none"></textarea>
                 <div class="input-group-append">
+                  <input type="file" class="btn" (change)="upload($event)" accept="image/*">
                   <a class="btn input-group-text" (click)="post(user.displayName,txt)">
                     <i class="fa fa-send p-auto"></i>
                   </a>
