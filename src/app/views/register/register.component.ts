@@ -9,11 +9,9 @@ import swal from 'sweetalert2';
 })
 export class RegisterComponent {
 
-  constructor(public auth: AuthService,
-    private router: Router) {
-
-
+  constructor(public auth: AuthService, private router: Router) {
   }
+  
   dn: Array<Dni> = [];
 
   async create(email, nombre, pas, pas1, dni) {

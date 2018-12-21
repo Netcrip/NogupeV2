@@ -9,13 +9,16 @@
           </div>
           <div class="card-body">
             <nav class="nav flex-column flex-sm-row justify-content-center">
-              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2" data-toggle="modal" data-target="#apresente">
+              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2"
+                data-toggle="modal" data-target="#apresente">
                 <h5>Dar presente</h5>
               </button>
-              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2" (click)=promedio() data-toggle="modal" data-target="#vernotas">
+              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2" (click)=promedio()
+                data-toggle="modal" data-target="#vernotas">
                 <h5>Notas</h5>
               </button>
-              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2" data-toggle="modal" data-target="#listadopresentes">
+              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2"
+                data-toggle="modal" data-target="#listadopresentes">
                 <h5>Presentes</h5>
               </button>
             </nav>
@@ -33,24 +36,33 @@
           </div>
           <div class="card-body">
             <nav class="nav flex-column flex-sm-row justify-content-center">
-              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2" data-toggle="modal" data-target="#presente">
+              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3  col-xl-2"
+                data-toggle="modal" data-target="#presente">
                 <h5>Tomar asistencia</h5>
               </button>
-              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2" data-toggle="modal" data-target="#verpresentes">
+              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2"
+                data-toggle="modal" data-target="#verpresentes">
                 <h5>Registro de asistencias</h5>
               </button>
-              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3 col-xl-2" data-toggle="modal" data-target="#listadopresentes">
+              <button type="button" class="btn btn-outline-primary p-auto col-12 col-md-4 col-lg-3 col-xl-2"
+                data-toggle="modal" data-target="#listadopresentes">
                 <h5>Listado de presentes</h5>
               </button>
-              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2" (click)=promedio() data-toggle="modal"
-                data-target="#vernotas">
+              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2" (click)=promedio()
+                data-toggle="modal" data-target="#vernotas">
                 <h5>Listado de notas</h5>
               </button>
-              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2" data-toggle="modal" data-target="#notascarga">
+              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2"
+                data-toggle="modal" data-target="#notascarga">
                 <h5>Cargar notas</h5>
               </button>
-              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2" data-toggle="modal" data-target="#autorizacion">
+              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2"
+                data-toggle="modal" data-target="#autorizacion">
                 <h5>Solicitud alumnos</h5>
+              </button>
+              <button type="button" class="btn btn-outline-primary  p-auto col-12 col-md-4 col-lg-3 col-xl-2"
+                data-toggle="modal" data-target="#uploadFile">
+                <h5>Subir Archivos</h5>
               </button>
             </nav>
           </div>
@@ -62,6 +74,19 @@
   <div class="card">
     <div class="card-header" data-spy="scroll">
       <h4 class="text-center"><i class="fa fa-align-justify mr-2"></i>Muro</h4>
+      <!-- <div class="file-upload text-center">
+        <label for="file-input">
+          <img src="data:image/png;base64,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"
+            style="width:20px; height:20px; cursor: pointer;">
+        </label>
+        <input id="file-input" type="file" (change)="upload($event)" style="display:none;">
+        <div class="item">
+          Subiendo: {{ (uploadProgress | async) / 100 | percent }}
+        </div>
+        <section *ngIf="uploadURL && (uploadURL | async) !== null && (uploadURL | async)">
+          <a [href]="uploadURL | async" target="_blank">Abrir archivo!</a>
+        </section>
+      </div> -->
     </div>
     <div id="muro" data-spy="scroll" #scrollMe [scrollTop]="scrollMe.scrollHeight" data-offset="5" style="max-height: 400px; overflow: auto;">
       <div *ngIf="clases?.length > 0;else noClase">
@@ -90,7 +115,6 @@
               <div class="input-group">
                 <textarea class="form-control" #text type="text" #txt placeholder="Enviar un mensaje..." style="overflow:auto;resize:none"></textarea>
                 <div class="input-group-append">
-                  <input type="file" class="btn" (change)="upload($event)" accept="image/*">
                   <a class="btn input-group-text" (click)="post(user.displayName,txt)">
                     <i class="fa fa-send p-auto"></i>
                   </a>
@@ -104,6 +128,36 @@
   </div>
 
   <!-- Modal Profesor -->
+  <div class="modal fade" id="uploadFile" tabindex="-1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Subir archivos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="file-upload text-center">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" (change)="upload($event)">
+                    <label class="custom-file-label" for="customFile">Seleccionar</label>
+                </div>
+                <div class="item mt-2 mb-2">
+                  Subiendo: {{ (uploadProgress | async) / 100 | percent }}
+                </div>
+                <section *ngIf="uploadURL && (uploadURL | async) !== null && (uploadURL | async)">
+                  <a [href]="uploadURL | async" target="_blank">Abrir archivo!</a>
+                </section>
+            </div>
+            <button type="submit" class="btn btn-success btn-block" (click)="postFile(user.displayName, uploadURL)">Publicar</button>
+
+            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="presente" tabindex="-1">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -162,15 +216,15 @@
                   <td><input type="number" min="0" max="10" #nota2 required></td>
                   <td><input type="number" min="0" max="10" #nota3 required></td>
                   <td><button type="submit" class="btn btn-success" (click)="cargarnota(nota1.value,nota2.value,nota3.value,alumno.notaid,nota3.value='')">Cargar</button></td>
-                  </tr>
+                </tr>
               </tbody>
               <ng-template #nomasalumnos>
                 <tbody>
                   <tr>
-                      <td>No hay cargas pendientes</td>
+                    <td>No hay cargas pendientes</td>
                   </tr>
                 </tbody>
-                </ng-template>
+              </ng-template>
             </table>
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
           </div>
@@ -191,7 +245,7 @@
         <div class="modal-body">
           <div class="form-group col-12">
             <div *ngIf="pendientes?.length>0; else nosolicitud">
-              <div *ngFor="let pendiente of pendientes" class="col-12 text-center" >
+              <div *ngFor="let pendiente of pendientes" class="col-12 text-center">
                 {{pendiente.uname}}
                 <button class="btn bg-green rounded offset-5" (click)="aceptar(pendiente.inscripcionesid,pendiente.uid,pendiente.uname)"><i
                     class="fa fa-check" aria-hidden="true"></i></button>
@@ -200,8 +254,8 @@
               </div>
             </div>
             <ng-template #nosolicitud>
-                <p>No hay solicitudes pendientes</p>
-              </ng-template>
+              <p>No hay solicitudes pendientes</p>
+            </ng-template>
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
           </div>
         </div>
@@ -221,37 +275,37 @@
         <div class="modal-body">
           <div class="form-group col-12">
             <h3 *ngIf="prom>0;">Promedio de calificación: {{prom}}</h3>
-           <div data-spy="scroll" style="max-height: 400px; overflow: auto;">
-            <table class="table">
-              <thead class="thead-light">
-                <tr>
-                  <th>Alumno</th>
-                  <th>Nota 1º</th>
-                  <th>Nota 2º</th>
-                  <th>Nota final</th>
-                  <th>Situación</th>  
-                </tr>
-              </thead>
-              <tbody>
-                <div *ngIf="notas?.length>0; else sinalumnos"></div>
-                <tr *ngFor="let al of notas">
-                  <td>{{al.uname}} </td>
-                  <td>{{al.nota1}}</td>
-                  <td>{{al.nota2}}</td>
-                  <td class="notafinal">{{al.notafinal}}</td>
-                  <td *ngIf="al.notafinal>7; else notabaja">Promoción</td>
-                  <ng-template #notabaja>
-                    <td *ngIf="al.notafinal>4; else aplazo">Regular</td>
+            <div data-spy="scroll" style="max-height: 400px; overflow: auto;">
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Alumno</th>
+                    <th>Nota 1º</th>
+                    <th>Nota 2º</th>
+                    <th>Nota final</th>
+                    <th>Situación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <div *ngIf="notas?.length>0; else sinalumnos"></div>
+                  <tr *ngFor="let al of notas">
+                    <td>{{al.uname}} </td>
+                    <td>{{al.nota1}}</td>
+                    <td>{{al.nota2}}</td>
+                    <td class="notafinal">{{al.notafinal}}</td>
+                    <td *ngIf="al.notafinal>7; else notabaja">Promoción</td>
+                    <ng-template #notabaja>
+                      <td *ngIf="al.notafinal>4; else aplazo">Regular</td>
+                    </ng-template>
+                    <ng-template #aplazo>
+                      <td>Aplazado</td>
+                    </ng-template>
+                  </tr>
+                  <ng-template #sinalumnos>
+                    <td>No hay notas cargadas.</td>
                   </ng-template>
-                  <ng-template #aplazo>
-                    <td>Aplazado</td>
-                  </ng-template>
-                </tr>
-                <ng-template #sinalumnos>
-                  <td>No hay notas cargadas.</td>
-                </ng-template>
-              </tbody>
-            </table>
+                </tbody>
+              </table>
             </div>
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
           </div>
@@ -271,7 +325,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group col-12" data-spy="scroll" style="max-height: 400px; overflow: auto;">
-            <table class="table" >
+            <table class="table">
               <thead class="thead-light">
                 <tr>
                   <th>Día y hora</th>
@@ -293,7 +347,7 @@
             </table>
             <button type="button" class="btn btn-secondary btn-block" (click)="cerrarmodal()">Cerrar</button>
           </div>
-          
+
         </div>
       </div>
     </div>
@@ -308,16 +362,16 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body" >
+        <div class="modal-body">
           <div class="form-group col-12" data-spy="scroll" style="max-height: 400px; overflow: auto;">
-            <table class="table" >
+            <table class="table">
               <thead class="thead-light">
                 <tr>
                   <th>Día</th>
                   <th>Nombre</th>
                 </tr>
               </thead>
-              <tbody >
+              <tbody>
                 <tr *ngFor="let ptes of listadopresentes">
                   <td>{{ptes.dia}} </td>
                   <td>{{ptes.uname}}</td>
@@ -346,7 +400,7 @@
             <div class="container mb-2 text-center" *ngFor="let dato of datosclase">
               <h2>{{dato.materia}}</h2>
               <p>Ingrese token para dar presente</p>
-              <div> 
+              <div>
               </div>
               <input type="text" maxlength="6" minlength="3" id="acodigo" required>
             </div>
@@ -385,7 +439,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-block"  data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>

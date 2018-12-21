@@ -87,7 +87,6 @@ export class LoginComponent {
       input: 'email',
       inputPlaceholder: 'Correo@example.com'
     })
-
     if (email) {
       this.auth.resetPassword(email)
       swal({

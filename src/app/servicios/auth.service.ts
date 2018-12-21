@@ -294,7 +294,6 @@ export class AuthService {
       facebook: 'unlink',
       google: 'unlink',
       cuenta: cuenta
-
     };
     return userRef.set(data);
   }

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import {ModalModule} from 'ngx-bootstrap'
+import { ModalModule } from 'ngx-bootstrap'
 
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -33,7 +33,7 @@ import {
   AppHeaderModule,
   AppFooterModule,
   AppSidebarModule,
-  
+
 } from '@coreui/angular';
 
 // Import routing module
@@ -54,7 +54,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 
 //SERVICIOS
-import {AuthService} from './servicios/auth.service';
+import { AuthService } from './servicios/auth.service';
 import { TareasComponent } from './views/tareas/tareas.component';
 
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
@@ -79,10 +79,6 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     AngularFireStorageModule, // imports firebase/storage only needed for storage features,
     ModalModule,
     SweetAlert2Module,
-    
-    
-    
-    
   ],
   declarations: [
     AppComponent,
@@ -92,12 +88,12 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     LoginComponent,
     RegisterComponent,
     TareasComponent,
- 
+
   ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  },AuthService],
-  bootstrap: [ AppComponent ]
+  }, AuthService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,11 +6,17 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyD8wjl77YJmAO636QxY7RmbNtLpDumenb0",
+    apiKey: "AIzaSyB71sdZD6BpfUYtD1pJgAaBQwfpDTuAAFg",
+    authDomain: "nogupedev.firebaseapp.com",
+    databaseURL: "https://nogupedev.firebaseio.com",
+    projectId: "nogupedev",
+    storageBucket: "nogupedev.appspot.com",
+    messagingSenderId: "1510465035"
+  /*   apiKey: "AIzaSyD8wjl77YJmAO636QxY7RmbNtLpDumenb0",
     authDomain: "nogupe-25eff.firebaseapp.com",
     databaseURL: "https://nogupe-25eff.firebaseio.com",
     projectId: "nogupe-25eff",
     storageBucket: "nogupe-25eff.appspot.com",
-    messagingSenderId: "778139974379"
+    messagingSenderId: "778139974379" */
   }
 };

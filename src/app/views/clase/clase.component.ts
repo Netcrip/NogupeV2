@@ -14,9 +14,9 @@ import $ from 'jquery';
 import { getTime } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { Alumnipresente } from '../../interface/alumnipresente';
 import { Presentismo } from '../../interface/presentismo';
-import { AngularFireStorage } from 'angularfire2/storage';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { finalize } from 'rxjs/operators';
-
+import { Key } from 'protractor';
 
 @Component({
   templateUrl: './clase.component.html'
@@ -41,9 +41,10 @@ export class ClaseComponent implements OnInit {
   // Variables de upload
   uploadProgress: Observable<number>;
   uploadURL: Observable<string>;
+  url: string;
 
-  constructor(private claseService: ClasesService, private _storage: AngularFireStorage, public auth: AuthService, private route: ActivatedRoute, private cur: CursosService
-  ) {
+  constructor(private claseService: ClasesService, private _storage: AngularFireStorage,
+    public auth: AuthService, private route: ActivatedRoute, private cur: CursosService) {
 
   }
 
@@ -113,15 +114,19 @@ export class ClaseComponent implements OnInit {
     txt.value = "";
   }
 
-  upload(event){
-    const file = event.target.files[0];
+  postFile(name, uploadURL){
+    var d = this.formattedDate()
+    this.mensaje = { fecha: d, nombre: name, texto: uploadURL } 
+    this.claseService.addPost(this.mensaje);
+    name.value = "";
+  }
 
+  upload(event) {
+    const file = event.target.files[0];
     const randomId = Math.random().toString(36).substring(2);
     console.log(randomId);
-    const filepath = 'images/${randomId}';
-
+    const filepath = `uploads/${randomId}`;
     const fileRef = this._storage.ref(filepath);
-
     // subir imagen
     const task = this._storage.upload(filepath, file);
 
@@ -132,8 +137,8 @@ export class ClaseComponent implements OnInit {
     task.snapshotChanges().pipe(
       finalize(() => this.uploadURL = fileRef.getDownloadURL())
     ).subscribe();
+    
   }
-
 
 
   notaexistente() {

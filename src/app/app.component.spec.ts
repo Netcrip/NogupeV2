@@ -7,7 +7,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-      imports: [ RouterTestingModule ]
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
   it('should create the app', async(() => {
